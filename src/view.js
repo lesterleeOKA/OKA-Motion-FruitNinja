@@ -55,12 +55,29 @@ export default {
   //-----------------------------------------------------------------------------------------------
   preloadedFallingImages: [],
   optionImages: [
-    require("./images/fruitNinja/fruit1.png"),
-    require("./images/fruitNinja/fruit2.png"),
-    require("./images/fruitNinja/fruit3.png"),
-    require("./images/fruitNinja/fruit4.png"),
-    require("./images/fruitNinja/fruit5.png"),
+    require("./images/fruitNinja/fruits/apple.png"),
+    //require("./images/fruitNinja/fruits/banana.png"),
+    require("./images/fruitNinja/fruits/peach.png"),
+    require("./images/fruitNinja/fruits/strawberry.png"),
+    require("./images/fruitNinja/fruits/watermelon.png"),
   ],
+  preloadedLeftSubImages: [],
+  leftSubImages: [
+    require("./images/fruitNinja/fruits/apple-1.png"),
+    //require("./images/fruitNinja/fruits/banana-1.png"),
+    require("./images/fruitNinja/fruits/peach-1.png"),
+    require("./images/fruitNinja/fruits/strawberry-1.png"),
+    require("./images/fruitNinja/fruits/watermelon-1.png"),
+  ],
+  preloadedRightSubImages: [],
+  rightSubImages: [
+    require("./images/fruitNinja/fruits/apple-2.png"),
+    //require("./images/fruitNinja/fruits/banana-2.png"),
+    require("./images/fruitNinja/fruits/peach-2.png"),
+    require("./images/fruitNinja/fruits/strawberry-2.png"),
+    require("./images/fruitNinja/fruits/watermelon-2.png"),
+  ],
+
   preloadUsedImages() {
     this.optionImages.forEach((path) => {
       const img = new Image();
@@ -68,7 +85,19 @@ export default {
       this.preloadedFallingImages.push(img);
     });
 
-    console.log("preloadUsedImages", this.preloadedFallingImages);
+    this.leftSubImages.forEach((path) => {
+      const img = new Image();
+      img.src = path;
+      this.preloadedLeftSubImages.push(img);
+    });
+
+    this.rightSubImages.forEach((path) => {
+      const img = new Image();
+      img.src = path;
+      this.preloadedRightSubImages.push(img);
+    });
+
+    //console.log("preloadUsedImages", this.preloadedFallingImages);
     Util.updateLoadingStatus("Loading Images");
   },
 

@@ -136,6 +136,7 @@ async function renderResult() {
   else {
     View.renderer.draw([Camera.video, poses, false, null]);
   }
+
   Util.updateLoadingStatus("Game is Ready");
 }
 

@@ -3,6 +3,7 @@ import State from './state';
 import Sound from './sound';
 import Camera from './camera';
 import Game from './fruitNinja';
+import Sword from './swords';
 
 
 export class RendererCanvas2d {
@@ -16,6 +17,7 @@ export class RendererCanvas2d {
     this.center_shoulder = null;
     this.triggeredAudio = false;
     this.canvasWrapperRect = null;
+    this.sword = new Sword("black");
   }
 
   draw(rendererParams) {
@@ -76,7 +78,12 @@ export class RendererCanvas2d {
             State.changeState('playing', 'waitAns');
           }
         }
+        else {
+          this.sword.clearSwipes();
+        }
       }
+      this.sword.update();
+      this.sword.draw(this.ctx);
       this.drawBox(isCurPoseValid);
     }
   }
@@ -179,6 +186,9 @@ export class RendererCanvas2d {
         rightHandImg.style.display = 'none';
         leftHandImg.style.display = 'none';
 
+        if (checkKeypoints.length == 0)
+          this.sword.clearSwipes();
+
         for (let point of checkKeypoints) {
           switch (point.name) {
             case 'right_wrist':
@@ -189,6 +199,8 @@ export class RendererCanvas2d {
               rightHandImg.style.left = `calc(${xInVw_right}vw - calc(min(3vh, 3vw)))`;
               rightHandImg.style.top = `${rightWristY - yInVw_right}px`;
               rightHandImg.style.display = 'block';
+
+              this.sword.swipe(rightWristX, rightWristY);
               this.handleWristDetection(optionWrappers, resetBtn, rightWristX, rightWristY);
               break;
             case 'left_wrist':
@@ -199,6 +211,8 @@ export class RendererCanvas2d {
               leftHandImg.style.left = `calc(${xInVw_left}vw - calc(min(3vh, 3vw)))`;
               leftHandImg.style.top = `${leftWristY - yInVw_left}px`;
               leftHandImg.style.display = 'block';
+
+              this.sword.swipe(leftWristX, leftWristY);
               this.handleWristDetection(optionWrappers, resetBtn, leftWristX, leftWristY);
               break;
           }

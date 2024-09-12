@@ -2,7 +2,6 @@ import View from './view';
 import State from './state';
 import Sound from './sound';
 import QuestionManager from './question';
-import ninjaController from './ninjaController';
 
 export default {
   fallingId: 0,
@@ -48,7 +47,6 @@ export default {
 
   init(gameTime = null, fallSpeed = null) {
     //View.showTips('tipsReady');
-    // ninjaController.init(View.canvas);
     this.startedGame = false;
     this.fallingId = 0;
     this.remainingTime = gameTime !== null ? gameTime : 300;
@@ -276,7 +274,12 @@ export default {
               this.fallingId = 0;
             }
             var optionImageId = this.fallingId % View.preloadedFallingImages.length;
-            this.createRandomItem(this.randomPair[this.fallingId], View.preloadedFallingImages[optionImageId]);
+            this.createRandomItem(
+              this.randomPair[this.fallingId],
+              View.preloadedFallingImages[optionImageId],
+              View.preloadedLeftSubImages[optionImageId],
+              View.preloadedRightSubImages[optionImageId],
+            );
           }
           else {
             this.finishedCreateOptions = true;
@@ -356,7 +359,7 @@ export default {
   generateUniqueId() {
     return Math.random().toString(16).slice(2);
   },
-  createRandomItem(char, optionImage) {
+  createRandomItem(char, optionImage, optionLeftImage, optionRightImage) {
     if (char && char.length !== 0) {
       const columnId = this.getBalancedColumn();
       const word = char;
@@ -364,7 +367,7 @@ export default {
       const generatePosition = () => {
         const x = this.generatePositionX(columnId);
         const id = this.generateUniqueId();
-        const optionWrapper = this.createOptionWrapper(word, id, optionImage, columnId);
+        const optionWrapper = this.createOptionWrapper(word, id, optionImage, optionLeftImage, optionRightImage, columnId);
         const newFallingItem = {
           x,
           size: this.optionSize,
@@ -441,7 +444,7 @@ export default {
   getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   },
-  createOptionWrapper(text, id, optionImage, columnId) {
+  createOptionWrapper(text, id, optionImage, optionLeftImage, optionRightImage, columnId) {
     let optionWrapper = document.createElement('div');
     optionWrapper.classList.add('optionWrapper');
     optionWrapper.style.width = `${this.optionSize}px`;
@@ -453,10 +456,24 @@ export default {
     optionWrapper.setAttribute('column', columnId);
     let option = document.createElement('span');
     option.classList.add('option');
-    //option.type = 'text';
     option.textContent = text;
     let fontSize = `calc(min(max(4vh, 20vh - ${text.length} * 5.2vh), 8vh))`;
     option.style.setProperty('--font-size', fontSize);
+
+    const leftSubImage = document.createElement('div');
+    const rightSubImage = document.createElement('div');
+    leftSubImage.classList.add('sub-image', 'left');
+    leftSubImage.style.backgroundImage = `url(${optionLeftImage.src})`;
+    leftSubImage.style.backgroundSize = 'contain'; // Adjust size to maintain aspect ratio
+    leftSubImage.style.backgroundRepeat = 'no-repeat'; // Prevent repeating
+    leftSubImage.style.backgroundPosition = 'center'; // Center the image
+    rightSubImage.classList.add('sub-image', 'right');
+    rightSubImage.style.backgroundImage = `url(${optionRightImage.src})`;
+    rightSubImage.style.backgroundSize = 'contain'; // Adjust size to maintain aspect ratio
+    rightSubImage.style.backgroundRepeat = 'no-repeat'; // Prevent repeating
+    rightSubImage.style.backgroundPosition = 'center'; // Center the image
+    option.append(leftSubImage);
+    option.append(rightSubImage);
     optionWrapper.appendChild(option);
     return optionWrapper;
   },
@@ -468,7 +485,7 @@ export default {
     View.optionArea.appendChild(item.optionWrapper);
     item.optionWrapper.classList.add("show");
     item.optionWrapper.style.left = item.x + 'px';
-    item.optionWrapper.style.setProperty('--bottom-height', `${(View.canvas.height + this.optionSize)}px`);
+    item.optionWrapper.style.setProperty('--bottom-height', `${(View.canvas.height + this.optionSize + 50)}px`);
     item.optionWrapper.style.setProperty('--fallingSpeed', `${this.fallingSpeed}s`);
     item.optionWrapper.addEventListener('animationend', () => this.animationEnd(item.optionWrapper));
   },
@@ -480,6 +497,11 @@ export default {
 
   resetFallingItem(optionWrapper) {
     optionWrapper.classList.remove('show');
+    optionWrapper.classList.remove('sliced');
+    const retrievedLeftSubImage = optionWrapper.querySelector('.sub-image.left');
+    const retrievedRightSubImage = optionWrapper.querySelector('.sub-image.right');
+    retrievedLeftSubImage.classList.remove('slice-left');
+    retrievedRightSubImage.classList.remove('slice-right');
     if (this.nextQuestion || State.stateType === 'ansWrong')
       return;
 
@@ -854,9 +876,33 @@ export default {
           }
         }
         else {
-          option.classList.remove('show');
+
           console.log("deduct:", option);
           this.typedItems.push(option);
+          const computedStyle = getComputedStyle(option);
+          const currentTransform = computedStyle.transform;
+          option.classList.remove('show');
+          void option.offsetWidth;
+          option.style.transform = currentTransform;
+          option.style.backgroundImage = 'none';
+          const childSpan = option.querySelector('.option');
+          const retrievedLeftSubImage = option.querySelector('.sub-image.left');
+          const retrievedRightSubImage = option.querySelector('.sub-image.right');
+          const randomLeftTranslate = Math.random() * (-20 - -100) + -100;
+          const randomRightTranslate = Math.random() * (100 - 20) + 20;
+          retrievedLeftSubImage.style.transform = `translate(${randomLeftTranslate}%, var(--optionPositionY))`;
+          retrievedRightSubImage.style.transform = `translate(${randomRightTranslate}%, var(--optionPositionY))`;
+
+          retrievedLeftSubImage.classList.add('slice-left');
+          retrievedRightSubImage.classList.add('slice-right');
+          if (childSpan) {
+            childSpan.style.setProperty('--font-size', "0px");
+          }
+
+          setTimeout(() => {
+            //option.style.display = 'none';
+            option.classList.add('sliced');
+          }, 500);
         }
 
         this.fillwordTime += 1;

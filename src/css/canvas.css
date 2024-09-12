@@ -25,13 +25,15 @@
 }
 
 .canvasWrapper > .optionArea > .optionWrapper {
-  position: relative;
+  position: absolute;
   left: 0px;
-  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
   transition: opacity 0.1s ease;
-  opacity: 0;
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: url(../images/fruitNinja/fruit1.png);
   background-position: center;
   background-size: cover;
@@ -226,7 +228,6 @@
 }
 
 
-
 .correct {
   background-repeat: no-repeat;
   background-size: contain;
@@ -239,15 +240,53 @@
 }
 
 .canvasWrapper > .optionArea > .optionWrapper.show {
-  position: absolute;
-  opacity: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   animation-name: fallingAnimation;
   animation-duration: var(--fallingSpeed);
   animation-timing-function: linear;
 }
+
+.sliced  {
+  animation-name: sliceAnimation;
+  animation-duration: 1s; /* Adjust duration as needed */
+  animation-fill-mode: forwards; /* Keep the final state */
+}
+
+.sub-image {
+  position: absolute;
+  overflow: hidden;
+  opacity: 0;
+  transition: transform 0.5s;
+  width: 100%;
+  height: 100%;
+}
+
+.left {
+  background: url(../images/fruitNinja/fruits/apple-1.png);
+  background-position: center;
+  background-size: cover;
+  left: 0;
+  transform-origin: right; /* Rotate around the right edge */
+}
+
+.right {
+  background: url(../images/fruitNinja/fruits/apple-2.png);
+  background-position: center;
+  background-size: cover;
+  right: 0;
+  transform-origin: left; /* Rotate around the left edge */
+}
+
+.slice-left {
+  opacity: 1;
+  transform: translate(-100%, var(--optionPositionY));
+}
+
+.slice-right {
+  opacity: 1;
+  transform: translate(100%, var(--optionPositionY));
+}
+
+
 
 .canvasWrapper > .optionArea > .optionWrapper > .option {
   position: absolute;
@@ -274,6 +313,7 @@
   --bottom-height: 200px;
   --font-size: 3vh;
   --question-font-size:3vh;
+  --optionPositionY:0px;
 }
 
 .fadeIn {
@@ -284,6 +324,12 @@
 .fadeOut {
   animation: fade-Out;
   animation-duration: 1s;
+}
+
+@keyframes sliceAnimation {
+  100% {
+    transform: translateY(var(--bottom-height)); /* Move down */
+  }
 }
 
 @keyframes fallingAnimation {
