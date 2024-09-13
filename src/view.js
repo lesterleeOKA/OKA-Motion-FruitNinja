@@ -56,7 +56,7 @@ export default {
   preloadedFallingImages: [],
   optionImages: [
     require("./images/fruitNinja/fruits/apple.png"),
-    //require("./images/fruitNinja/fruits/banana.png"),
+    require("./images/fruitNinja/fruits/banana.png"),
     require("./images/fruitNinja/fruits/peach.png"),
     require("./images/fruitNinja/fruits/strawberry.png"),
     require("./images/fruitNinja/fruits/watermelon.png"),
@@ -64,7 +64,7 @@ export default {
   preloadedLeftSubImages: [],
   leftSubImages: [
     require("./images/fruitNinja/fruits/apple-1.png"),
-    //require("./images/fruitNinja/fruits/banana-1.png"),
+    require("./images/fruitNinja/fruits/banana-1.png"),
     require("./images/fruitNinja/fruits/peach-1.png"),
     require("./images/fruitNinja/fruits/strawberry-1.png"),
     require("./images/fruitNinja/fruits/watermelon-1.png"),
@@ -72,7 +72,7 @@ export default {
   preloadedRightSubImages: [],
   rightSubImages: [
     require("./images/fruitNinja/fruits/apple-2.png"),
-    //require("./images/fruitNinja/fruits/banana-2.png"),
+    require("./images/fruitNinja/fruits/banana-2.png"),
     require("./images/fruitNinja/fruits/peach-2.png"),
     require("./images/fruitNinja/fruits/strawberry-2.png"),
     require("./images/fruitNinja/fruits/watermelon-2.png"),

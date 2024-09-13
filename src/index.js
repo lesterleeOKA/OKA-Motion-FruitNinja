@@ -379,7 +379,7 @@ function init() {
     ['btnClick', require('./audio/btnClick.wav')],
     ['countDown', require('./audio/countDown.mp3')],
     ['score', require('./audio/score.mp3')],
-    //['instruction', require('./audio/instruction.mp3')],
+    ['splatter', require('./audio/splatter.mp3')],
     ['prepare', require('./audio/prepare.mp3')],
     ['start', require('./audio/start.mp3')],
     /*['finished', require('./audio/finished.mp3')],*/

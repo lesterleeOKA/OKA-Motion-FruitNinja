@@ -291,6 +291,7 @@ export default {
             let refallingItem = this.reFallingItems[0];
             this.resetFallingItem(refallingItem);
             this.reFallingItems.splice(0, 1);
+            console.log(this.resetFallingItem);
           }
         }
         this.lastFallingTime = timestamp;
@@ -449,8 +450,12 @@ export default {
     optionWrapper.classList.add('optionWrapper');
     optionWrapper.style.width = `${this.optionSize}px`;
     optionWrapper.style.height = `${this.optionSize}px`;
-    if (optionImage !== '' && optionImage !== 'undefined')
+    if (optionImage !== '' && optionImage !== 'undefined') {
       optionWrapper.style.backgroundImage = `url(${optionImage.src})`;
+      optionWrapper.style.backgroundSize = 'contain'; // Adjust size to maintain aspect ratio
+      optionWrapper.style.backgroundRepeat = 'no-repeat'; // Prevent repeating
+      optionWrapper.style.backgroundPosition = 'center'; // Center the image
+    }
     optionWrapper.id = id;
     optionWrapper.setAttribute('word', text);
     optionWrapper.setAttribute('column', columnId);
@@ -475,6 +480,9 @@ export default {
     option.append(leftSubImage);
     option.append(rightSubImage);
     optionWrapper.appendChild(option);
+    optionWrapper.setAttribute('image', optionImage.src);
+    optionWrapper.setAttribute('fontSize', fontSize);
+    optionWrapper.setAttribute('loop', 'true');
     return optionWrapper;
   },
   getRandomQuestions(string) {
@@ -485,19 +493,22 @@ export default {
     View.optionArea.appendChild(item.optionWrapper);
     item.optionWrapper.classList.add("show");
     item.optionWrapper.style.left = item.x + 'px';
-    item.optionWrapper.style.setProperty('--bottom-height', `${(View.canvas.height + this.optionSize + 50)}px`);
+    item.optionWrapper.style.setProperty('--bottom-height', `${(View.canvas.height + this.optionSize + 100)}px`);
     item.optionWrapper.style.setProperty('--fallingSpeed', `${this.fallingSpeed}s`);
     item.optionWrapper.addEventListener('animationend', () => this.animationEnd(item.optionWrapper));
   },
 
   animationEnd(optionWrapper) {
-    this.reFallingItems.push(optionWrapper);
-    console.log("re falling item", this.reFallingItems);
+    var loop = optionWrapper.getAttribute('loop');
+    if (loop === 'true') {
+      console.log("loop", loop);
+      this.reFallingItems.push(optionWrapper);
+      console.log("re falling item////////////////////////////////////////////////////////////////////////", optionWrapper.getAttribute("word"));
+    }
   },
 
   resetFallingItem(optionWrapper) {
     optionWrapper.classList.remove('show');
-    optionWrapper.classList.remove('sliced');
     const retrievedLeftSubImage = optionWrapper.querySelector('.sub-image.left');
     const retrievedRightSubImage = optionWrapper.querySelector('.sub-image.right');
     retrievedLeftSubImage.classList.remove('slice-left');
@@ -514,12 +525,11 @@ export default {
     }
     optionWrapper.x = this.generatePositionX(currentColumnId);
     optionWrapper.setAttribute('column', currentColumnId);
-
     //let delay = this.refallingDelay();
     //console.log("delay", delay, itemLength);
     setTimeout(() => {
       optionWrapper.style.left = optionWrapper.x + 'px';
-      optionWrapper.style.setProperty('--bottom-height', `${View.canvas.height + this.optionSize}px`);
+      optionWrapper.style.setProperty('--bottom-height', `${View.canvas.height + this.optionSize + 100}px`);
       optionWrapper.style.setProperty('--fallingSpeed', `${this.fallingSpeed}s`);
       optionWrapper.classList.add('show');
     }, 100);
@@ -876,39 +886,15 @@ export default {
           }
         }
         else {
-
           console.log("deduct:", option);
           this.typedItems.push(option);
-          const computedStyle = getComputedStyle(option);
-          const currentTransform = computedStyle.transform;
-          option.classList.remove('show');
-          void option.offsetWidth;
-          option.style.transform = currentTransform;
-          option.style.backgroundImage = 'none';
-          const childSpan = option.querySelector('.option');
-          const retrievedLeftSubImage = option.querySelector('.sub-image.left');
-          const retrievedRightSubImage = option.querySelector('.sub-image.right');
-          const randomLeftTranslate = Math.random() * (-20 - -100) + -100;
-          const randomRightTranslate = Math.random() * (100 - 20) + 20;
-          retrievedLeftSubImage.style.transform = `translate(${randomLeftTranslate}%, var(--optionPositionY))`;
-          retrievedRightSubImage.style.transform = `translate(${randomRightTranslate}%, var(--optionPositionY))`;
-
-          retrievedLeftSubImage.classList.add('slice-left');
-          retrievedRightSubImage.classList.add('slice-right');
-          if (childSpan) {
-            childSpan.style.setProperty('--font-size', "0px");
-          }
-
-          setTimeout(() => {
-            //option.style.display = 'none';
-            option.classList.add('sliced');
-          }, 500);
+          this.playSlicedEffect(option);
         }
 
         this.fillwordTime += 1;
         if (State.isSoundOn) {
           Sound.stopAll(['bgm', 'lastTen']);
-          Sound.play('btnClick');
+          Sound.play('splatter');
         }
         if (this.fillwordTime == this.answerLength) {
           setTimeout(() => {
@@ -916,6 +902,52 @@ export default {
           }, 300);
         }
       }
+    }
+  },
+  playSlicedEffect(option = null) {
+    if (option) {
+      let computedStyle = getComputedStyle(option);
+      let currentTransform = computedStyle.transform;
+      option.classList.remove('show');
+      option.style.backgroundImage = 'none';
+      let childSpan = option.querySelector('.option');
+      let retrievedLeftSubImage = option.querySelector('.sub-image.left');
+      let retrievedRightSubImage = option.querySelector('.sub-image.right');
+      let randomLeftTranslate = Math.random() * (-20 - -100) + -100;
+      let randomRightTranslate = Math.random() * (100 - 20) + 20;
+      let randomDeg = Math.floor(Math.random() * 61);
+      retrievedLeftSubImage.style.transform = `translate(${randomLeftTranslate}%) rotate(${randomDeg}deg)`;
+      retrievedRightSubImage.style.transform = `translate(${randomRightTranslate}%) rotate(${-randomDeg}deg)`;
+      retrievedLeftSubImage.classList.add('slice-left');
+      retrievedRightSubImage.classList.add('slice-right');
+      if (childSpan) {
+        childSpan.style.setProperty('--font-size', "0px");
+      }
+      option.classList.add('sliced');
+      let matrixValues = currentTransform.match(/matrix.*\((.+)\)/)[1].split(', ');
+      let translateY = parseFloat(matrixValues[5]);
+      option.style.setProperty('--optionPositionY', `${translateY}px`);
+      option.style.setProperty('--bottom-height', `${(View.canvas.height + this.optionSize + 100)}px`);
+      /*let rect = option.getBoundingClientRect();
+      let posY = rect.top + window.scrollY;
+      let bottomDistance = (View.canvas.height + this.optionSize + 50) - posY;
+      let speedFactor = 0.005; // Adjust speed factor as needed
+      let sliceSpeed = Math.max(bottomDistance * speedFactor, 0.1); // Ensure a minimum speed*/
+      option.style.setProperty('--slice-speed', `${0.5}s`);
+      option.setAttribute('loop', 'false');
+
+      setTimeout(() => {
+        //reset
+        option.style.backgroundImage = `url(${option.getAttribute('image')})`;
+        retrievedLeftSubImage.style.transform = '';
+        retrievedRightSubImage.style.transform = '';
+        retrievedLeftSubImage.classList.remove('slice-left');
+        retrievedRightSubImage.classList.remove('slice-right');
+        if (childSpan) {
+          childSpan.style.setProperty('--font-size', `${option.getAttribute('fontSize')}`);
+        }
+        option.classList.remove('sliced');
+      }, 800);
     }
   },
   resetFillWord() {
@@ -940,6 +972,7 @@ export default {
       let lastOption = null;
       if (this.typedItems.length > 0) {
         lastOption = this.typedItems[this.typedItems.length - 1];
+        lastOption.setAttribute('loop', 'true');
         console.log('lastOption', lastOption);
 
         if (lastOption && !lastOption.classList.contains('show')) {

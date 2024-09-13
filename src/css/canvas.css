@@ -247,15 +247,16 @@
 
 .sliced  {
   animation-name: sliceAnimation;
-  animation-duration: 1s; /* Adjust duration as needed */
-  animation-fill-mode: forwards; /* Keep the final state */
+  animation-duration: var(--slice-speed);
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
 }
 
 .sub-image {
   position: absolute;
   overflow: hidden;
   opacity: 0;
-  transition: transform 0.5s;
+  transition: transform 0.5s ease-out;
   width: 100%;
   height: 100%;
 }
@@ -278,12 +279,10 @@
 
 .slice-left {
   opacity: 1;
-  transform: translate(-100%, var(--optionPositionY));
 }
 
 .slice-right {
   opacity: 1;
-  transform: translate(100%, var(--optionPositionY));
 }
 
 
@@ -314,6 +313,7 @@
   --font-size: 3vh;
   --question-font-size:3vh;
   --optionPositionY:0px;
+  --slice-speed:0s;
 }
 
 .fadeIn {
@@ -327,8 +327,14 @@
 }
 
 @keyframes sliceAnimation {
+  0% {
+    transform: translateY(var(--optionPositionY));
+  }
+  20% {
+    transform: translateY(calc(var(--optionPositionY) - 100px));
+  }
   100% {
-    transform: translateY(var(--bottom-height)); /* Move down */
+    transform: translateY(var(--bottom-height));
   }
 }
 

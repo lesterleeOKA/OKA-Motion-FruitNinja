@@ -17,7 +17,7 @@ export class RendererCanvas2d {
     this.center_shoulder = null;
     this.triggeredAudio = false;
     this.canvasWrapperRect = null;
-    this.sword = new Sword("black");
+    //this.sword = new Sword("black");
   }
 
   draw(rendererParams) {
@@ -79,11 +79,11 @@ export class RendererCanvas2d {
           }
         }
         else {
-          this.sword.clearSwipes();
+          //this.sword.clearSwipes();
         }
       }
-      this.sword.update();
-      this.sword.draw(this.ctx);
+      //this.sword.update();
+      //this.sword.draw(this.ctx);
       this.drawBox(isCurPoseValid);
     }
   }
@@ -186,8 +186,8 @@ export class RendererCanvas2d {
         rightHandImg.style.display = 'none';
         leftHandImg.style.display = 'none';
 
-        if (checkKeypoints.length == 0)
-          this.sword.clearSwipes();
+        //if (checkKeypoints.length == 0)
+        //this.sword.clearSwipes();
 
         for (let point of checkKeypoints) {
           switch (point.name) {
@@ -200,7 +200,7 @@ export class RendererCanvas2d {
               rightHandImg.style.top = `${rightWristY - yInVw_right}px`;
               rightHandImg.style.display = 'block';
 
-              this.sword.swipe(rightWristX, rightWristY);
+              //this.sword.swipe(rightWristX, rightWristY);
               this.handleWristDetection(optionWrappers, resetBtn, rightWristX, rightWristY);
               break;
             case 'left_wrist':
@@ -212,7 +212,7 @@ export class RendererCanvas2d {
               leftHandImg.style.top = `${leftWristY - yInVw_left}px`;
               leftHandImg.style.display = 'block';
 
-              this.sword.swipe(leftWristX, leftWristY);
+              //this.sword.swipe(leftWristX, leftWristY);
               this.handleWristDetection(optionWrappers, resetBtn, leftWristX, leftWristY);
               break;
           }
