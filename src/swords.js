@@ -9,22 +9,22 @@ export function Sword(color) {
 Sword.prototype.draw = function (ctx) {
   const l = this.swipes.length;
 
-  for (let i = 0; i < this.swipes.length; i++) {
-    const size = this.mapSize(i, l);
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.swipes[i].x, this.swipes[i].y, size / 2, 0, Math.PI * 2); // Draw circle
-    ctx.fill();
-  }
+  ctx.lineCap = 'round';
 
-  if (l < 1) {
-    return;
+  for (let i = 0; i < l - 1; i++) {
+    const opacity = (i + 1) / l;
+    ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+    ctx.lineWidth = (i + 1) * (5 / l);
+
+    ctx.beginPath();
+    ctx.moveTo(this.swipes[i].x, this.swipes[i].y);
+    ctx.lineTo(this.swipes[i + 1].x, this.swipes[i + 1].y);
+    ctx.stroke();
   }
 };
 
 Sword.prototype.update = function () {
   if (this.swipes.length > this.maxCircles) {
-    // Remove the oldest swipes; keep only the last defined in maxCircles
     this.swipes.splice(0, this.swipes.length - this.maxCircles);
   }
 };
@@ -41,31 +41,27 @@ Sword.prototype.checkSlice = function (fruit) {
   const d2 = this.distance(stroke2.x, stroke2.y, fruit.x, fruit.y);
   const d3 = this.distance(stroke1.x, stroke1.y, stroke2.x, stroke2.y);
 
-  // Adjust the condition to increase the arc length needed for slicing
   const sliced = (d1 < fruit.size) || ((d1 < d3 * this.arcLengthFactor && d2 < d3 * this.arcLengthFactor) && (d3 < this.minSliceDistance));
   fruit.sliced = sliced;
   return sliced;
 };
 
 Sword.prototype.swipe = function (x, y) {
-  this.swipes.push({ x: x, y: y }); // Use plain object instead of createVector
+  this.swipes.push({ x: x, y: y });
 };
 
-// Helper method to map size
 Sword.prototype.mapSize = function (index, total) {
-  return map(index, 0, total, 10, 40); // Increase size range from 10 to 40
+  return map(index, 0, total, 10, 40);
 };
 
-// Helper method to calculate distance
 Sword.prototype.distance = function (x1, y1, x2, y2) {
   return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
 };
 
 Sword.prototype.clearSwipes = function () {
-  this.swipes = []; // Reset the swipes array to empty
+  this.swipes = [];
 };
 
-// Simple map function for size calculation
 function map(value, start1, stop1, start2, stop2) {
   return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
 }

@@ -276,9 +276,9 @@ export default {
             var optionImageId = this.fallingId % View.preloadedFallingImages.length;
             this.createRandomItem(
               this.randomPair[this.fallingId],
-              View.preloadedFallingImages[optionImageId],
-              View.preloadedLeftSubImages[optionImageId],
-              View.preloadedRightSubImages[optionImageId],
+              View.preloadedFallingImages.length === 0 ? null : View.preloadedFallingImages[optionImageId],
+              View.preloadedLeftSubImages.length === 0 ? null : View.preloadedLeftSubImages[optionImageId],
+              View.preloadedRightSubImages.length === 0 ? null : View.preloadedRightSubImages[optionImageId],
             );
           }
           else {
@@ -467,13 +467,21 @@ export default {
 
     const leftSubImage = document.createElement('div');
     const rightSubImage = document.createElement('div');
-    leftSubImage.classList.add('sub-image', 'left');
-    leftSubImage.style.backgroundImage = `url(${optionLeftImage.src})`;
+    if (optionLeftImage === null || optionRightImage === null) {
+      leftSubImage.classList.add('sub-image', 'left', 'cutLeft');
+      leftSubImage.style.backgroundImage = `url(${optionImage.src})`;
+      rightSubImage.classList.add('sub-image', 'right', 'cutRight');
+      rightSubImage.style.backgroundImage = `url(${optionImage.src})`;
+    }
+    else {
+      leftSubImage.classList.add('sub-image', 'left');
+      leftSubImage.style.backgroundImage = `url(${optionLeftImage.src})`;
+      rightSubImage.classList.add('sub-image', 'right');
+      rightSubImage.style.backgroundImage = `url(${optionRightImage.src})`;
+    }
     leftSubImage.style.backgroundSize = 'contain'; // Adjust size to maintain aspect ratio
     leftSubImage.style.backgroundRepeat = 'no-repeat'; // Prevent repeating
     leftSubImage.style.backgroundPosition = 'center'; // Center the image
-    rightSubImage.classList.add('sub-image', 'right');
-    rightSubImage.style.backgroundImage = `url(${optionRightImage.src})`;
     rightSubImage.style.backgroundSize = 'contain'; // Adjust size to maintain aspect ratio
     rightSubImage.style.backgroundRepeat = 'no-repeat'; // Prevent repeating
     rightSubImage.style.backgroundPosition = 'center'; // Center the image
