@@ -1,802 +1,284 @@
 {
-   "QA":[
-      {
-        "QID":"p1u1-b1",
-        "QuestionType":"Spelling",
-        "Question":"Classmate",
-        "CorrectAnswer":"Classmate"
-      },
-      {
-        "QID":"p1u1-b2",
-        "QuestionType":"Spelling",
-        "Question":"Goodbye",
-        "CorrectAnswer":"Goodbye"
-      },
-      {
-        "QID":"p1u1-b5",
-        "QuestionType":"Spelling",
-        "Question":"Greet",
-        "CorrectAnswer":"Greet"
-      },
-      {
-         "QID":"p1u1-b6",
-         "QuestionType":"Spelling",
-         "Question":"Hello",
-         "CorrectAnswer":"Hello"
-      },
-      {
-        "QID":"p1u1-b7",
-        "QuestionType":"Spelling",
-        "Question":"Monitor",
-        "CorrectAnswer":"Monitor"
-      },
-      {
-        "QID":"p1u1-b8",
-        "QuestionType":"Spelling",
-        "Question":"Teacher",
-        "CorrectAnswer":"Teacher"
-      },
-      {
-        "QID":"p1u1-b9",
-        "QuestionType":"Spelling",
-        "Question":"Friend",
-        "CorrectAnswer":"Friend"
-      },
-      {
-        "QID":"p1u1-b10",
-        "QuestionType":"Spelling",
-        "Question":"Gardener",
-        "CorrectAnswer":"Gardener"
-      },
-      {
-        "QID":"p1u1-b11",
-        "QuestionType":"Spelling",
-        "Question":"Driver",
-        "CorrectAnswer":"Driver"
-      },
-      {
-        "QID":"p1u1-b12",
-        "QuestionType":"Spelling",
-        "Question":"Coach",
-        "CorrectAnswer":"Coach"
-      },
-      {
-        "QID":"p1u1-b13",
-        "QuestionType":"Spelling",
-        "Question":"Leader",
-        "CorrectAnswer":"Leader"
-      },
-      {
-        "QID":"p1u2-a1",
-        "QuestionType":"Spelling",
-        "Question":"Family",
-        "CorrectAnswer":"Family"
-      },
-      {
-         "QID":"p1u2-a2",
-         "QuestionType":"Spelling",
-         "Question":"Sister",
-         "CorrectAnswer":"Sister"
-      },
-      {
-         "QID":"p1u2-a3",
-         "QuestionType":"Spelling",
-         "Question":"Father",
-         "CorrectAnswer":"Father"
-      },
-      {
-         "QID":"p1u2-a4",
-         "QuestionType":"Spelling",
-         "Question":"Mother",
-         "CorrectAnswer":"Mother"
-      },
-      {
-         "QID":"p1u2-a5",
-         "QuestionType":"Spelling",
-         "Question":"Brother",
-         "CorrectAnswer":"Brother"
-      },
-      {
-        "QID":"p1u2-a6",
-        "QuestionType":"Spelling",
-        "Question":"Grandmother",
-        "CorrectAnswer":"Grandmother"
-      },
-      {
-        "QID":"p1u2-a7",
-        "QuestionType":"Spelling",
-        "Question":"Grandfather",
-        "CorrectAnswer":"Grandfather"
-      },
-      {
-        "QID":"p1u2-a8",
-        "QuestionType":"Spelling",
-        "Question":"Parents",
-        "CorrectAnswer":"Parents"
-      },
-      {
-        "QID":"p1u2-a9",
-        "QuestionType":"Spelling",
-        "Question":"Children",
-        "CorrectAnswer":"Children"
-      },
-      {
-        "QID":"p1u3-a2",
-        "QuestionType":"Audio",
-        "Question":"Book",
-        "CorrectAnswer":"Book"
-      },
-      {
-        "QID":"p1u3-a3",
-        "QuestionType":"Audio",
-        "Question":"Pen",
-        "CorrectAnswer":"Pen"
-      },
-      {
-        "QID":"p1u3-a4",
-        "QuestionType":"Audio",
-        "Question":"Eraser",
-        "CorrectAnswer":"Eraser"
-      },
-      {
-        "QID":"p1u3-a5",
-        "QuestionType":"Audio",
-        "Question":"Pencil",
-        "CorrectAnswer":"Pencil"
-      },
-      {
-        "QID":"p1u3-a6",
-        "QuestionType":"Audio",
-        "Question":"Case",
-        "CorrectAnswer":"Case"
-      },
-      {
-        "QID":"p1u3-a7",
-        "QuestionType":"Audio",
-        "Question":"Ruler",
-        "CorrectAnswer":"Ruler"
-      },
-      {
-        "QID":"p1u3-a8",
-        "QuestionType":"Audio",
-        "Question":"Crayons",
-        "CorrectAnswer":"Crayons"
-      },
-      {
-        "QID":"p1u3-a9",
-        "QuestionType":"Audio",
-        "Question":"Glue",
-        "CorrectAnswer":"Glue"
-      },
-      {
-        "QID":"p1u3-a10",
-        "QuestionType":"Audio",
-        "Question":"Stapler",
-        "CorrectAnswer":"Stapler"
-      },
-      {
-        "QID":"p2u2-d1",
-        "QuestionType":"FillInBlank",
-        "Question":"Peter is good at playing____________. He has scored many goals.",
-        "CorrectAnswer":"football"
-      },
-      {
-        "QID": "p2u2-d2",
-        "QuestionType": "FillInBlank",
-        "Question": "Can you teach me how to ride a _________?",
-        "CorrectAnswer": "bicycle"
-      },
-      {
-        "QID": "p2u2-d3",
-        "QuestionType": "FillInBlank",
-        "Question": "Sally's dog, Coco can get the ________ back in two seconds.",
-        "CorrectAnswer": "Frisbee"
-      },
-      {
-        "QID": "p2u2-d4",
-        "QuestionType": "FillInBlank",
-        "Question": "My dad just bought me a new ______. It is fun to play with.",
-        "CorrectAnswer": "scooter"
-      },
-      {
-        "QID": "p2u2-d5",
-        "QuestionType": "FillInBlank",
-        "Question": "Sam and Peter are battling on the _________.",
-        "CorrectAnswer": "seesaw"
-      },
-      {
-        "QID": "p2u2-d6",
-        "QuestionType": "FillInBlank",
-        "Question": "We all love playing on the _______ because it feels like flying in the sky.",
-        "CorrectAnswer": "swing"
-      },
-      {
-        "QID": "p2u2-d7",
-        "QuestionType": "FillInBlank",
-        "Question": "Wow! This is the fastest ______ever!",
-        "CorrectAnswer": "slide"
-      },
-      {
-        "QID": "p2u2-d8",
-        "QuestionType": "FillInBlank",
-        "Question": "Should we play some ______ such as hide-and-seek?",
-        "CorrectAnswer": "games"
-      },
-      {
-        "QID": "p2u2-d9",
-        "QuestionType": "FillInBlank",
-        "Question": "Let's take some beautiful _______ before we go!",
-        "CorrectAnswer": "photos"
-      },
-      {
-        "QID": "p2u2-d10",
-        "QuestionType": "FillInBlank",
-        "Question": "Mom, please buy more chicken wings for the ____________tomorrow!",
-        "CorrectAnswer": "barbecue"
-      },
-      {
-        "QID": "p2u2-d11",
-        "QuestionType": "FillInBlank",
-        "Question": "I don't think grandma can ______ the stairs. It's very tiring.",
-        "CorrectAnswer": "climb"
-      },
-      {
-        "QID": "p2u2-d12",
-        "QuestionType": "FillInBlank",
-        "Question": "Excuse me, what would you like to ______?",
-        "CorrectAnswer": "drink"
-      },
-      {
-        "QID": "p2u2-d13",
-        "QuestionType": "FillInBlank",
-        "Question": "I am ___________ the room all by myself!",
-        "CorrectAnswer": "painting"
-      },
-      {
-        "QID": "p2u2-d14",
-        "QuestionType": "FillInBlank",
-        "Question": "Don't ______ on the floor, or I will tell Mr. Lam!",
-        "CorrectAnswer": "spit"
-      },
-      {
-        "QID": "p2u2-d15",
-        "QuestionType": "FillInBlank",
-        "Question": "You must not _________. The rubbish bin is right next to you.",
-        "CorrectAnswer": "litter"
-      },
-      {
-        "QID": "p2u2-d16",
-        "QuestionType": "FillInBlank",
-        "Question": "My mom is making me cheese and ham __________ for lunch.",
-        "CorrectAnswer": "sandwiches"
-      },
-      {
-        "QID": "p2u2-d17",
-        "QuestionType": "FillInBlank",
-        "Question": "What is your favourite fruit? I love __________.",
-        "CorrectAnswer": "strawberries"
-      },
-      {
-        "QID": "p2u2-d18",
-        "QuestionType": "FillInBlank",
-        "Question": "Do you know where we can go for a ______?",
-        "CorrectAnswer": "picnic"
-      },
-      {
-        "QID": "p2u2-d19",
-        "QuestionType": "FillInBlank",
-        "Question": "We cannot pick _________ in the park.",
-        "CorrectAnswer": "flowers"
-      },
-      {
-        "QID": "p2u2-d20",
-        "QuestionType": "FillInBlank",
-        "Question": "Mona likes to go ________because she can see the bright stars at night.",
-        "CorrectAnswer": "camping"
-      },
-      {
-      "QID":"p2u3-c1",
-      "QuestionType":"Reorder",
-      "Question":"sxiht",
-      "CorrectAnswer":"sixth"
-      },
-      {
-        "QID":"p2u3-c2",
-        "QuestionType":"Reorder",
-        "Question":"calssrmoo",
-        "CorrectAnswer":"classroom"
-      },
-      {
-        "QID":"p2u3-c3",
-        "QuestionType":"Reorder",
-        "Question":"folor",
-        "CorrectAnswer":"floor"
-      },
-      {
-        "QID":"p2u3-c4",
-        "QuestionType":"Reorder",
-        "Question":"ffiht",
-        "CorrectAnswer":"fifth"
-      },
-      {
-        "QID":"p2u3-c5",
-        "QuestionType":"Reorder",
-        "Question":"litf",
-        "CorrectAnswer":"lift"
-      },
-      {
-        "QID":"p2u3-c6",
-        "QuestionType":"Reorder",
-        "Question":"ahll",
-        "CorrectAnswer":"hall"
-      },
-      {
-        "QID":"p2u3-c7",
-        "QuestionType":"Reorder",
-        "Question":"frsit",
-        "CorrectAnswer":"first"
-      },
-      {
-        "QID":"p2u3-c8",
-        "QuestionType":"Reorder",
-        "Question":"cmoupert room",
-        "CorrectAnswer":"computer"
-      },
-      {
-        "QID":"p2u3-c9",
-        "QuestionType":"Reorder",
-        "Question":"libarry",
-        "CorrectAnswer":"library"
-      },
-      {
-        "QID":"p2u3-c10",
-        "QuestionType":"Reorder",
-        "Question":"gdaren",
-        "CorrectAnswer":"garden"
-      },
-      {
-        "QID":"p2u3-c11",
-        "QuestionType":"Reorder",
-        "Question":"furoth",
-        "CorrectAnswer":"fourth"
-      },
-      {
-        "QID":"p2u3-c12",
-        "QuestionType":"Reorder",
-        "Question":"atr room",
-        "CorrectAnswer":"art"
-      },
-      {
-        "QID":"p2u3-c13",
-        "QuestionType":"Reorder",
-        "Question":"tcuk shop",
-        "CorrectAnswer":"tuck shop"
-      },
-      {
-        "QID":"p2u3-c14",
-        "QuestionType":"Reorder",
-        "Question":"tioltes",
-        "CorrectAnswer":"toilet"
-      },
-      {
-        "QID":"p2u3-c15",
-        "QuestionType":"Reorder",
-        "Question":"msuic room ",
-        "CorrectAnswer":"music"
-      },
-      {
-        "QID":"p2u3-c16",
-        "QuestionType":"Reorder",
-        "Question":"STAME room",
-        "CorrectAnswer":"STEAM"
-      },
-      {
-        "QID":"p2u3-c17",
-        "QuestionType":"Reorder",
-        "Question":"scenod",
-        "CorrectAnswer":"second"
-      },
-      {
-        "QID":"p2u3-c18",
-        "QuestionType":"Reorder",
-        "Question":"palygournd",
-        "CorrectAnswer":"playground"
-      },
-      {
-        "QID":"p2u3-c19",
-        "QuestionType":"Reorder",
-        "Question":"scik room",
-        "CorrectAnswer":"sick"
-      },
-      {
-        "QID":"p2u3-c20",
-        "QuestionType":"Reorder",
-        "Question":"trihd",
-        "CorrectAnswer":"third"
-      },
-      {
-        "QID":"p3u1-e1",
-        "QuestionType":"Text",
-        "Question":"What is the color of apple?",
-        "Answers":[
-           "red",
-           "blue",
-           "purple",
-           "black"
-        ],
-        "CorrectAnswer":"red"
-     },
-     {
-       "QID": "p3u1-e2",
-       "QuestionType":"Text",
-       "Question": "What is the color of banana?",
-       "Answers": [
-         "red",
-         "yellow",
-         "purple",
-         "black"
-       ],
-       "CorrectAnswer": "yellow"
-     },
-     {
-      "QID":"p3u2-c1",
-      "QuestionType":"Audio",
-      "Question":"general",
-      "CorrectAnswer":"general"
-      },
-      {
-          "QID":"p3u2-c2",
-          "QuestionType":"Audio",
-          "Question":"maths",
-          "CorrectAnswer":"maths"
-      },
-      {
-          "QID":"p3u2-c3",
-          "QuestionType":"Audio",
-          "Question":"english",
-          "CorrectAnswer":"english"
-      },
-      {
-          "QID":"p3u2-c4",
-          "QuestionType":"Audio",
-          "Question":"physical",
-          "CorrectAnswer":"physical"
-      },
-      {
-          "QID":"p3u2-c5",
-          "QuestionType":"Audio",
-          "Question":"science",
-          "CorrectAnswer":"science"
-      },
-      {
-          "QID":"p3u2-c6",
-          "QuestionType":"Audio",
-          "Question":"history",
-          "CorrectAnswer":"history"
-      },
-      {
-          "QID":"p3u2-c7",
-          "QuestionType":"Audio",
-          "Question":"arts",
-          "CorrectAnswer":"arts"
-      },
-      {
-          "QID":"p3u2-c8",
-          "QuestionType":"Audio",
-          "Question":"geography",
-          "CorrectAnswer":"geography"
-      },
-      {
-          "QID":"p3u2-c9",
-          "QuestionType":"Audio",
-          "Question":"computer",
-          "CorrectAnswer":"computer"
-      },
-      {
-          "QID":"p3u2-c10",
-          "QuestionType":"Audio",
-          "Question":"music",
-          "CorrectAnswer":"music"
-      },
-      {
-          "QID":"p3u2-c11",
-          "QuestionType":"Audio",
-          "Question":"religious",
-          "CorrectAnswer":"religious"
-      },
-      {
-          "QID":"p3u2-c12",
-          "QuestionType":"Audio",
-          "Question":"project",
-          "CorrectAnswer":"project"
-      },
-      {
-          "QID":"p3u2-c13",
-          "QuestionType":"Audio",
-          "Question":"dictate",
-          "CorrectAnswer":"dictate"
-      },
-      {
-          "QID":"p3u2-c14",
-          "QuestionType":"Audio",
-          "Question":"visual",
-          "CorrectAnswer":"visual"
-      },
-      {
-          "QID":"p3u2-c15",
-          "QuestionType":"Audio",
-          "Question":"internet",
-          "CorrectAnswer":"internet"
-      },
-      {
-          "QID":"p3u2-c16",
-          "QuestionType":"Audio",
-          "Question":"outing",
-          "CorrectAnswer":"outing"
-      },
-      {
-          "QID":"p3u2-c17",
-          "QuestionType":"Audio",
-          "Question":"attention",
-          "CorrectAnswer":"attention"
-      },
-      {
-          "QID":"p3u2-c18",
-          "QuestionType":"Audio",
-          "Question":"listen",
-          "CorrectAnswer":"listen"
-      },
-      {
-          "QID":"p3u2-c19",
-          "QuestionType":"Audio",
-          "Question":"learn",
-          "CorrectAnswer":"learn"
-      },
-      {
-          "QID":"p3u2-c20",
-          "QuestionType":"Audio",
-          "Question":"improve",
-          "CorrectAnswer":"improve"
-      },
-      {
-        "QID":"p3u5-c1",
-        "QuestionType":"Audio",
-        "Question":"biscuits",
-        "CorrectAnswer":"biscuits"
-      },
-      {
-        "QID":"p3u5-c2",
-        "QuestionType":"Audio",
-        "Question":"bread",
-        "CorrectAnswer":"bread"
-      },
-      {
-        "QID":"p3u5-c3",
-        "QuestionType":"Audio",
-        "Question":"cheese",
-        "CorrectAnswer":"cheese"
-      },
-      {
-        "QID":"p3u5-c4",
-        "QuestionType":"Audio",
-        "Question":"chocolate",
-        "CorrectAnswer":"chocolate"
-      },
-      {
-        "QID":"p3u5-c5",
-        "QuestionType":"Audio",
-        "Question":"juice",
-        "CorrectAnswer":"juice"
-      },
-      {
-        "QID":"p3u5-c6",
-        "QuestionType":"Audio",
-        "Question":"sandwich",
-        "CorrectAnswer":"sandwich"
-      },
-      {
-        "QID":"p3u5-c7",
-        "QuestionType":"Audio",
-        "Question":"soda",
-        "CorrectAnswer":"soda"
-      },
-      {
-        "QID":"p3u5-c8",
-        "QuestionType":"Audio",
-        "Question":"sausages",
-        "CorrectAnswer":"sausages"
-      },
-      {
-        "QID":"p3u5-c9",
-        "QuestionType":"Audio",
-        "Question":"tea",
-        "CorrectAnswer":"tea"
-      },
-      {
-        "QID":"p3u5-c10",
-        "QuestionType":"Audio",
-        "Question":"salad",
-        "CorrectAnswer":"salad"
-      },
-      {
-        "QID":"p3u5-c11",
-        "QuestionType":"Audio",
-        "Question":"noodles",
-        "CorrectAnswer":"noodles"
-      },
-      {
-        "QID":"p3u5-c12",
-        "QuestionType":"Audio",
-        "Question":"fruit",
-        "CorrectAnswer":"fruit"
-      },
-      {
-        "QID":"p3u5-c13",
-        "QuestionType":"Audio",
-        "Question":"mushrooms",
-        "CorrectAnswer":"mushrooms"
-      },
-      {
-        "QID":"p3u5-c14",
-        "QuestionType":"Audio",
-        "Question":"rice",
-        "CorrectAnswer":"rice"
-      },
-      {
-        "QID":"p3u5-c15",
-        "QuestionType":"Audio",
-        "Question":"milk",
-        "CorrectAnswer":"milk"
-      },
-      {
-        "QID":"p3u5-c16",
-        "QuestionType":"Audio",
-        "Question":"pork",
-        "CorrectAnswer":"pork"
-      },
-      {
-        "QID":"p3u5-c17",
-        "QuestionType":"Audio",
-        "Question":"beef",
-        "CorrectAnswer":"beef"
-      },
-      {
-        "QID":"p3u5-c18",
-        "QuestionType":"Audio",
-        "Question":"potato",
-        "CorrectAnswer":"potato"
-      },
-      {
-        "QID":"p3u5-c19",
-        "QuestionType":"Audio",
-        "Question":"soup",
-        "CorrectAnswer":"soup"
-      },
-      {
-        "QID":"p3u5-c20",
-        "QuestionType":"Audio",
-        "Question":"eggs",
-        "CorrectAnswer":"eggs"
-      },
-      {
-        "QID":"p5u3-c1",
-        "QuestionType":"Picture",
-        "Question":"breakfast",
-        "CorrectAnswer":"breakfast"
-      },
-      {
-        "QID":"p5u3-c2",
-        "QuestionType":"Picture",
-        "Question":"hang",
-        "CorrectAnswer":"hang"
-      },
-      {
-        "QID":"p5u3-c3",
-        "QuestionType":"Picture",
-        "Question":"backpack",
-        "CorrectAnswer":"backpack"
-      },
-      {
-        "QID":"p5u3-c4",
-        "QuestionType":"Picture",
-        "Question":"prepare",
-        "CorrectAnswer":"prepare"
-      },
-      {
-        "QID":"p5u3-c5",
-        "QuestionType":"Picture",
-        "Question":"dentist",
-        "CorrectAnswer":"dentist"
-      },
-      {
-        "QID":"p5u3-c6",
-        "QuestionType":"Picture",
-        "Question":"fingenails",
-        "CorrectAnswer":"fingenails"
-      },
-      {
-        "QID":"p5u3-c7",
-        "QuestionType":"Picture",
-        "Question":"uniform",
-        "CorrectAnswer":"uniform"
-      },
-      {
-        "QID":"p5u3-c8",
-        "QuestionType":"Picture",
-        "Question":"handkerchief",
-        "CorrectAnswer":"handkerchief"
-      },
-      {
-        "QID":"p5u3-c9",
-        "QuestionType":"Picture",
-        "Question":"chopsticks",
-        "CorrectAnswer":"chopsticks"
-      },
-      {
-        "QID":"p5u3-c10",
-        "QuestionType":"Picture",
-        "Question":"chores",
-        "CorrectAnswer":"chores"
-      },
-      {
-        "QID":"p5u3-c11",
-        "QuestionType":"Picture",
-        "Question":"shoelaces",
-        "CorrectAnswer":"shoelaces"
-      },
-      {
-        "QID":"p5u3-c12",
-        "QuestionType":"Picture",
-        "Question":"laundry",
-        "CorrectAnswer":"laundry"
-      },
-      {
-        "QID":"p5u3-c13",
-        "QuestionType":"Picture",
-        "Question":"pack",
-        "CorrectAnswer":"pack"
-      },
-      {
-        "QID":"p5u3-c14",
-        "QuestionType":"Picture",
-        "Question":"comb",
-        "CorrectAnswer":"comb"
-      },
-      {
-        "QID":"p5u3-c15",
-        "QuestionType":"Picture",
-        "Question":"button",
-        "CorrectAnswer":"button"
-      },
-      {
-        "QID":"p5u3-c16",
-        "QuestionType":"Picture",
-        "Question":"groom",
-        "CorrectAnswer":"groom"
-      },
-      {
-        "QID":"p5u3-c17",
-        "QuestionType":"Picture",
-        "Question":"tie",
-        "CorrectAnswer":"tie"
-      },
-      {
-        "QID":"p5u3-c18",
-        "QuestionType":"Picture",
-        "Question":"get dressed",
-        "CorrectAnswer":"get dressed"
-      },
-      {
-        "QID":"p5u3-c19",
-        "QuestionType":"Picture",
-        "Question":"zip",
-        "CorrectAnswer":"zip"
-      },
-      {
-        "QID":"p5u3-c20",
-        "QuestionType":"Picture",
-        "Question":"brush",
-        "CorrectAnswer":"brush"
-      }
-   ]
+  "QA":[
+  {
+      "QID": "p1u1-e1",
+      "QuestionType": "FillInBlank",
+      "Question": "Miss Chan is my favourite _________. She teaches me English.",
+      "Answers": ["principal", "student", "teacher"],
+      "CorrectAnswer": "teacher"
+  },
+  {
+      "QID": "p1u1-e2",
+      "QuestionType": "FillInBlank",
+      "Question": "It’s time to go, let’s say __________ to Aunt Lily.",
+      "Answers": ["good morning", "good night", "goodbye"],
+      "CorrectAnswer": "goodbye"
+  },
+  {
+      "QID": "p1u1-e3",
+      "QuestionType": "FillInBlank",
+      "Question": "Mr Lee made Tom a ________and he is happy about it.",
+      "Answers": ["monitor", "monita", "monika"],
+      "CorrectAnswer": "monitor"
+  },
+  {
+      "QID": "p1u1-e4",
+      "QuestionType": "FillInBlank",
+      "Question": "Leo and I are____________. We are in the same class.",
+      "Answers": ["students", "classmates", "teachers"],
+      "CorrectAnswer": "classmates"
+  },
+  {
+      "QID": "p1u1-e5",
+      "QuestionType": "FillInBlank",
+      "Question": "Amy is my best _______ and we always share secrets to each other.",
+      "Answers": ["friend", "teacher", "student"],
+      "CorrectAnswer": "friend"
+  },
+  {
+      "QID": "p1u1-e6",
+      "QuestionType": "FillInBlank",
+      "Question": "You can ask a ________to help you find books.",
+      "Answers": ["library", "prefect", "librarian"],
+      "CorrectAnswer": "librarian"
+  },
+  {
+      "QID": "p1u1-e7",
+      "QuestionType": "FillInBlank",
+      "Question": "We should ____ others when we see them.",
+      "Answers": ["greek", "greed", "greet"],
+      "CorrectAnswer": "greet"
+  },
+  {
+      "QID": "p1u1-e8",
+      "QuestionType": "FillInBlank",
+      "Question": "Who is the group ______?",
+      "Answers": ["cleaner", "leader", "lender"],
+      "CorrectAnswer": "leader"
+  },
+  {
+      "QID": "p1u1-e9",
+      "QuestionType": "FillInBlank",
+      "Question": "He says good __________ to us first thing every day.",
+      "Answers": ["morning", "evening", "afternoon"],
+      "CorrectAnswer": "morning"
+  },
+  {
+      "QID": "p1u1-e10",
+      "QuestionType": "FillInBlank",
+      "Question": "Sorry, do you know where the ________’s office is?",
+      "Answers": ["principal", "principle", "princess"],
+      "CorrectAnswer": "principal"
+  },
+  {
+    "QID": "p1u2-a1",
+    "QuestionType": "Audio",
+    "Question": "femily, families, family",
+    "Answers": ["femily", "families", "family"],
+    "CorrectAnswer": "family"
+  },
+  {
+      "QID": "p1u2-a2",
+      "QuestionType": "Audio",
+      "Question": "mother, father, sister",
+      "Answers": ["mother", "father", "sister"],
+      "CorrectAnswer": "sister"
+  },
+  {
+      "QID": "p1u2-a3",
+      "QuestionType": "Audio",
+      "Question": "mother, father, sister",
+      "Answers": ["mother", "father", "sister"],
+      "CorrectAnswer": "father"
+  },
+  {
+      "QID": "p1u2-a4",
+      "QuestionType": "Audio",
+      "Question": "mother, sister, brother",
+      "Answers": ["mother", "sister", "brother"],
+      "CorrectAnswer": "mother"
+  },
+  {
+      "QID": "p1u2-a5",
+      "QuestionType": "Audio",
+      "Question": "mother, sister, brother",
+      "Answers": ["mother", "sister", "brother"],
+      "CorrectAnswer": "brother"
+  },
+  {
+      "QID": "p1u2-a6",
+      "QuestionType": "Audio",
+      "Question": "grandma, grandmother, grandfather",
+      "Answers": ["grandma", "grandmother", "grandfather"],
+      "CorrectAnswer": "grandmother"
+  },
+  {
+      "QID": "p1u2-a7",
+      "QuestionType": "Audio",
+      "Question": "grandmother, grandpa, grandfather",
+      "Answers": ["grandmother", "grandpa", "grandfather"],
+      "CorrectAnswer": "grandfather"
+  },
+  {
+      "QID": "p1u2-a8",
+      "QuestionType": "Audio",
+      "Question": "parrots, parants, parents",
+      "Answers": ["parrots", "parants", "parents"],
+      "CorrectAnswer": "parents"
+  },
+  {
+      "QID": "p1u2-a9",
+      "QuestionType": "Audio",
+      "Question": "children, chilldren, childrens",
+      "Answers": ["children", "chilldren", "childrens"],
+      "CorrectAnswer": "children"
+  },
+  {
+      "QID": "p1u2-a10",
+      "QuestionType": "Audio",
+      "Question": "babies, baby, babe",
+      "Answers": ["babies", "baby", "babe"],
+      "CorrectAnswer": "baby"
+  },
+  {
+      "QID": "p1u2-a11",
+      "QuestionType": "Audio",
+      "Question": "ant, aunt, arent",
+      "Answers": ["ant", "aunt", "arent"],
+      "CorrectAnswer": "aunt"
+  },
+  {
+      "QID": "p1u2-a12",
+      "QuestionType": "Audio",
+      "Question": "uncle, oncle, under",
+      "Answers": ["uncle", "oncle", "under"],
+      "CorrectAnswer": "uncle"
+  },
+  {
+      "QID": "p1u2-a13",
+      "QuestionType": "Audio",
+      "Question": "nephew, niece, liece",
+      "Answers": ["nephew", "niece", "liece"],
+      "CorrectAnswer": "niece"
+  },
+  {
+      "QID": "p1u2-a14",
+      "QuestionType": "Audio",
+      "Question": "naphew, nephew, niece",
+      "Answers": ["naphew", "nephew", "niece"],
+      "CorrectAnswer": "nephew"
+  },
+  {
+      "QID": "p1u2-a15",
+      "QuestionType": "Audio",
+      "Question": "coussins, cushions, cousins",
+      "Answers": ["coussins", "cushions", "cousins"],
+      "CorrectAnswer": "cousins"
+  },
+  {
+      "QID": "p1u2-a16",
+      "QuestionType": "Audio",
+      "Question": "siblings, sibbings, sibings",
+      "Answers": ["siblings", "sibbings", "sibings"],
+      "CorrectAnswer": "siblings"
+  },
+  {
+      "QID": "p1u2-a17",
+      "QuestionType": "Audio",
+      "Question": "triplets, sons, twins",
+      "Answers": ["triplets", "sons", "twins"],
+      "CorrectAnswer": "twins"
+  },
+  {
+      "QID": "p1u2-a18",
+      "QuestionType": "Audio",
+      "Question": "triplets, sons, twins",
+      "Answers": ["triplets", "sons", "twins"],
+      "CorrectAnswer": "son"
+  },
+  {
+      "QID": "p1u2-a19",
+      "QuestionType": "Audio",
+      "Question": "daughter, doctor, daughtor",
+      "Answers": ["daughter", "doctor", "daughtor"],
+      "CorrectAnswer": "daughter"
+  },
+  {
+      "QID": "p1u2-a20",
+      "QuestionType": "Audio",
+      "Question": "grantchildren, grandchilldren, grandchildren",
+      "Answers": ["grantchildren", "grandchilldren", "grandchildren"],
+      "CorrectAnswer": "grandchildren"
+  },
+  {
+    "QID": "p2u3-e1",
+    "QuestionType": "Text",
+    "Question": "We come here for talks, ceremonies or shows.",
+    "Answers": ["library", "hall", "playground"],
+    "CorrectAnswer": "hall"
+  },
+  {
+      "QID": "p2u3-e2",
+      "QuestionType": "Text",
+      "Question": "I need to do some research on how many countries there are in the world.",
+      "Answers": ["music room", "art room", "computer room"],
+      "CorrectAnswer": "computer room"
+  },
+  {
+      "QID": "p2u3-e3",
+      "QuestionType": "Text",
+      "Question": "I think I ate something wrong. I am having a stomachache.",
+      "Answers": ["toilet", "lift", "classroom"],
+      "CorrectAnswer": "toilet"
+  },
+  {
+      "QID": "p2u3-e4",
+      "QuestionType": "Text",
+      "Question": "I didn't have breakfast this morning. I am hungry.",
+      "Answers": ["garden", "tuck shop", "sick room"],
+      "CorrectAnswer": "tuck shop"
+  },
+  {
+      "QID": "p2u3-e5",
+      "QuestionType": "Text",
+      "Question": "The bell is ringing. We need to have English lesson now.",
+      "Answers": ["classroom", "music room", "computer room"],
+      "CorrectAnswer": "classroom"
+  },
+  {
+      "QID": "p2u3-e6",
+      "QuestionType": "Text",
+      "Question": "Mary wants to borrow the book 'The Little Prince'.",
+      "Answers": ["hall", "library", "playground"],
+      "CorrectAnswer": "library"
+  },
+  {
+      "QID": "p2u3-e7",
+      "QuestionType": "Text",
+      "Question": "It rained this morning. Be careful when playing badminton.",
+      "Answers": ["garden", "classroom", "playground"],
+      "CorrectAnswer": "playground"
+  },
+  {
+      "QID": "p2u3-e8",
+      "QuestionType": "Text",
+      "Question": "Do you know there are beautiful pink roses? Let’s go check it out!",
+      "Answers": ["garden", "classroom", "playground"],
+      "CorrectAnswer": "garden"
+  },
+  {
+      "QID": "p2u3-e9",
+      "QuestionType": "Text",
+      "Question": "Nicole broke her legs. She can't walk up stairs.",
+      "Answers": ["stairs", "toilet", "lift"],
+      "CorrectAnswer": "lift"
+  },
+  {
+      "QID": "p2u3-e10",
+      "QuestionType": "Text",
+      "Question": "Good morning, class. Today we are going to make a Lego robot.",
+      "Answers": ["art room", "music room", "STEAM room"],
+      "CorrectAnswer": "STEAM room"
+  }
+  ]
 }

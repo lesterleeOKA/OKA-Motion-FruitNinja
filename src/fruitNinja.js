@@ -448,8 +448,8 @@ export default {
   createOptionWrapper(text, id, optionImage, optionLeftImage, optionRightImage, columnId) {
     let optionWrapper = document.createElement('div');
     optionWrapper.classList.add('optionWrapper');
-    optionWrapper.style.width = `${this.optionSize}px`;
-    optionWrapper.style.height = `${this.optionSize}px`;
+    optionWrapper.style.width = `${this.optionSize + 20}px`;
+    optionWrapper.style.height = `${this.optionSize + 20}px`;
     if (optionImage !== '' && optionImage !== 'undefined') {
       optionWrapper.style.backgroundImage = `url(${optionImage.src})`;
       optionWrapper.style.backgroundSize = 'contain'; // Adjust size to maintain aspect ratio
@@ -462,8 +462,14 @@ export default {
     let option = document.createElement('span');
     option.classList.add('option');
     option.textContent = text;
-    let fontSize = `calc(min(max(4vh, 20vh - ${text.length} * 5.2vh), 8vh))`;
-    option.style.setProperty('--font-size', fontSize);
+    /*let fontSize = `calc(min(max(4vh, 20vh - ${text.length} * 5.2vh), 8vh))`;
+    option.style.setProperty('--font-size', fontSize);*/
+    let containerWidth = this.optionSize;
+    let maxFontSize = 40; // Maximum font size in px
+    let minFontSize = 10; // Minimum font size in px
+    let fontSize = Math.max(minFontSize, Math.min(maxFontSize, containerWidth / (text.length * 0.58)));
+
+    option.style.fontSize = `${fontSize}px`;
 
     const leftSubImage = document.createElement('div');
     const rightSubImage = document.createElement('div');
@@ -626,18 +632,14 @@ export default {
 
   randomOptions() {
     //console.log('question class', this.randomQuestion);
-    switch (this.randomQuestion.QuestionType) {
-      case 'Spelling':
-      case 'Audio':
-      case 'FillInBlank':
-      case 'Reorder':
-      case 'Picture':
-        var array = this.generateCharArray(this.randomQuestion.CorrectAnswer);
-        this.answerLength = array.length;
-        return array;
-      case 'Text':
-        this.answerLength = 1;
-        return this.randomizeAnswers(this.randomQuestion.Answers);
+    if (this.randomQuestion.Answers && this.randomQuestion.Answers.length > 0) {
+      this.answerLength = 1;
+      return this.randomizeAnswers(this.randomQuestion.Answers);
+    }
+    else {
+      var array = this.generateCharArray(this.randomQuestion.CorrectAnswer);
+      this.answerLength = array.length;
+      return array;
     }
   },
   setQuestions() {
@@ -678,7 +680,6 @@ export default {
         this.questionWrapper.style.setProperty('--question-font-size', fontSize);
         this.questionWrapper.style.top = "-15%";
         this.answerWrapper.classList.add('audioType');
-
         break;
       case 'Audio':
         this.questionWrapper.classList.add('questionAudioWrapper');
@@ -1029,9 +1030,9 @@ export default {
     this.randomQuestion = null;
     this.randomPair.splice(0);
     View.stageImg.innerHTML = '';
+    this.clearWrapper();
     setTimeout(() => {
       this.nextQuestion = true;
-      this.clearWrapper();
     }, 500);
   }
 }

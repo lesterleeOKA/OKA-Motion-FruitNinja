@@ -84,7 +84,7 @@
   /*font-family: "Arzachel", system-ui;*/
   font-family: 'PoetsenOne', sans-serif;
   font-weight: 100;
-  width: calc(min(30.7vh, 30.7vw));
+  width: calc(min(34.7vh, 34.7vw));
   color: rgb(98 48 16);
   height: auto;
   white-space: normal;
@@ -103,7 +103,7 @@
   /*font-family: "Arzachel", system-ui;*/
   font-family: 'PoetsenOne', sans-serif;
   font-weight: 100;
-  width: calc(min(30.7vh, 30.7vw));
+  width: calc(min(34.7vh, 34.7vw));
   height: calc(min(26vh, 26vw));
   color: rgb(98 48 16);
   display: flex;
@@ -145,11 +145,11 @@
   transition: opacity 0.1s ease;
   text-align: center;
   font-size: var(--question-font-size);
-  line-height: 3.5vh;
+  line-height: 2.8vh;
   /*font-family: "Arzachel", system-ui;*/
   font-family: 'PoetsenOne', sans-serif;
   font-weight: 100;
-  width: calc(min(30.7vh, 30.7vw));
+  width: calc(min(34.7vh, 34.7vw));
   height: calc(min(26vh, 26vw));
   color: rgb(98 48 16);
   display: flex;
@@ -300,13 +300,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
-  height: 90%;
+  width: 70%;
+  height: 70%;
   text-align: center;
   font-size: var(--font-size);
   /*font-family: "Arzachel", system-ui;*/
   font-family: 'PoetsenOne', sans-serif;
   font-weight: 100;
+  line-height: 3.6vh;
   background: transparent;
   border: none;
   color: white;
