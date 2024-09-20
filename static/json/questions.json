@@ -192,8 +192,8 @@
   {
       "QID": "p1u2-a18",
       "QuestionType": "Audio",
-      "Question": "triplets, sons, twins",
-      "Answers": ["triplets", "sons", "twins"],
+      "Question": "triplets, son, twins",
+      "Answers": ["triplets", "son", "twins"],
       "CorrectAnswer": "son"
   },
   {
