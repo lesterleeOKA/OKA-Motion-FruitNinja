@@ -16,7 +16,6 @@ export default {
   //-----------------------------------------------------------------------------------------------
   getVideo() {
     //console.log('in getVideo()');
-
     return new Promise((resolve, reject) => {
       if (!navigator.mediaDevices.getUserMedia && !navigator.mediaDevices) {
         const errMsg = 'Browser API navigator.mediaDevices.getUserMedia not available';
@@ -85,74 +84,3 @@ export default {
   }
 
 };
-/*
-export class Camera {
-
-  video;
-
-  constructor() {
-    this.video = document.getElementById('video');
-  }
-
-  //-----------------------------------------------------------------------------------------------
-  static getVideo() {
-    return new Promise((resolve, reject)=>{
-      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        reject('Browser API navigator.mediaDevices.getUserMedia not available');
-      } else {
-
-      }
-
-      const videoConfig = {
-        'audio': false,
-        'video': {
-          facingMode: 'user',
-          width: 640,
-          height: 480,
-          frameRate: {
-            ideal: 60,
-          }
-        }
-      };
-
-      navigator.mediaDevices.getUserMedia(videoConfig).then(stream=>{
-        this.video.srcObject = stream;
-        resolve();
-      });
-    });
-  }
-
-  //-----------------------------------------------------------------------------------------------
-
-  static async setup(cameraParam) {
-    await this.getVideo();
-
-    this.video.play();
-
-    this.resetSize(this.video);
-    addEventListener("resize", (event)=>this.resetSize(this.video));
-    return this;
-  }
-
-  static resetSize(video) {
-    const videoRatio = video.videoWidth / video.videoHeight;
-    const screenRatio = document.body.clientWidth / document.body.clientHeight;
-
-    let videoWidth = 0;
-    let videoHeight = 0;
-    if (videoRatio > screenRatio) {
-      videoWidth = document.body.clientWidth;
-      videoHeight = document.body.clientWidth / videoRatio;
-    } else {
-      videoHeight = document.body.clientHeight;
-      videoWidth = document.body.clientHeight * videoRatio;
-    }
-
-    video.width = videoWidth;
-    video.height = videoHeight;
-
-    const canvasContainer = document.querySelector('.canvas-wrapper');
-    canvasContainer.style = `width: ${videoWidth}px; height: ${videoHeight}px`;
-  }
-}
-*/

@@ -3,8 +3,6 @@ import State from './state';
 import Sound from './sound';
 import Camera from './camera';
 import Game from './fruitNinja';
-import Sword from './swords';
-
 
 export class RendererCanvas2d {
   constructor(canvas) {
@@ -88,6 +86,15 @@ export class RendererCanvas2d {
     }
   }
 
+  isOutOfBounds(keypoint) {
+    return (
+      keypoint.x < this.redBoxX ||
+      keypoint.x > (this.redBoxX + this.redBoxWidth) ||
+      keypoint.y < this.redBoxY ||
+      keypoint.y > (this.redBoxY + this.redBoxHeight)
+    );
+  }
+
   isPoseValid(poses) {
     if (!poses[0]) return false;
     let pose = poses[0];
@@ -99,67 +106,19 @@ export class RendererCanvas2d {
       //nose, left_eye_inner, left_eye, left_eye_outer, right_eye_inner, right_eye, right_eye_outer, left_ear, right_ear, mouth_left, mouth_right, left_shoulder, right_shoulder, left_elbow, right_elbow, left_wrist, right_wrist, left_pinky, right_pinky, left_index, right_index, left_thumb, right_thumb, left_hip, right_hip, left_knee, right_knee, left_ankle, right_ankle, left_heel, right_heel, left_foot_index, right_foot_index
       //let checkKeypoints = pose.keypoints.filter(k=>['left_shoulder', 'right_shoulder', 'left_elbow', 'right_elbow', 'left_wrist', 'right_wrist', 'left_hip', 'right_hip', 'left_knee', 'right_knee'].includes(k.name) && k.score>0.65);
 
-      /*if (this.center_shoulder) {
-        isBodyOutBox = ((
-          this.center_shoulder.x < this.redBoxX ||
-          this.center_shoulder.x > (this.redBoxX + this.redBoxWidth) ||
-          this.center_shoulder.y < this.redBoxX ||
-          this.center_shoulder.y > (this.redBoxY + this.redBoxHeight)) ? true : false);
-      }
-      else {
-        isBodyOutBox = false;
-      }
-
-      let checkKeypoints = pose.keypoints.filter(k => k.name == 'nose' && k.score > passScore);
-      let isBodyOutBox = (
-        checkKeypoints.find(keypoint => (
-          keypoint.x < this.redBoxX ||
-          keypoint.x > (this.redBoxX + this.redBoxWidth) ||
-          keypoint.y < this.redBoxY ||
-          keypoint.y > (this.redBoxY + this.redBoxHeight)
-        )) ? true : false
-      );*/
-
-      if (this.center_shoulder) {
-        const isShoulderOutBox = (
-          this.center_shoulder.x < this.redBoxX ||
-          this.center_shoulder.x > (this.redBoxX + this.redBoxWidth) ||
-          this.center_shoulder.y < this.redBoxY ||
-          this.center_shoulder.y > (this.redBoxY + this.redBoxHeight)
-        );
-
-        const isNoseOutBox = pose.keypoints
-          .filter(k => k.name === 'nose' && k.score > passScore)
-          .some(keypoint =>
-            keypoint.x < this.redBoxX ||
-            keypoint.x > (this.redBoxX + this.redBoxWidth) ||
-            keypoint.y < this.redBoxY ||
-            keypoint.y > (this.redBoxY + this.redBoxHeight)
-          );
-
-        isBodyOutBox = isShoulderOutBox && isNoseOutBox;
-      } else {
-        const isNoseOutBox = pose.keypoints
-          .filter(k => k.name === 'nose' && k.score > passScore)
-          .some(keypoint =>
-            keypoint.x < this.redBoxX ||
-            keypoint.x > (this.redBoxX + this.redBoxWidth) ||
-            keypoint.y < this.redBoxY ||
-            keypoint.y > (this.redBoxY + this.redBoxHeight)
-          );
-
-        isBodyOutBox = isNoseOutBox;
-      }
+      const isNoseOutBox = pose.keypoints
+        .filter(k => k.name === 'nose' && k.score > passScore)
+        .some(keypoint => this.isOutOfBounds(keypoint));
+      const isShoulderOutBox = this.center_shoulder && this.isOutOfBounds(this.center_shoulder);
+      isBodyOutBox = this.center_shoulder ? (isShoulderOutBox && isNoseOutBox) : isNoseOutBox;
 
       State.setPoseState('bodyInsideRedBox', !isBodyOutBox);
       if (isBodyOutBox) {
-        if (State.state == 'playing') State.changeState('outBox', 'outBox');
-        //console.log('outBox', 'outBox');
+        if (State.state === 'playing') State.changeState('outBox', 'outBox');
         return false;
       }
 
       let questionBoard = null;
-
       if (Game.randomQuestion) {
         if (Game.randomQuestion.type === 'Listening') {
           questionBoard = document.querySelector('.questionAudioBg');
@@ -168,154 +127,24 @@ export class RendererCanvas2d {
           questionBoard = document.querySelector('.questionImgBg');
         }
       }
-
-      let resetBtn = document.querySelector('.resetBtn');
-      let audioBtn = document.querySelector('.buttonWrapper');
-
-      const rightHandImg = document.getElementById('right-hand');
-      const leftHandImg = document.getElementById('left-hand');
-
       //檢查是否有選到圖
       let optionWrappers = document.querySelectorAll('.canvasWrapper > .optionArea > .optionWrapper.show');
       let canvasWrapper = document.querySelector('.canvasWrapper');
       this.canvasWrapperRect = canvasWrapper.getBoundingClientRect();
       if (State.state == 'playing' && ['waitAns'].includes(State.stateType)) {
-        let checkKeypoints = pose.keypoints.filter(k => ['right_wrist', 'left_wrist'/*, 'right_index', 'left_index'*/].includes(k.name) && k.score > passScore);
-        let touchingWord = [];
-
-        rightHandImg.style.display = 'none';
-        leftHandImg.style.display = 'none';
-
-        //if (checkKeypoints.length == 0)
-        //this.sword.clearSwipes();
-
-        for (let point of checkKeypoints) {
-          switch (point.name) {
-            case 'right_wrist':
-              const rightWristX = point.x;
-              const rightWristY = point.y;
-              let xInVw_right = (rightWristX / window.innerWidth) * 95;
-              let yInVw_right = (window.innerWidth / 12);
-              rightHandImg.style.left = `calc(${xInVw_right}vw - calc(min(3vh, 3vw)))`;
-              rightHandImg.style.top = `${rightWristY - yInVw_right}px`;
-              rightHandImg.style.display = 'block';
-
-              //this.sword.swipe(rightWristX, rightWristY);
-              this.handleWristDetection(optionWrappers, resetBtn, rightWristX, rightWristY);
-              break;
-            case 'left_wrist':
-              const leftWristX = point.x;
-              const leftWristY = point.y;
-              let xInVw_left = (leftWristX / window.innerWidth) * 105;
-              let yInVw_left = (window.innerWidth / 12);
-              leftHandImg.style.left = `calc(${xInVw_left}vw - calc(min(3vh, 3vw)))`;
-              leftHandImg.style.top = `${leftWristY - yInVw_left}px`;
-              leftHandImg.style.display = 'block';
-
-              //this.sword.swipe(leftWristX, leftWristY);
-              this.handleWristDetection(optionWrappers, resetBtn, leftWristX, leftWristY);
-              break;
-          }
-        }
-
-        const rightHandLeft = rightHandImg.offsetLeft;
-        const rightHandTop = rightHandImg.offsetTop;
-        const rightHandWidth = rightHandImg.offsetWidth;
-        const rightHandHeight = rightHandImg.offsetHeight;
-
-        const leftHandLeft = leftHandImg.offsetLeft;
-        const leftHandTop = leftHandImg.offsetTop;
-        const leftHandWidth = leftHandImg.offsetWidth;
-        const leftHandHeight = leftHandImg.offsetHeight;
-
-        for (let option of optionWrappers) {
-
-          const optionRect = option.getBoundingClientRect();
-          if (rightHandImg.style.display !== 'none' &&
-            rightHandLeft < (optionRect.right - this.canvasWrapperRect.left) &&
-            (rightHandLeft + rightHandWidth) > (optionRect.left - this.canvasWrapperRect.left) &&
-            rightHandTop < (optionRect.bottom - this.canvasWrapperRect.top) &&
-            (rightHandTop + rightHandHeight) > (optionRect.top - this.canvasWrapperRect.top) &&
-            !Game.isTriggeredBackSpace
-          ) {
-            touchingWord.push(option);
-          }
-
-          if (leftHandImg.style.display !== 'none' &&
-            leftHandLeft < (optionRect.right - this.canvasWrapperRect.left) &&
-            (leftHandLeft + leftHandWidth) > (optionRect.left - this.canvasWrapperRect.left) &&
-            leftHandTop < (optionRect.bottom - this.canvasWrapperRect.top) &&
-            (leftHandTop + leftHandHeight) > (optionRect.top - this.canvasWrapperRect.top) &&
-            !Game.isTriggeredBackSpace
-          ) {
-            touchingWord.push(option);
-          }
-        }
-
-        this.triggeredAudio = false;
-
-        if (audioBtn) {
-          const audioBtnRect = audioBtn.getBoundingClientRect();
-          let audioRectHalf = (audioBtnRect.width * 0.5);
-          if (rightHandImg.style.display !== 'none' &&
-            rightHandLeft < (audioBtnRect.right - audioRectHalf - this.canvasWrapperRect.left) &&
-            (rightHandLeft + rightHandWidth) > (audioBtnRect.left - this.canvasWrapperRect.left) + audioRectHalf &&
-            rightHandTop < (audioBtnRect.bottom - this.canvasWrapperRect.top) &&
-            (rightHandTop + rightHandHeight) > (audioBtnRect.top - this.canvasWrapperRect.top)
-          ) {
-            if (!this.triggeredAudio) {
-              Game.motionTriggerPlayAudio(true);
-              this.triggeredAudio = true;
-            }
-          }
-
-          if (leftHandImg.style.display !== 'none' &&
-            leftHandLeft < (audioBtnRect.right - audioRectHalf - this.canvasWrapperRect.left) &&
-            (leftHandLeft + leftHandWidth) > (audioBtnRect.left - this.canvasWrapperRect.left) + audioRectHalf &&
-            leftHandTop < (audioBtnRect.bottom - this.canvasWrapperRect.top) &&
-            (leftHandTop + leftHandHeight) > (audioBtnRect.top - this.canvasWrapperRect.top)
-          ) {
-            if (!this.triggeredAudio) {
-              Game.motionTriggerPlayAudio(true);
-              this.triggeredAudio = true;
-            }
-          }
-
-          if (audioBtn.classList.contains('clicked')) {
-            if (!Game.touchBtn) {
-              if (!this.triggeredAudio) Game.motionTriggerPlayAudio(false);
-            }
-          }
-        }
-
-        if (resetBtn) {
-          if (!Game.isTriggeredBackSpace && resetBtn.classList.contains('active') && !Game.touchBtn) {
-            resetBtn.classList.remove('active');
-          }
-        }
-
-        for (let option of optionWrappers) {
-          if (touchingWord.includes(option) && !option.classList.contains('touch')) {
-            State.setPoseState('selectedImg', option);
-            //console.log("touch ", option);
-            Game.fillWord(option);
-          }
-        }
-
-        if (touchingWord.length === 0) State.setPoseState('selectedImg', '');
+        const checkKeypoints = pose.keypoints.filter(k => ['right_wrist', 'left_wrist'].includes(k.name) && k.score > passScore);
+        this.handleInteractions(checkKeypoints);
       }
       else if (State.state == 'playing' && ['wrong'].includes(State.stateType)) {
         for (let option of optionWrappers) option.classList.remove('touch');
         State.changeState('playing', 'waitAns');
       }
-
       return true;
     } else {
       return false;
     }
   }
-
-  handleWristDetection(optionWrappers, resetBtn, wristX, wristY) {
+  handleBackSpaceBtnDetection(optionWrappers, resetBtn, wristX, wristY) {
     const offsetX = (window.innerWidth / 7.68);
     if (resetBtn) {
       if (
@@ -330,8 +159,102 @@ export class RendererCanvas2d {
         }
       }
     }
+  }
+  updateHandDisplays(optionWrappers, keypoints, rightHandImg, leftHandImg, resetBtn) {
+    rightHandImg.style.display = 'none';
+    leftHandImg.style.display = 'none';
+    keypoints.forEach(point => {
+      const wristX = point.x;
+      const wristY = point.y;
+      const handImg = point.name === 'right_wrist' ? rightHandImg : leftHandImg;
+      handImg.style.left = `${(wristX / window.innerWidth) * 95}vw`;
+      handImg.style.top = `${wristY - (window.innerWidth / 12)}px`;
+      handImg.style.display = 'block';
+      this.handleBackSpaceBtnDetection(optionWrappers, resetBtn, wristX, wristY);
+    });
+  }
+  checkTouchingWords(optionWrappers, rightHandImg, leftHandImg) {
+    const touchingWords = [];
+    const rightHandBounds = rightHandImg.getBoundingClientRect();
+    const leftHandBounds = leftHandImg.getBoundingClientRect();
 
+    optionWrappers.forEach(option => {
+      const optionRect = option.getBoundingClientRect();
+      if (this.isTouching(rightHandBounds, optionRect) && !Game.isTriggeredBackSpace) {
+        touchingWords.push(option);
+      }
+      if (this.isTouching(leftHandBounds, optionRect) && !Game.isTriggeredBackSpace) {
+        touchingWords.push(option);
+      }
+    });
+    return touchingWords;
+  }
+  isTouching(handBounds, optionRect) {
+    return (
+      handBounds.right > optionRect.left &&
+      handBounds.left < optionRect.right &&
+      handBounds.bottom > optionRect.top &&
+      handBounds.top < optionRect.bottom
+    );
+  }
+  handleWordSelection(touchingWords, optionWrappers) {
+    for (let option of optionWrappers) {
+      if (touchingWords.includes(option) && !option.classList.contains('touch')) {
+        State.setPoseState('selectedImg', option);
+        Game.fillWord(option);
+      }
+    }
 
+    if (touchingWords.length === 0) {
+      State.setPoseState('selectedImg', '');
+    }
+  }
+  checkAudioButtonInteraction(audioBtn, rightHandImg, leftHandImg) {
+    if (!audioBtn) return;
+
+    const audioBtnRect = audioBtn.getBoundingClientRect();
+    const audioRectHalf = audioBtnRect.width * 0.5;
+
+    this.triggerAudioInteraction(rightHandImg, audioBtnRect, audioRectHalf);
+    this.triggerAudioInteraction(leftHandImg, audioBtnRect, audioRectHalf);
+
+    if (audioBtn.classList.contains('clicked') && !Game.touchBtn) {
+      Game.motionTriggerPlayAudio(false);
+    }
+  }
+
+  triggerAudioInteraction(handImg, audioBtnRect, audioRectHalf) {
+    if (handImg.style.display === 'none') return;
+
+    const handBounds = handImg.getBoundingClientRect();
+    if (
+      handBounds.right > audioBtnRect.left + audioRectHalf &&
+      handBounds.left < audioBtnRect.right - audioRectHalf &&
+      handBounds.bottom > audioBtnRect.top &&
+      handBounds.top < audioBtnRect.bottom
+    ) {
+      Game.motionTriggerPlayAudio(true);
+    }
+  }
+
+  handleResetButton(resetBtn) {
+    if (resetBtn) {
+      if (!Game.isTriggeredBackSpace && resetBtn.classList.contains('active') && !Game.touchBtn) {
+        resetBtn.classList.remove('active');
+      }
+    }
+  }
+  handleInteractions(keypoints) {
+    const optionWrappers = document.querySelectorAll('.canvasWrapper > .optionArea > .optionWrapper.show');
+    const resetBtn = document.querySelector('.resetBtn');
+    const audioBtn = document.querySelector('.buttonWrapper');
+    const rightHandImg = document.getElementById('right-hand');
+    const leftHandImg = document.getElementById('left-hand');
+    this.updateHandDisplays(optionWrappers, keypoints, rightHandImg, leftHandImg, resetBtn);
+    const touchingWords = this.checkTouchingWords(optionWrappers, rightHandImg, leftHandImg);
+    this.checkAudioButtonInteraction(audioBtn, rightHandImg, leftHandImg);
+    this.handleResetButton(resetBtn);
+    this.handleWordSelection(touchingWords, optionWrappers);
   }
 
   drawBox(isCurPoseValid) {
@@ -346,7 +269,6 @@ export class RendererCanvas2d {
     if (!this.lastPoseValidValue && isCurPoseValid && State.isSoundOn) Sound.play('poseValid');
     this.lastPoseValidValue = isCurPoseValid;
   }
-
   drawCtx(video, bodySegmentationCanvas) {
     if (Camera.constraints.video.facingMode == 'user') {
       this.ctx.translate(this.videoWidth, 0);
@@ -358,17 +280,14 @@ export class RendererCanvas2d {
       this.ctx.scale(-1, 1);
     }
   }
-
   clearCtx() {
     this.ctx.clearRect(0, 0, this.videoWidth, this.videoHeight);
   }
-
   drawResults(poses, ratio) {
     for (const pose of poses) {
       this.drawResult(pose, ratio);
     }
   }
-
   drawResult(pose, ratio) {
     if (pose.keypoints != null) {
       this.keypointsFitRatio(pose.keypoints, ratio);
@@ -376,7 +295,6 @@ export class RendererCanvas2d {
       this.drawSkeleton(pose.keypoints, pose.id);
     }
   }
-
   drawKeypoints(keypoints) {
     const keypointInd = posedetection.util.getKeypointIndexBySide(this.modelType);
     this.ctx.fillStyle = 'Red';
@@ -386,30 +304,25 @@ export class RendererCanvas2d {
     for (const i of keypointInd.middle) {
       this.drawKeypoint(keypoints[i]);
     }
-
     this.ctx.fillStyle = 'Green';
     for (const i of keypointInd.left) {
       this.drawKeypoint(keypoints[i]);
     }
-
     this.ctx.fillStyle = 'Orange';
     for (const i of keypointInd.right) {
       this.drawKeypoint(keypoints[i]);
     }
   }
-
   keypointsFitRatio(keypoints, ratio) {
     for (let keypoint of keypoints) {
       keypoint.x = (Camera.constraints.video.facingMode == 'user') ? this.videoWidth - (keypoint.x * ratio) : (keypoint.x * ratio);
       keypoint.y = keypoint.y * ratio;
     }
   }
-
   drawKeypoint(keypoint) {
     // If score is null, just show the keypoint.
     const score = keypoint.score != null ? keypoint.score : 1;
     //const scoreThreshold = params.STATE.modelConfig.scoreThreshold || 0;
-
     if (score >= this.scoreThreshold) {
       const circle = new Path2D();
       circle.arc(keypoint.x, keypoint.y, 4, 0, 2 * Math.PI);
@@ -417,7 +330,6 @@ export class RendererCanvas2d {
       this.ctx.stroke(circle);
     }
   }
-
   drawSkeleton(keypoints, poseId) {
     const color = 'White';
     this.ctx.fillStyle = color;
@@ -470,7 +382,5 @@ export class RendererCanvas2d {
         this.ctx.stroke(circle);
       }
     }
-
   }
-
 }

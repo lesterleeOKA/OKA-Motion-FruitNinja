@@ -6,7 +6,6 @@ async function getDeviceIdForLabel(cameras, cameraLabel) {
       return camera.deviceId;
     }
   }
-
   return null;
 }
 
@@ -32,8 +31,6 @@ export class Camera {
       'video': {
         //deviceId,
         facingMode: 'user',
-        // Only setting the video to a specified size for large screen, on
-        // mobile devices accept the default size.
         width: 640,
         height: 480,
         frameRate: {

@@ -465,9 +465,9 @@ export default {
     /*let fontSize = `calc(min(max(4vh, 20vh - ${text.length} * 5.2vh), 8vh))`;
     option.style.setProperty('--font-size', fontSize);*/
     let containerWidth = this.optionSize;
-    let maxFontSize = 40; // Maximum font size in px
+    let maxFontSize = 60; // Maximum font size in px
     let minFontSize = 10; // Minimum font size in px
-    let fontSize = Math.max(minFontSize, Math.min(maxFontSize, containerWidth / (text.length * 0.58)));
+    let fontSize = Math.max(minFontSize, Math.min(maxFontSize, containerWidth / (text.length * 0.65)));
 
     option.style.fontSize = `${fontSize}px`;
 
@@ -517,7 +517,7 @@ export default {
     if (loop === 'true') {
       console.log("loop", loop);
       this.reFallingItems.push(optionWrapper);
-      console.log("re falling item////////////////////////////////////////////////////////////////////////", optionWrapper.getAttribute("word"));
+      //console.log("re falling item////////////////////////////////////////////////////////////////////////", optionWrapper.getAttribute("word"));
     }
   },
 
@@ -899,7 +899,6 @@ export default {
           this.typedItems.push(option);
           this.playSlicedEffect(option);
         }
-
         this.fillwordTime += 1;
         if (State.isSoundOn) {
           Sound.stopAll(['bgm', 'lastTen']);
@@ -930,7 +929,7 @@ export default {
       retrievedLeftSubImage.classList.add('slice-left');
       retrievedRightSubImage.classList.add('slice-right');
       if (childSpan) {
-        childSpan.style.setProperty('--font-size', "0px");
+        childSpan.style.fontSize = `${0}px`;
       }
       option.classList.add('sliced');
       let matrixValues = currentTransform.match(/matrix.*\((.+)\)/)[1].split(', ');
@@ -953,7 +952,7 @@ export default {
         retrievedLeftSubImage.classList.remove('slice-left');
         retrievedRightSubImage.classList.remove('slice-right');
         if (childSpan) {
-          childSpan.style.setProperty('--font-size', `${option.getAttribute('fontSize')}`);
+          childSpan.style.fontSize = `${option.getAttribute('fontSize')}px`;
         }
         option.classList.remove('sliced');
       }, 800);
