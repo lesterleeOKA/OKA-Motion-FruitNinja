@@ -15,7 +15,7 @@ Sword.prototype.draw = function (ctx) {
 
   // Create a gradient based on the first and last swipe points
   const gradient = ctx.createLinearGradient(this.swipes[0].x, this.swipes[0].y, this.swipes[l - 1].x, this.swipes[l - 1].y);
-  gradient.addColorStop(0, 'rgba(192, 192, 192, 1)'); // Gray
+  gradient.addColorStop(0, 'rgba(5, 245, 245, 1)'); // Gray
   gradient.addColorStop(1, 'rgba(255, 255, 255, 1)'); // White
 
   // Draw the outline first
