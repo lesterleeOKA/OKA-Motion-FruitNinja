@@ -3,6 +3,7 @@ import State from './state';
 import Sound from './sound';
 import Camera from './camera';
 import Game from './fruitNinja';
+import Sword from './swords';
 
 export class RendererCanvas2d {
   constructor(canvas) {
@@ -15,7 +16,8 @@ export class RendererCanvas2d {
     this.center_shoulder = null;
     this.triggeredAudio = false;
     this.canvasWrapperRect = null;
-    //this.sword = new Sword("black");
+    this.leftHandSword = new Sword({ r: 255, g: 255, b: 255, a: 0.7 });
+    this.rightHandSword = new Sword({ r: 255, g: 255, b: 255, a: 0.7 });
   }
 
   draw(rendererParams) {
@@ -77,11 +79,14 @@ export class RendererCanvas2d {
           }
         }
         else {
-          //this.sword.clearSwipes();
+          this.leftHandSword.clearSwipes();
+          this.rightHandSword.clearSwipes();
         }
       }
-      //this.sword.update();
-      //this.sword.draw(this.ctx);
+      this.leftHandSword.update();
+      this.leftHandSword.draw(this.ctx);
+      this.rightHandSword.update();
+      this.rightHandSword.draw(this.ctx);
       this.drawBox(isCurPoseValid);
     }
   }
@@ -118,7 +123,7 @@ export class RendererCanvas2d {
         return false;
       }
 
-      let questionBoard = null;
+      const questionBoard = null;
       if (Game.randomQuestion) {
         if (Game.randomQuestion.type === 'Listening') {
           questionBoard = document.querySelector('.questionAudioBg');
@@ -163,15 +168,56 @@ export class RendererCanvas2d {
   updateHandDisplays(optionWrappers, keypoints, rightHandImg, leftHandImg, resetBtn) {
     rightHandImg.style.display = 'none';
     leftHandImg.style.display = 'none';
+
+    if (keypoints.length === 0) {
+      this.leftHandSword.clearSwipes();
+      this.rightHandSword.clearSwipes();
+    }
+
     keypoints.forEach(point => {
       const wristX = point.x;
       const wristY = point.y;
       const handImg = point.name === 'right_wrist' ? rightHandImg : leftHandImg;
-      handImg.style.left = `${(wristX / window.innerWidth) * 95}vw`;
+      let adjustedWristX = wristX;
+      const movementThreshold = 6;
+
+      if (point.name === 'right_wrist') {
+        adjustedWristX -= 20;
+        const lastSwipe = this.rightHandSword.swipes[this.rightHandSword.swipes.length - 1];
+        if (lastSwipe) {
+          const distance = this.rightHandSword.distance(lastSwipe.x, lastSwipe.y, adjustedWristX, wristY - 100);
+          if (distance > movementThreshold) {
+            this.rightHandSword.swipe(adjustedWristX, wristY - 100);
+          } else {
+            this.rightHandSword.clearSwipes();
+          }
+        } else {
+          // If no previous swipe, just swipe
+          this.rightHandSword.swipe(adjustedWristX, wristY - 100);
+        }
+      } else if (point.name === 'left_wrist') {
+        const lastSwipe = this.leftHandSword.swipes[this.leftHandSword.swipes.length - 1];
+
+        if (lastSwipe) {
+          const distance = this.leftHandSword.distance(lastSwipe.x, lastSwipe.y, wristX + 30, wristY - 100);
+          if (distance > movementThreshold) {
+            this.leftHandSword.swipe(wristX + 30, wristY - 100);
+          } else {
+            this.leftHandSword.clearSwipes();
+          }
+        } else {
+          this.leftHandSword.swipe(wristX + 30, wristY - 100);
+        }
+      }
+      handImg.style.left = `${(adjustedWristX / window.innerWidth) * 95}vw`;
       handImg.style.top = `${wristY - (window.innerWidth / 12)}px`;
       handImg.style.display = 'block';
+
       this.handleBackSpaceBtnDetection(optionWrappers, resetBtn, wristX, wristY);
     });
+
+    const touchingWords = this.checkTouchingWords(optionWrappers, rightHandImg, leftHandImg);
+    this.handleWordSelection(touchingWords, optionWrappers);
   }
   checkTouchingWords(optionWrappers, rightHandImg, leftHandImg) {
     const touchingWords = [];
@@ -180,13 +226,14 @@ export class RendererCanvas2d {
 
     optionWrappers.forEach(option => {
       const optionRect = option.getBoundingClientRect();
-      if (this.isTouching(rightHandBounds, optionRect) && !Game.isTriggeredBackSpace) {
+      if (this.isTouching(rightHandBounds, optionRect) && !Game.isTriggeredBackSpace && this.rightHandSword.swipes.length > 5) {
         touchingWords.push(option);
       }
-      if (this.isTouching(leftHandBounds, optionRect) && !Game.isTriggeredBackSpace) {
+      if (this.isTouching(leftHandBounds, optionRect) && !Game.isTriggeredBackSpace && this.leftHandSword.swipes.length > 5) {
         touchingWords.push(option);
       }
     });
+
     return touchingWords;
   }
   isTouching(handBounds, optionRect) {
@@ -198,15 +245,17 @@ export class RendererCanvas2d {
     );
   }
   handleWordSelection(touchingWords, optionWrappers) {
-    for (let option of optionWrappers) {
-      if (touchingWords.includes(option) && !option.classList.contains('touch')) {
-        State.setPoseState('selectedImg', option);
-        Game.fillWord(option);
+    if (touchingWords && optionWrappers) {
+      for (let option of optionWrappers) {
+        if (touchingWords.includes(option) && !option.classList.contains('touch')) {
+          State.setPoseState('selectedImg', option);
+          Game.fillWord(option);
+        }
       }
-    }
 
-    if (touchingWords.length === 0) {
-      State.setPoseState('selectedImg', '');
+      if (touchingWords.length === 0) {
+        State.setPoseState('selectedImg', '');
+      }
     }
   }
   checkAudioButtonInteraction(audioBtn, rightHandImg, leftHandImg) {
@@ -251,10 +300,8 @@ export class RendererCanvas2d {
     const rightHandImg = document.getElementById('right-hand');
     const leftHandImg = document.getElementById('left-hand');
     this.updateHandDisplays(optionWrappers, keypoints, rightHandImg, leftHandImg, resetBtn);
-    const touchingWords = this.checkTouchingWords(optionWrappers, rightHandImg, leftHandImg);
     this.checkAudioButtonInteraction(audioBtn, rightHandImg, leftHandImg);
     this.handleResetButton(resetBtn);
-    this.handleWordSelection(touchingWords, optionWrappers);
   }
 
   drawBox(isCurPoseValid) {

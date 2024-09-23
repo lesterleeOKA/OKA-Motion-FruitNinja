@@ -1,7 +1,7 @@
 export function Sword(color) {
   this.swipes = [];
   this.color = color;
-  this.maxCircles = 20; // Maximum number of circles to keep
+  this.maxCircles = 10; // Maximum number of circles to keep
   this.arcLengthFactor = 1.5; // Factor to increase arc length for slicing
   this.minSliceDistance = 50; // Minimum distance for a slice to register
 }
@@ -11,11 +11,29 @@ Sword.prototype.draw = function (ctx) {
 
   ctx.lineCap = 'round';
 
-  for (let i = 0; i < l - 1; i++) {
-    const opacity = (i + 1) / l;
-    ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
-    ctx.lineWidth = (i + 1) * (5 / l);
+  if (l < 2) return; // Ensure there are enough swipes to draw
 
+  // Create a gradient based on the first and last swipe points
+  const gradient = ctx.createLinearGradient(this.swipes[0].x, this.swipes[0].y, this.swipes[l - 1].x, this.swipes[l - 1].y);
+  gradient.addColorStop(0, 'rgba(192, 192, 192, 1)'); // Gray
+  gradient.addColorStop(1, 'rgba(255, 255, 255, 1)'); // White
+
+  // Draw the outline first
+  for (let i = 0; i < l - 1; i++) {
+    ctx.lineWidth = (i + 1) * (20 / l) + 4; // Increase line width for the outline
+    ctx.beginPath();
+    ctx.moveTo(this.swipes[i].x, this.swipes[i].y);
+    ctx.lineTo(this.swipes[i + 1].x, this.swipes[i + 1].y);
+    ctx.strokeStyle = 'black'; // Set stroke style to black for outline
+    ctx.stroke();
+  }
+
+  // Draw the gradient fill on top
+  ctx.lineWidth = 0; // Reset line width for the gradient
+  ctx.strokeStyle = gradient; // Set the stroke style to the gradient
+
+  for (let i = 0; i < l - 1; i++) {
+    ctx.lineWidth = (i + 1) * (20 / l); // Dynamic line width
     ctx.beginPath();
     ctx.moveTo(this.swipes[i].x, this.swipes[i].y);
     ctx.lineTo(this.swipes[i + 1].x, this.swipes[i + 1].y);
