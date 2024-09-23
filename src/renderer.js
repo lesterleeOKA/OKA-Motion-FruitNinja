@@ -172,44 +172,18 @@ export class RendererCanvas2d {
     if (keypoints.length === 0) {
       this.leftHandSword.clearSwipes();
       this.rightHandSword.clearSwipes();
+      return;
     }
 
     keypoints.forEach(point => {
-      const wristX = point.x;
-      const wristY = point.y;
-      const handImg = point.name === 'right_wrist' ? rightHandImg : leftHandImg;
-      let adjustedWristX = wristX;
-      const movementThreshold = 6;
+      const { x: wristX, y: wristY, name } = point;
+      const handImg = name === 'right_wrist' ? rightHandImg : leftHandImg;
+      const handAdjustedWristX = this.handAdjustWristX(name, wristX);
+      const adjustedWristX = this.adjustWristX(name, wristX);
+      const movementThreshold = 4;
 
-      if (point.name === 'right_wrist') {
-        adjustedWristX -= 20;
-        const lastSwipe = this.rightHandSword.swipes[this.rightHandSword.swipes.length - 1];
-        if (lastSwipe) {
-          const distance = this.rightHandSword.distance(lastSwipe.x, lastSwipe.y, adjustedWristX, wristY - 100);
-          if (distance > movementThreshold) {
-            this.rightHandSword.swipe(adjustedWristX, wristY - 100);
-          } else {
-            this.rightHandSword.clearSwipes();
-          }
-        } else {
-          // If no previous swipe, just swipe
-          this.rightHandSword.swipe(adjustedWristX, wristY - 100);
-        }
-      } else if (point.name === 'left_wrist') {
-        const lastSwipe = this.leftHandSword.swipes[this.leftHandSword.swipes.length - 1];
-
-        if (lastSwipe) {
-          const distance = this.leftHandSword.distance(lastSwipe.x, lastSwipe.y, wristX + 30, wristY - 100);
-          if (distance > movementThreshold) {
-            this.leftHandSword.swipe(wristX + 30, wristY - 100);
-          } else {
-            this.leftHandSword.clearSwipes();
-          }
-        } else {
-          this.leftHandSword.swipe(wristX + 30, wristY - 100);
-        }
-      }
-      handImg.style.left = `${(adjustedWristX / window.innerWidth) * 95}vw`;
+      this.handleSwipe(name, adjustedWristX, wristY, movementThreshold);
+      handImg.style.left = `${(handAdjustedWristX / window.innerWidth) * 95}vw`;
       handImg.style.top = `${wristY - (window.innerWidth / 12)}px`;
       handImg.style.display = 'block';
 
@@ -218,6 +192,26 @@ export class RendererCanvas2d {
 
     const touchingWords = this.checkTouchingWords(optionWrappers, rightHandImg, leftHandImg);
     this.handleWordSelection(touchingWords, optionWrappers);
+  }
+  handAdjustWristX(handName, wristX) {
+    return handName === 'right_wrist' ? wristX - 20 : wristX;
+  }
+  adjustWristX(handName, wristX) {
+    return handName === 'right_wrist' ? wristX - 20 : wristX + 30;
+  }
+  handleSwipe(handName, adjustedWristX, wristY, movementThreshold) {
+    const sword = handName === 'right_wrist' ? this.rightHandSword : this.leftHandSword;
+    const lastSwipe = sword.swipes[sword.swipes.length - 1];
+
+    // Calculate targetY based on viewport height
+    const targetY = wristY - (window.innerHeight * 0.1); // Adjust the factor as needed (e.g., 0.2 for 20%)
+
+    if (lastSwipe) {
+      const distance = sword.distance(lastSwipe.x, lastSwipe.y, adjustedWristX, targetY);
+      distance > movementThreshold ? sword.swipe(adjustedWristX, targetY) : sword.clearSwipes();
+    } else {
+      sword.swipe(adjustedWristX, targetY);
+    }
   }
   checkTouchingWords(optionWrappers, rightHandImg, leftHandImg) {
     const touchingWords = [];
@@ -245,28 +239,23 @@ export class RendererCanvas2d {
     );
   }
   handleWordSelection(touchingWords, optionWrappers) {
-    if (touchingWords && optionWrappers) {
-      for (let option of optionWrappers) {
-        if (touchingWords.includes(option) && !option.classList.contains('touch')) {
+    if (touchingWords.length > 0) {
+      touchingWords.forEach(option => {
+        if (!option.classList.contains('touch')) {
           State.setPoseState('selectedImg', option);
           Game.fillWord(option);
         }
-      }
-
-      if (touchingWords.length === 0) {
-        State.setPoseState('selectedImg', '');
-      }
+      });
+    } else {
+      State.setPoseState('selectedImg', '');
     }
   }
   checkAudioButtonInteraction(audioBtn, rightHandImg, leftHandImg) {
     if (!audioBtn) return;
-
     const audioBtnRect = audioBtn.getBoundingClientRect();
     const audioRectHalf = audioBtnRect.width * 0.5;
-
     this.triggerAudioInteraction(rightHandImg, audioBtnRect, audioRectHalf);
     this.triggerAudioInteraction(leftHandImg, audioBtnRect, audioRectHalf);
-
     if (audioBtn.classList.contains('clicked') && !Game.touchBtn) {
       Game.motionTriggerPlayAudio(false);
     }
