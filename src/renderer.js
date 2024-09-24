@@ -18,10 +18,11 @@ export class RendererCanvas2d {
     this.canvasWrapperRect = null;
     this.leftHandSword = new Sword({ r: 255, g: 255, b: 255, a: 0.7 });
     this.rightHandSword = new Sword({ r: 255, g: 255, b: 255, a: 0.7 });
+    this.showSkeleton = false;
   }
 
   draw(rendererParams) {
-    const [video, poses, isModelChanged, bodySegmentationCanvas] = rendererParams;
+    const [video, poses, isFPSMode, bodySegmentationCanvas] = rendererParams;
     this.videoWidth = video.width;
     this.videoHeight = video.height;
     this.ctx.canvas.width = this.videoWidth;
@@ -35,8 +36,9 @@ export class RendererCanvas2d {
     this.drawCtx(video, bodySegmentationCanvas);
     if (['prepare', 'counting3', 'counting2', 'counting1', 'counting0', 'playing', 'outBox'].includes(State.state)) {
       let isCurPoseValid = false;
-      if (poses && poses.length > 0 && !isModelChanged) {
-        this.drawResults(poses, video.width / video.videoWidth);
+      if (poses && poses.length > 0) {
+        let ratio = video.width / video.videoWidth;
+        this.drawResults(poses, ratio, isFPSMode);
         //this.isPoseValid(poses, video.width / video.videoWidth);
         isCurPoseValid = this.isPoseValid(poses, video.width / video.videoWidth);
         if (isCurPoseValid && State.bodyInsideRedBox.value == true) {
@@ -186,12 +188,13 @@ export class RendererCanvas2d {
       handImg.style.left = `${(handAdjustedWristX / window.innerWidth) * 95}vw`;
       handImg.style.top = `${wristY - (window.innerWidth / 12)}px`;
       handImg.style.display = 'block';
+      handImg.style.opacity = '0';
 
       this.handleBackSpaceBtnDetection(optionWrappers, resetBtn, wristX, wristY);
     });
 
     const touchingWords = this.checkTouchingWords(optionWrappers, rightHandImg, leftHandImg);
-    this.handleWordSelection(touchingWords, optionWrappers);
+    this.handleWordSelection(touchingWords);
   }
   handAdjustWristX(handName, wristX) {
     return handName === 'right_wrist' ? wristX - 20 : wristX;
@@ -238,7 +241,7 @@ export class RendererCanvas2d {
       handBounds.top < optionRect.bottom
     );
   }
-  handleWordSelection(touchingWords, optionWrappers) {
+  handleWordSelection(touchingWords) {
     if (touchingWords.length > 0) {
       touchingWords.forEach(option => {
         if (!option.classList.contains('touch')) {
@@ -319,16 +322,16 @@ export class RendererCanvas2d {
   clearCtx() {
     this.ctx.clearRect(0, 0, this.videoWidth, this.videoHeight);
   }
-  drawResults(poses, ratio) {
+  drawResults(poses, ratio, isFPSMode) {
     for (const pose of poses) {
-      this.drawResult(pose, ratio);
+      this.drawResult(pose, ratio, isFPSMode);
     }
   }
-  drawResult(pose, ratio) {
+  drawResult(pose, ratio, isFPSMode) {
     if (pose.keypoints != null) {
       this.keypointsFitRatio(pose.keypoints, ratio);
-      this.drawKeypoints(pose.keypoints);
-      this.drawSkeleton(pose.keypoints, pose.id);
+      if (isFPSMode || this.showSkeleton) this.drawKeypoints(pose.keypoints);
+      this.drawSkeleton(pose.keypoints, pose.id, isFPSMode);
     }
   }
   drawKeypoints(keypoints) {
@@ -366,7 +369,7 @@ export class RendererCanvas2d {
       this.ctx.stroke(circle);
     }
   }
-  drawSkeleton(keypoints, poseId) {
+  drawSkeleton(keypoints, poseId, isFPSMode) {
     const color = 'White';
     this.ctx.fillStyle = color;
     this.ctx.strokeStyle = color;
@@ -387,7 +390,7 @@ export class RendererCanvas2d {
         this.ctx.beginPath();
         this.ctx.moveTo(kp1.x, kp1.y);
         this.ctx.lineTo(kp2.x, kp2.y);
-        this.ctx.stroke();
+        if (isFPSMode || this.showSkeleton) this.ctx.stroke();
       }
 
       if (kp1.name === 'left_shoulder') left_shoulder = kp1;
@@ -414,8 +417,10 @@ export class RendererCanvas2d {
         this.ctx.lineWidth = 2;
         const circle = new Path2D();
         circle.arc(this.center_shoulder.x, this.center_shoulder.y, 4, 0, 2 * Math.PI);
-        this.ctx.fill(circle);
-        this.ctx.stroke(circle);
+        if (isFPSMode || this.showSkeleton) {
+          this.ctx.fill(circle);
+          this.ctx.stroke(circle);
+        }
       }
     }
   }
