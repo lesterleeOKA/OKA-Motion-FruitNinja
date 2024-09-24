@@ -40,7 +40,7 @@ export class RendererCanvas2d {
         let ratio = video.width / video.videoWidth;
         this.drawResults(poses, ratio, isFPSMode);
         //this.isPoseValid(poses, video.width / video.videoWidth);
-        isCurPoseValid = this.isPoseValid(poses, video.width / video.videoWidth);
+        isCurPoseValid = this.isPoseValid(poses);
         if (isCurPoseValid && State.bodyInsideRedBox.value == true) {
           if (State.state == 'prepare' && State.getStateLastFor() > 3500) {
             State.changeState('counting3');
