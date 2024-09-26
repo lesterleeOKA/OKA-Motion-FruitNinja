@@ -1,284 +1,284 @@
 {
-  "QA":[
+  "questions":[
   {
-      "QID": "p1u1-e1",
-      "QuestionType": "FillInBlank",
-      "Question": "Miss Chan is my favourite _________. She teaches me English.",
-      "Answers": ["principal", "student", "teacher"],
-      "CorrectAnswer": "teacher"
+      "qid": "p1u1-e1",
+      "questionType": "fillInBlank",
+      "question": "Miss Chan is my favourite _________. She teaches me English.",
+      "answers": ["principal", "student", "teacher"],
+      "correctAnswer": "teacher"
   },
   {
-      "QID": "p1u1-e2",
-      "QuestionType": "FillInBlank",
-      "Question": "It’s time to go, let’s say __________ to Aunt Lily.",
-      "Answers": ["good morning", "good night", "goodbye"],
-      "CorrectAnswer": "goodbye"
+      "qid": "p1u1-e2",
+      "questionType": "fillInBlank",
+      "question": "It’s time to go, let’s say __________ to Aunt Lily.",
+      "answers": ["good morning", "good night", "goodbye"],
+      "correctAnswer": "goodbye"
   },
   {
-      "QID": "p1u1-e3",
-      "QuestionType": "FillInBlank",
-      "Question": "Mr Lee made Tom a ________and he is happy about it.",
-      "Answers": ["monitor", "monita", "monika"],
-      "CorrectAnswer": "monitor"
+      "qid": "p1u1-e3",
+      "questionType": "fillInBlank",
+      "question": "Mr Lee made Tom a ________and he is happy about it.",
+      "answers": ["monitor", "monita", "monika"],
+      "correctAnswer": "monitor"
   },
   {
-      "QID": "p1u1-e4",
-      "QuestionType": "FillInBlank",
-      "Question": "Leo and I are____________. We are in the same class.",
-      "Answers": ["students", "classmates", "teachers"],
-      "CorrectAnswer": "classmates"
+      "qid": "p1u1-e4",
+      "questionType": "fillInBlank",
+      "question": "Leo and I are____________. We are in the same class.",
+      "answers": ["students", "classmates", "teachers"],
+      "correctAnswer": "classmates"
   },
   {
-      "QID": "p1u1-e5",
-      "QuestionType": "FillInBlank",
-      "Question": "Amy is my best _______ and we always share secrets to each other.",
-      "Answers": ["friend", "teacher", "student"],
-      "CorrectAnswer": "friend"
+      "qid": "p1u1-e5",
+      "questionType": "fillInBlank",
+      "question": "Amy is my best _______ and we always share secrets to each other.",
+      "answers": ["friend", "teacher", "student"],
+      "correctAnswer": "friend"
   },
   {
-      "QID": "p1u1-e6",
-      "QuestionType": "FillInBlank",
-      "Question": "You can ask a ________to help you find books.",
-      "Answers": ["library", "prefect", "librarian"],
-      "CorrectAnswer": "librarian"
+      "qid": "p1u1-e6",
+      "questionType": "fillInBlank",
+      "question": "You can ask a ________to help you find books.",
+      "answers": ["library", "prefect", "librarian"],
+      "correctAnswer": "librarian"
   },
   {
-      "QID": "p1u1-e7",
-      "QuestionType": "FillInBlank",
-      "Question": "We should ____ others when we see them.",
-      "Answers": ["greek", "greed", "greet"],
-      "CorrectAnswer": "greet"
+      "qid": "p1u1-e7",
+      "questionType": "fillInBlank",
+      "question": "We should ____ others when we see them.",
+      "answers": ["greek", "greed", "greet"],
+      "correctAnswer": "greet"
   },
   {
-      "QID": "p1u1-e8",
-      "QuestionType": "FillInBlank",
-      "Question": "Who is the group ______?",
-      "Answers": ["cleaner", "leader", "lender"],
-      "CorrectAnswer": "leader"
+      "qid": "p1u1-e8",
+      "questionType": "fillInBlank",
+      "question": "Who is the group ______?",
+      "answers": ["cleaner", "leader", "lender"],
+      "correctAnswer": "leader"
   },
   {
-      "QID": "p1u1-e9",
-      "QuestionType": "FillInBlank",
-      "Question": "He says good __________ to us first thing every day.",
-      "Answers": ["morning", "evening", "afternoon"],
-      "CorrectAnswer": "morning"
+      "qid": "p1u1-e9",
+      "questionType": "fillInBlank",
+      "question": "He says good __________ to us first thing every day.",
+      "answers": ["morning", "evening", "afternoon"],
+      "correctAnswer": "morning"
   },
   {
-      "QID": "p1u1-e10",
-      "QuestionType": "FillInBlank",
-      "Question": "Sorry, do you know where the ________’s office is?",
-      "Answers": ["principal", "principle", "princess"],
-      "CorrectAnswer": "principal"
+      "qid": "p1u1-e10",
+      "questionType": "fillInBlank",
+      "question": "Sorry, do you know where the ________’s office is?",
+      "answers": ["principal", "principle", "princess"],
+      "correctAnswer": "principal"
   },
   {
-    "QID": "p1u2-a1",
-    "QuestionType": "Audio",
-    "Question": "femily, families, family",
-    "Answers": ["femily", "families", "family"],
-    "CorrectAnswer": "family"
+    "qid": "p1u2-a1",
+    "questionType": "audio",
+    "question": "femily, families, family",
+    "answers": ["femily", "families", "family"],
+    "correctAnswer": "family"
   },
   {
-      "QID": "p1u2-a2",
-      "QuestionType": "Audio",
-      "Question": "mother, father, sister",
-      "Answers": ["mother", "father", "sister"],
-      "CorrectAnswer": "sister"
+      "qid": "p1u2-a2",
+      "questionType": "audio",
+      "question": "mother, father, sister",
+      "answers": ["mother", "father", "sister"],
+      "correctAnswer": "sister"
   },
   {
-      "QID": "p1u2-a3",
-      "QuestionType": "Audio",
-      "Question": "mother, father, sister",
-      "Answers": ["mother", "father", "sister"],
-      "CorrectAnswer": "father"
+      "qid": "p1u2-a3",
+      "questionType": "audio",
+      "question": "mother, father, sister",
+      "answers": ["mother", "father", "sister"],
+      "correctAnswer": "father"
   },
   {
-      "QID": "p1u2-a4",
-      "QuestionType": "Audio",
-      "Question": "mother, sister, brother",
-      "Answers": ["mother", "sister", "brother"],
-      "CorrectAnswer": "mother"
+      "qid": "p1u2-a4",
+      "questionType": "audio",
+      "question": "mother, sister, brother",
+      "answers": ["mother", "sister", "brother"],
+      "correctAnswer": "mother"
   },
   {
-      "QID": "p1u2-a5",
-      "QuestionType": "Audio",
-      "Question": "mother, sister, brother",
-      "Answers": ["mother", "sister", "brother"],
-      "CorrectAnswer": "brother"
+      "qid": "p1u2-a5",
+      "questionType": "audio",
+      "question": "mother, sister, brother",
+      "answers": ["mother", "sister", "brother"],
+      "correctAnswer": "brother"
   },
   {
-      "QID": "p1u2-a6",
-      "QuestionType": "Audio",
-      "Question": "grandma, grandmother, grandfather",
-      "Answers": ["grandma", "grandmother", "grandfather"],
-      "CorrectAnswer": "grandmother"
+      "qid": "p1u2-a6",
+      "questionType": "audio",
+      "question": "grandma, grandmother, grandfather",
+      "answers": ["grandma", "grandmother", "grandfather"],
+      "correctAnswer": "grandmother"
   },
   {
-      "QID": "p1u2-a7",
-      "QuestionType": "Audio",
-      "Question": "grandmother, grandpa, grandfather",
-      "Answers": ["grandmother", "grandpa", "grandfather"],
-      "CorrectAnswer": "grandfather"
+      "qid": "p1u2-a7",
+      "questionType": "audio",
+      "question": "grandmother, grandpa, grandfather",
+      "answers": ["grandmother", "grandpa", "grandfather"],
+      "correctAnswer": "grandfather"
   },
   {
-      "QID": "p1u2-a8",
-      "QuestionType": "Audio",
-      "Question": "parrots, parants, parents",
-      "Answers": ["parrots", "parants", "parents"],
-      "CorrectAnswer": "parents"
+      "qid": "p1u2-a8",
+      "questionType": "audio",
+      "question": "parrots, parants, parents",
+      "answers": ["parrots", "parants", "parents"],
+      "correctAnswer": "parents"
   },
   {
-      "QID": "p1u2-a9",
-      "QuestionType": "Audio",
-      "Question": "children, chilldren, childrens",
-      "Answers": ["children", "chilldren", "childrens"],
-      "CorrectAnswer": "children"
+      "qid": "p1u2-a9",
+      "questionType": "audio",
+      "question": "children, chilldren, childrens",
+      "answers": ["children", "chilldren", "childrens"],
+      "correctAnswer": "children"
   },
   {
-      "QID": "p1u2-a10",
-      "QuestionType": "Audio",
-      "Question": "babies, baby, babe",
-      "Answers": ["babies", "baby", "babe"],
-      "CorrectAnswer": "baby"
+      "qid": "p1u2-a10",
+      "questionType": "audio",
+      "question": "babies, baby, babe",
+      "answers": ["babies", "baby", "babe"],
+      "correctAnswer": "baby"
   },
   {
-      "QID": "p1u2-a11",
-      "QuestionType": "Audio",
-      "Question": "ant, aunt, arent",
-      "Answers": ["ant", "aunt", "arent"],
-      "CorrectAnswer": "aunt"
+      "qid": "p1u2-a11",
+      "questionType": "audio",
+      "question": "ant, aunt, arent",
+      "answers": ["ant", "aunt", "arent"],
+      "correctAnswer": "aunt"
   },
   {
-      "QID": "p1u2-a12",
-      "QuestionType": "Audio",
-      "Question": "uncle, oncle, under",
-      "Answers": ["uncle", "oncle", "under"],
-      "CorrectAnswer": "uncle"
+      "qid": "p1u2-a12",
+      "questionType": "audio",
+      "question": "uncle, oncle, under",
+      "answers": ["uncle", "oncle", "under"],
+      "correctAnswer": "uncle"
   },
   {
-      "QID": "p1u2-a13",
-      "QuestionType": "Audio",
-      "Question": "nephew, niece, liece",
-      "Answers": ["nephew", "niece", "liece"],
-      "CorrectAnswer": "niece"
+      "qid": "p1u2-a13",
+      "questionType": "audio",
+      "question": "nephew, niece, liece",
+      "answers": ["nephew", "niece", "liece"],
+      "correctAnswer": "niece"
   },
   {
-      "QID": "p1u2-a14",
-      "QuestionType": "Audio",
-      "Question": "naphew, nephew, niece",
-      "Answers": ["naphew", "nephew", "niece"],
-      "CorrectAnswer": "nephew"
+      "qid": "p1u2-a14",
+      "questionType": "audio",
+      "question": "naphew, nephew, niece",
+      "answers": ["naphew", "nephew", "niece"],
+      "correctAnswer": "nephew"
   },
   {
-      "QID": "p1u2-a15",
-      "QuestionType": "Audio",
-      "Question": "coussins, cushions, cousins",
-      "Answers": ["coussins", "cushions", "cousins"],
-      "CorrectAnswer": "cousins"
+      "qid": "p1u2-a15",
+      "questionType": "audio",
+      "question": "coussins, cushions, cousins",
+      "answers": ["coussins", "cushions", "cousins"],
+      "correctAnswer": "cousins"
   },
   {
-      "QID": "p1u2-a16",
-      "QuestionType": "Audio",
-      "Question": "siblings, sibbings, sibings",
-      "Answers": ["siblings", "sibbings", "sibings"],
-      "CorrectAnswer": "siblings"
+      "qid": "p1u2-a16",
+      "questionType": "audio",
+      "question": "siblings, sibbings, sibings",
+      "answers": ["siblings", "sibbings", "sibings"],
+      "correctAnswer": "siblings"
   },
   {
-      "QID": "p1u2-a17",
-      "QuestionType": "Audio",
-      "Question": "triplets, sons, twins",
-      "Answers": ["triplets", "sons", "twins"],
-      "CorrectAnswer": "twins"
+      "qid": "p1u2-a17",
+      "questionType": "audio",
+      "question": "triplets, sons, twins",
+      "answers": ["triplets", "sons", "twins"],
+      "correctAnswer": "twins"
   },
   {
-      "QID": "p1u2-a18",
-      "QuestionType": "Audio",
-      "Question": "triplets, son, twins",
-      "Answers": ["triplets", "son", "twins"],
-      "CorrectAnswer": "son"
+      "qid": "p1u2-a18",
+      "questionType": "audio",
+      "question": "triplets, son, twins",
+      "answers": ["triplets", "son", "twins"],
+      "correctAnswer": "son"
   },
   {
-      "QID": "p1u2-a19",
-      "QuestionType": "Audio",
-      "Question": "daughter, doctor, daughtor",
-      "Answers": ["daughter", "doctor", "daughtor"],
-      "CorrectAnswer": "daughter"
+      "qid": "p1u2-a19",
+      "questionType": "audio",
+      "question": "daughter, doctor, daughtor",
+      "answers": ["daughter", "doctor", "daughtor"],
+      "correctAnswer": "daughter"
   },
   {
-      "QID": "p1u2-a20",
-      "QuestionType": "Audio",
-      "Question": "grantchildren, grandchilldren, grandchildren",
-      "Answers": ["grantchildren", "grandchilldren", "grandchildren"],
-      "CorrectAnswer": "grandchildren"
+      "qid": "p1u2-a20",
+      "questionType": "audio",
+      "question": "grantchildren, grandchilldren, grandchildren",
+      "answers": ["grantchildren", "grandchilldren", "grandchildren"],
+      "correctAnswer": "grandchildren"
   },
   {
-    "QID": "p2u3-e1",
-    "QuestionType": "Text",
-    "Question": "We come here for talks, ceremonies or shows.",
-    "Answers": ["library", "hall", "playground"],
-    "CorrectAnswer": "hall"
+    "qid": "p2u3-e1",
+    "questionType": "text",
+    "question": "We come here for talks, ceremonies or shows.",
+    "answers": ["library", "hall", "playground"],
+    "correctAnswer": "hall"
   },
   {
-      "QID": "p2u3-e2",
-      "QuestionType": "Text",
-      "Question": "I need to do some research on how many countries there are in the world.",
-      "Answers": ["music room", "art room", "computer room"],
-      "CorrectAnswer": "computer room"
+      "qid": "p2u3-e2",
+      "questionType": "text",
+      "question": "I need to do some research on how many countries there are in the world.",
+      "answers": ["music room", "art room", "computer room"],
+      "correctAnswer": "computer room"
   },
   {
-      "QID": "p2u3-e3",
-      "QuestionType": "Text",
-      "Question": "I think I ate something wrong. I am having a stomachache.",
-      "Answers": ["toilet", "lift", "classroom"],
-      "CorrectAnswer": "toilet"
+      "qid": "p2u3-e3",
+      "questionType": "text",
+      "question": "I think I ate something wrong. I am having a stomachache.",
+      "answers": ["toilet", "lift", "classroom"],
+      "correctAnswer": "toilet"
   },
   {
-      "QID": "p2u3-e4",
-      "QuestionType": "Text",
-      "Question": "I didn't have breakfast this morning. I am hungry.",
-      "Answers": ["garden", "tuck shop", "sick room"],
-      "CorrectAnswer": "tuck shop"
+      "qid": "p2u3-e4",
+      "questionType": "text",
+      "question": "I didn't have breakfast this morning. I am hungry.",
+      "answers": ["garden", "tuck shop", "sick room"],
+      "correctAnswer": "tuck shop"
   },
   {
-      "QID": "p2u3-e5",
-      "QuestionType": "Text",
-      "Question": "The bell is ringing. We need to have English lesson now.",
-      "Answers": ["classroom", "music room", "computer room"],
-      "CorrectAnswer": "classroom"
+      "qid": "p2u3-e5",
+      "questionType": "text",
+      "question": "The bell is ringing. We need to have English lesson now.",
+      "answers": ["classroom", "music room", "computer room"],
+      "correctAnswer": "classroom"
   },
   {
-      "QID": "p2u3-e6",
-      "QuestionType": "Text",
-      "Question": "Mary wants to borrow the book 'The Little Prince'.",
-      "Answers": ["hall", "library", "playground"],
-      "CorrectAnswer": "library"
+      "qid": "p2u3-e6",
+      "questionType": "text",
+      "question": "Mary wants to borrow the book 'The Little Prince'.",
+      "answers": ["hall", "library", "playground"],
+      "correctAnswer": "library"
   },
   {
-      "QID": "p2u3-e7",
-      "QuestionType": "Text",
-      "Question": "It rained this morning. Be careful when playing badminton.",
-      "Answers": ["garden", "classroom", "playground"],
-      "CorrectAnswer": "playground"
+      "qid": "p2u3-e7",
+      "questionType": "text",
+      "question": "It rained this morning. Be careful when playing badminton.",
+      "answers": ["garden", "classroom", "playground"],
+      "correctAnswer": "playground"
   },
   {
-      "QID": "p2u3-e8",
-      "QuestionType": "Text",
-      "Question": "Do you know there are beautiful pink roses? Let’s go check it out!",
-      "Answers": ["garden", "classroom", "playground"],
-      "CorrectAnswer": "garden"
+      "qid": "p2u3-e8",
+      "questionType": "text",
+      "question": "Do you know there are beautiful pink roses? Let’s go check it out!",
+      "answers": ["garden", "classroom", "playground"],
+      "correctAnswer": "garden"
   },
   {
-      "QID": "p2u3-e9",
-      "QuestionType": "Text",
-      "Question": "Nicole broke her legs. She can't walk up stairs.",
-      "Answers": ["stairs", "toilet", "lift"],
-      "CorrectAnswer": "lift"
+      "qid": "p2u3-e9",
+      "questionType": "text",
+      "question": "Nicole broke her legs. She can't walk up stairs.",
+      "answers": ["stairs", "toilet", "lift"],
+      "correctAnswer": "lift"
   },
   {
-      "QID": "p2u3-e10",
-      "QuestionType": "Text",
-      "Question": "Good morning, class. Today we are going to make a Lego robot.",
-      "Answers": ["art room", "music room", "STEAM room"],
-      "CorrectAnswer": "STEAM room"
+      "qid": "p2u3-e10",
+      "questionType": "text",
+      "question": "Good morning, class. Today we are going to make a Lego robot.",
+      "answers": ["art room", "music room", "STEAM room"],
+      "correctAnswer": "STEAM room"
   }
   ]
 }
