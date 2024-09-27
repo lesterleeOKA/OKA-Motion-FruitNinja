@@ -192,6 +192,7 @@ async function init() {
       levelKey,
       () => {
         View.setPlayerIcon(apiManager.iconDataUrl);
+        View.setPlayerName(apiManager.loginName);
         resolve();
       },
       () => {

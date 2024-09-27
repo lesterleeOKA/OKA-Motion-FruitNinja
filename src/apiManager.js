@@ -59,9 +59,9 @@ const apiManager = {
             //this.peopleIcon = await this.loadPeopleIcon(imageUrl);
           }
 
-          if (this.accountJson.length > 0 && this.accountJson.display_name) {
+          if (this.accountJson && this.accountJson.display_name) {
             this.loginName = this.accountJson.display_name.replace(/"/g, "");
-            console.log(`login Name: ${this.loginName}`);
+            console.log(`FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFlogin Name: ${this.loginName}`);
           }
 
           if (onCompleted) onCompleted();
