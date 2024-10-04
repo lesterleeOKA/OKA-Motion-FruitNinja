@@ -1,6 +1,7 @@
 import View from './view';
 import Sound from './sound';
 import Game from './fruitNinja';
+import { apiManager } from "./apiManager";
 
 export default {
   state: 'load', //load/instruction/prepare/count/play
@@ -175,22 +176,29 @@ export default {
       return;
     }
     else if (state == 'leave') {
-      const hostname = window.location.hostname;
-      let homePageUrl;
-
-      if (hostname.includes('dev.openknowledge.hk')) {
-        homePageUrl = window.location.origin + '/RainbowOne/webapp/OKAGames/SelectGames/';
-        window.open(homePageUrl, '_self');
-      }
-      else if (hostname.includes('www.rainbowone.app')) {
-        homePageUrl = 'https://www.starwishparty.com';
-        window.open(homePageUrl, '_self');
-      }
-      else if (hostname.includes('localhost')) {
-        location.reload();
+      if (apiManager.isLogined) {
+        apiManager.exitGameRecord(
+          () => window.close()
+        );
       }
       else {
-        location.hash = 'exit';
+        const hostname = window.location.hostname;
+        let homePageUrl;
+
+        if (hostname.includes('dev.openknowledge.hk')) {
+          homePageUrl = window.location.origin + '/RainbowOne/webapp/OKAGames/SelectGames/';
+          window.open(homePageUrl, '_self');
+        }
+        else if (hostname.includes('www.rainbowone.app')) {
+          homePageUrl = 'https://www.starwishparty.com';
+          window.open(homePageUrl, '_self');
+        }
+        else if (hostname.includes('localhost')) {
+          location.reload();
+        }
+        else {
+          location.hash = 'exit';
+        }
       }
     }
 

@@ -9,9 +9,16 @@
 }
 
 .loadingBarWrapper > .loadingCharacter {
+  align-items: center;
+  justify-content: center;
+  width: calc(min(18vh, 18vw));
   height: calc(min(18vh, 18vw));
-  content: url(../images/fruitNinja/ui_princewalk_apng.png);
+  /*content: url(../images/fruitNinja/ui_princewalk_apng.png);*/
+  background-image: url(../images/fruitNinja/ui_princewalk_apng.png);
+  background-size: contain; /* Adjust as necessary */
+  background-repeat: no-repeat;
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
+  margin-left: calc(min(5vh, 5vw));
 }
 
 /*.loadingBarWrapper > .loadingText {

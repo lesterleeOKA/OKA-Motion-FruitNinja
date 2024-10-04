@@ -186,7 +186,7 @@ async function init() {
 
   // Load question data and handle callbacks
   await new Promise((resolve, reject) => {
-    QuestionManager.loadQuestionData(
+    QuestionManager.checkIsLogin(
       jwt,
       id,
       levelKey,
