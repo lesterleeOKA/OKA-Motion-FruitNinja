@@ -2,6 +2,8 @@ import View from './view';
 import State from './state';
 import Sound from './sound';
 import QuestionManager from './question';
+import { apiManager } from './apiManager';
+import state from './state';
 
 export default {
   fallingId: 0,
@@ -22,7 +24,9 @@ export default {
   fallingItems: [],
   reFallingItems: [],
   typedItems: [],
+  randomQuestionId: 0,
   answeredNum: 0,
+  correctedAnswerNumber: 0,
   answerLength: 0,
   questionWrapper: null,
   answerWrapper: null,
@@ -44,6 +48,7 @@ export default {
   wholeScreenColumnSeperated: false,
   starNum: 0,
   touchBtn: false,
+  apiManager: null,
 
   init(gameTime = null, fallSpeed = null) {
     //View.showTips('tipsReady');
@@ -71,7 +76,9 @@ export default {
     this.questionWrapper = null;
     this.answerWrapper = null;
     View.scoreBoard.className = "scoreBoard";
+    this.randomQuestionId = 0;
     this.answeredNum = 0;
+    this.correctedAnswerNumber = 0;
     this.answerLength = 0;
     this.optionSize = View.canvas.width / 7.5;
     this.redBoxX = View.canvas.width / 3;
@@ -98,6 +105,7 @@ export default {
     this.starNum = 0;
     this.selectedCount = 0;
     this.touchBtn = false;
+    this.apiManager = state.apiManager;
   },
 
   handleVisibilityChange() {
@@ -587,22 +595,29 @@ export default {
       return null;
 
     let questions = this.questionType.questions;
-    if (this.answeredNum === 0) {
+    if (this.randomQuestionId === 0) {
       questions = questions.sort(() => Math.random() - 0.5);
     }
     console.log("questions", questions);
-    const _type = questions[this.answeredNum].questionType;
-    const _QID = questions[this.answeredNum].qid;
-    const _question = questions[this.answeredNum].question;
-    const _answers = questions[this.answeredNum].answers;
-    const _correctAnswer = questions[this.answeredNum].correctAnswer;
-    const _media = questions[this.answeredNum].media;
+    const _type = questions[this.randomQuestionId].questionType;
+    const _QID = questions[this.randomQuestionId].qid;
+    const _question = questions[this.randomQuestionId].question;
+    const _answers = questions[this.randomQuestionId].answers;
+    const _correctAnswer = questions[this.randomQuestionId].correctAnswer;
+    const _star = questions[this.randomQuestionId].star;
+    const _score = questions[this.randomQuestionId].score;
+    const _correctAnswerIndex = questions[this.randomQuestionId].correctAnswerIndex;
+    const _media = questions[this.randomQuestionId].media;
 
-    if (this.answeredNum < questions.length - 1) {
-      this.answeredNum += 1;
+    if (this.randomQuestionId < questions.length - 1) {
+      this.randomQuestionId += 1;
     }
     else {
-      this.answeredNum = 0;
+      this.randomQuestionId = 0;
+    }
+
+    if (this.answeredNum < questions.length) {
+      this.answeredNum += 1;
     }
 
     //console.log("answered count", this.answeredNum);
@@ -612,6 +627,10 @@ export default {
       Question: _question,
       Answers: _answers,
       CorrectAnswer: _correctAnswer,
+      Star: _star,
+      Score: _score,
+      CorrectAnswer: _correctAnswer,
+      CorrectAnswerId: _correctAnswerIndex,
       Media: _media,
     };
   },
@@ -1015,7 +1034,9 @@ export default {
   checkAnswer(answer) {
     if (answer === this.randomQuestion.CorrectAnswer) {
       //答岩1分，答錯唔扣分
-      this.addScore(this.eachQAMark);
+      var eachQAScore = this.randomQuestion.Score == 0 ? this.eachQAMark : this.randomQuestion.Score;
+      this.addScore(eachQAScore);
+      this.uploadAnswerToAPI(answer, this.randomQuestion, eachQAScore); /////////////////////////new////////
       this.answerWrapper.classList.add('correct');
       State.changeState('playing', 'ansCorrect');
       View.showCorrectEffect(true);
@@ -1033,5 +1054,90 @@ export default {
     setTimeout(() => {
       this.nextQuestion = true;
     }, 500);
+  },
+
+  answeredPercentage(correctedAnswerNumber, totalQuestions = 0) {
+    if (totalQuestions === 0) return 0;
+    return (correctedAnswerNumber / totalQuestions) * 100;
+  },
+
+  uploadAnswerToAPI(answer, currentQuestion, eachMark) {
+    if (this.apiManager.isLogined) {
+      if (answer === '') return;
+
+      let currentTime;
+      let currentQAPercent = 0;
+      let correctId = 0;
+      let score = 0;
+      let answeredPercentage = 0;
+      let totalQuestions = this.question.length;
+      var progress = Math.floor((this.answeredNum / totalQuestions) * 100);
+
+      if (answer === currentQuestion.CorrectAnswer) {
+        if (this.correctedAnswerNumber < totalQuestions) {
+          this.correctedAnswerNumber += 1;
+        }
+        correctId = 2;
+        score = eachMark;
+        currentQAPercent = 100;
+      }
+      else {
+        if (this.correctedAnswerNumber > 0) {
+          this.correctedAnswerNumber -= 1;
+        }
+      }
+
+      if (this.correctedAnswerNumber < totalQuestions) {
+        answeredPercentage = this.answeredPercentage(totalQuestions);
+      }
+      else {
+        answeredPercentage = 100;
+      }
+
+      this.apiManager.SubmitAnswer(
+        currentTime,
+        this.score,
+        answeredPercentage,
+        progress,
+        correctId,
+        currentTime,
+        currentQuestion.QID,
+        currentQuestion.CorrectAnswerId,
+        answer,
+        currentQuestion.CorrectAnswer,
+        score,
+        currentQAPercent
+      );
+    }
+  }
+}
+
+
+class State {
+  constructor(duration, score, percent, progress) {
+    this.duration = duration; // int
+    this.score = score;       // float
+    this.percent = percent;   // float
+    this.progress = progress; // int
+  }
+}
+
+class CurrentQA {
+  constructor(correctId, duration, qid, answerId, answerText, correctAnswerText, score, percent) {
+    this.correctId = correctId;                // int
+    this.duration = duration;                   // float
+    this.qid = qid;                            // string
+    this.answerId = answerId;                  // int
+    this.answerText = answerText;              // string
+    this.correctAnswerText = correctAnswerText; // string
+    this.score = score;                         // float
+    this.percent = percent;                     // float
+  }
+}
+
+class Answer {
+  constructor(state, currentQA) {
+    this.state = state;        // State instance
+    this.currentQA = currentQA; // CurrentQA instance
   }
 }

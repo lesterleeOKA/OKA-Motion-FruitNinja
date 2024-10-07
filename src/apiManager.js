@@ -100,6 +100,55 @@ const apiManager = {
     }
   },
 
+
+
+  async SubmitAnswer(answer = null, onCompleted = null) {
+    // Check for invalid parameters
+    if (!this.payloads || this.accountUid === -1 || !this.jwt || !this.isLogined) {
+      console.log("Invalid parameters: payloads, accountUid, or jwt is null or empty or login out.");
+      return;
+    }
+
+    const api = this.submitAnswerAPI(answer, this.payloads, this.accountUid, this.jwt);
+    console.debug("Called submit marks API: " + api);
+    const maxRetries = this.maxRetries;
+    let retryCount = 0;
+    let requestSuccessful = false;
+
+    while (retryCount < maxRetries && !requestSuccessful) {
+      try {
+        const response = await fetch(api, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'typ': 'jwt',
+            'alg': 'HS256',
+          },
+        });
+
+        // Check for HTTP errors
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const responseText = await response.json();
+        console.debug("Success to submit answers: ", JSON.stringify(responseText, null, 2));
+        requestSuccessful = true;
+        if (onCompleted) onCompleted();
+
+      } catch (error) {
+        retryCount++;
+        console.error("Error: " + error.message + " Retrying... " + retryCount);
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for 2 seconds before retrying
+      }
+    }
+
+    if (!requestSuccessful) {
+      console.error("Failed to call upload marks response after " + maxRetries + " attempts.");
+      if (onCompleted) onCompleted();
+    }
+  },
+
   async exitGameRecord(onCompleted = null) {
     // Check for invalid parameters
     if (!this.payloads || this.accountUid === -1 || !this.jwt || !this.isLogined) {
@@ -155,6 +204,51 @@ const apiManager = {
         onCompleted(); // Call onCompleted even if it failed
       }
     }
+  },
+
+  submitAnswerAPI(answer, payloads, uid, jwt) {
+    const hostName = this.currentHostName;
+    const answer = answer;
+
+    const stateDuration = answer.state.duration;
+    const stateScore = answer.state.score;
+    const statePercent = answer.state.percent;
+    const stateProgress = answer.state.progress;
+
+    const correct = answer.currentQA.correctId;
+    const currentQADuration = answer.currentQA.duration;
+    const currentqid = answer.currentQA.qid;
+    const answerId = answer.currentQA.answerId;
+    const answerText = answer.currentQA.answerText;
+    const correctAnswerText = answer.currentQA.correctAnswerText;
+    const currentQAscore = answer.currentQA.score;
+    const currentQAPercent = answer.currentQA.percent;
+
+    // Construct the JSON payload
+    const jsonPayload = JSON.stringify([{
+      payloads: payloads,
+      role: { uid: uid },
+      state: {
+        duration: stateDuration,
+        score: stateScore,
+        percent: statePercent,
+        progress: stateProgress
+      },
+      currentQuestion: {
+        correct: correct,
+        duration: currentQADuration,
+        qid: currentqid,
+        answer: answerId,
+        answerText: answerText,
+        correctAnswerText: correctAnswerText,
+        score: currentQAscore,
+        percent: currentQAPercent
+      }
+    }]);
+
+    // Construct the API endpoint URL
+    const submitAPI = `${hostName}/RainbowOne/index.php/PHPGateway/proxy/2.8/?api=ROGame.submit_answer&json=${jsonPayload}&jwt=${jwt}`;
+    return submitAPI;
   },
 }
 
