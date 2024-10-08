@@ -101,9 +101,15 @@ const apiManager = {
   },
 
 
+  async SubmitAnswer(duration, playerScore, statePercent, stateProgress, correctId,
+    currentQADuration, qid, answerId, answerText, correctAnswerText,
+    currentQAscore, currentQAPercent, onCompleted = null) {
 
-  async SubmitAnswer(answer = null, onCompleted = null) {
     // Check for invalid parameters
+    var answerState = new State(duration, playerScore, statePercent, stateProgress);
+    var currentQA = new CurrentQA(correctId, currentQADuration, qid, answerId, answerText, correctAnswerText, currentQAscore, currentQAPercent);
+    var answer = new Answer(answerState, currentQA);
+
     if (!this.payloads || this.accountUid === -1 || !this.jwt || !this.isLogined) {
       console.log("Invalid parameters: payloads, accountUid, or jwt is null or empty or login out.");
       return;
@@ -132,7 +138,7 @@ const apiManager = {
         }
 
         const responseText = await response.json();
-        console.debug("Success to submit answers: ", JSON.stringify(responseText, null, 2));
+        console.log("Success to submit answers: ", JSON.stringify(responseText, null, 2));
         requestSuccessful = true;
         if (onCompleted) onCompleted();
 
@@ -152,7 +158,7 @@ const apiManager = {
   async exitGameRecord(onCompleted = null) {
     // Check for invalid parameters
     if (!this.payloads || this.accountUid === -1 || !this.jwt || !this.isLogined) {
-      console.log("Invalid parameters: payloads, accountUid, or jwt is null or empty.");
+      console.log("Invalid parameters: payloads, accountUid, or jwt is null or empty, quit game");
       return;
     }
 
@@ -185,7 +191,6 @@ const apiManager = {
           console.log("Success to post end game api:", JSON.stringify(parsedJson, null, 2));
           requestSuccessful = true;
           if (onCompleted) {
-            console.log("leave page, window close");
             onCompleted();
           }
         } catch (ex) {
@@ -206,9 +211,9 @@ const apiManager = {
     }
   },
 
-  submitAnswerAPI(answer, payloads, uid, jwt) {
+  submitAnswerAPI(qaAnswer = null, payloads = null, uid = null, jwt = null) {
     const hostName = this.currentHostName;
-    const answer = answer;
+    const answer = qaAnswer;
 
     const stateDuration = answer.state.duration;
     const stateScore = answer.state.score;
@@ -250,6 +255,35 @@ const apiManager = {
     const submitAPI = `${hostName}/RainbowOne/index.php/PHPGateway/proxy/2.8/?api=ROGame.submit_answer&json=${jsonPayload}&jwt=${jwt}`;
     return submitAPI;
   },
+}
+
+class State {
+  constructor(duration, score, percent, progress) {
+    this.duration = duration; // int
+    this.score = score;       // float
+    this.percent = percent;   // float
+    this.progress = progress; // int
+  }
+}
+
+class CurrentQA {
+  constructor(correctId, duration, qid, answerId, answerText, correctAnswerText, score, percent) {
+    this.correctId = correctId;                // int
+    this.duration = duration;                   // float
+    this.qid = qid;                            // string
+    this.answerId = answerId;                  // int
+    this.answerText = answerText;              // string
+    this.correctAnswerText = correctAnswerText; // string
+    this.score = score;                         // float
+    this.percent = percent;                     // float
+  }
+}
+
+class Answer {
+  constructor(state, currentQA) {
+    this.state = state;        // State instance
+    this.currentQA = currentQA; // CurrentQA instance
+  }
 }
 
 export { apiManager };

@@ -53,8 +53,8 @@ const QuestionManager = {
     let questionsJsonPath;
     let questions;
 
-    console.log("Account Logined", this.isLogined);
-    if (apiManager.questionJson && !this.isLogined) {
+    console.log("Account Logined", apiManager.isLogined);
+    if (apiManager.questionJson && apiManager.isLogined) {
       questions = apiManager.questionJson;
       this.QUESTION_TYPE = { questions: questions };
     }

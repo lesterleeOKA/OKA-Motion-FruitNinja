@@ -4,6 +4,7 @@ import Game from './fruitNinja';
 import { apiManager } from "./apiManager";
 
 export default {
+  apiManager: apiManager,
   state: 'load', //load/instruction/prepare/count/play
   lastState: '',
   stateLastAt: +new Date(),
@@ -116,11 +117,12 @@ export default {
             Sound.stopAll(['bgm', 'lastTen']);
             Sound.play('ansWrong');
           }
-          this.changeState('playing', 'wrong');
+          this.changeState('playing', 'waitAns');
           setTimeout(() => {
             this.setPoseState('selectedImg', '');
-            Game.resetFillWord();
-          }, 100);
+            if (state === 'playing')
+              Game.moveToNextQuestion();
+          }, 1000);
           break;
         case 'ansCorrect':
           if (this.isSoundOn) {
@@ -176,25 +178,48 @@ export default {
       return;
     }
     else if (state == 'leave') {
-      if (apiManager.isLogined) {
-        apiManager.exitGameRecord(
-          () => window.close()
-        );
-      }
-      else {
-        const hostname = window.location.hostname;
-        let homePageUrl;
+      const hostname = window.location.hostname;
+      let homePageUrl = '';
 
-        if (hostname.includes('dev.openknowledge.hk')) {
+      if (hostname.includes('dev.openknowledge.hk')) {
+        if (this.apiManager.isLogined) {
+          this.apiManager.exitGameRecord(
+            () => {
+              console.log("leave page, back to history");
+              window.history.back();
+            }
+          );
+        }
+        else {
           homePageUrl = window.location.origin + '/RainbowOne/webapp/OKAGames/SelectGames/';
           window.open(homePageUrl, '_self');
         }
-        else if (hostname.includes('www.rainbowone.app')) {
+      }
+      else if (hostname.includes('www.rainbowone.app')) {
+        if (this.apiManager.isLogined) {
+          this.apiManager.exitGameRecord(
+            () => {
+              console.log("leave page, back to history");
+              window.history.back();
+            }
+          );
+        }
+        else {
           homePageUrl = 'https://www.starwishparty.com';
           window.open(homePageUrl, '_self');
         }
-        else if (hostname.includes('localhost')) {
-          location.reload();
+      }
+      else if (hostname.includes('localhost')) {
+        location.reload();
+      }
+      else {
+        console.log("Quit Game");
+        if (this.apiManager.isLogined) {
+          this.apiManager.exitGameRecord(
+            () => {
+              location.hash = 'exit';
+            }
+          );
         }
         else {
           location.hash = 'exit';
@@ -225,6 +250,16 @@ export default {
       Sound.stopAll();
       this.isSoundOn = status;
     }
+  },
+  isWebView() {
+    let isWebView = true;
+    const uagent = navigator.userAgent;
+    if (/iPhone|iPad|iPod|Android/i.test(uagent)) {
+      isWebView = /wv/i.test(uagent) || /FBAN|FBAV|Instagram|Twitter/i.test(uagent);
+    } else {
+      isWebView = false;
+    }
+    return isWebView;
   }
   //-----------------------------------------------------------------------------------------------
 };
