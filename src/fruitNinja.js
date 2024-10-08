@@ -2,7 +2,6 @@ import View from './view';
 import State from './state';
 import Sound from './sound';
 import QuestionManager from './question';
-import state from './state';
 
 export default {
   fallingId: 0,
@@ -106,7 +105,7 @@ export default {
     this.starNum = 0;
     this.selectedCount = 0;
     this.touchBtn = false;
-    this.apiManager = state.apiManager;
+    this.apiManager = State.apiManager;
   },
 
   handleVisibilityChange() {

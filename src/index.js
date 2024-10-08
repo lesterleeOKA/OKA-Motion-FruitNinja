@@ -221,7 +221,7 @@ async function init() {
     );
     const dialogText = "Your game has been saved! Would you like to continue unloading the page?";
     e.returnValue = dialogText; // For most browsers
-    return dialogText; // For Firefox
+    return dialogText;
   };
 
   const defaultAudios = [

@@ -72,9 +72,16 @@ const apiManager = {
             //this.peopleIcon = await this.loadPeopleIcon(imageUrl);
           }
 
-          if (this.accountJson && this.accountJson.display_name) {
-            this.loginName = this.accountJson.display_name.replace(/"/g, "");
-            //console.log(`FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFlogin Name: ${this.loginName}`);
+          if (this.accountJson) {
+            if (this.accountJson.display_name) {
+              this.loginName = this.accountJson.display_name.replace(/"/g, "");
+              console.log(`login Name: ${this.loginName}`);
+            }
+            else {
+              var first_name = this.accountJson.first_name.replace(/"/g, "");
+              var last_name = this.accountJson.last_name.replace(/"/g, "");
+              this.loginName = last_name + " " + first_name;
+            }
           }
 
           if (onCompleted) onCompleted();
