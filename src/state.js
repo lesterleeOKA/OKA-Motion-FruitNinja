@@ -61,6 +61,7 @@ export default {
 
     if (state == 'instruction') {
       Game.init(this.gameTime, this.fallSpeed);
+      View.setProgressBar(false);
       View.hideTopLeftControl();
       View.hideTips();
       View.showCanvas();
@@ -101,6 +102,7 @@ export default {
       }
     } else if (state == 'playing') {
       //View.showTips('tipsReady');
+      View.setProgressBar(apiManager.isLogined ? true : false);
       View.showTopLeftControl();
       switch (stateType) {
         case 'showStage':
@@ -155,6 +157,7 @@ export default {
         View.showPrepareBoard();
       }
     } else if (state == 'finished') {
+      View.setProgressBar(false);
       View.hideTopLeftControl();
       View.hideTips();
       View.hideGame();

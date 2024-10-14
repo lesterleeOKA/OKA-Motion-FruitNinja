@@ -106,6 +106,7 @@ export default {
     this.selectedCount = 0;
     this.touchBtn = false;
     this.apiManager = State.apiManager;
+    this.resetProgressBar();
   },
 
   handleVisibilityChange() {
@@ -164,7 +165,7 @@ export default {
     this.countUp(View.scoreText, currentScore, this.score, 1000);
   },
 
-  countUp(displayElement, start, end, duration) {
+  countUp(displayElement, start, end, duration, playEffect = true, unit = "") {
     let startTime = null;
     let lastSoundTime = 0;
     const soundInterval = 200;
@@ -177,10 +178,10 @@ export default {
       const progress = timestamp - startTime;
       // Calculate the current value based on the start value
       const current = Math.min(Math.floor((progress / duration) * (end - start) + start), end);
-      displayElement.innerText = current;
+      displayElement.innerText = current + unit;
 
       if (current < end) {
-        if (State.isSoundOn && (timestamp - lastSoundTime >= soundInterval)) {
+        if (State.isSoundOn && (timestamp - lastSoundTime >= soundInterval) && playEffect) {
           Sound.play('score');
           lastSoundTime = timestamp; // Update the last sound time
         }
@@ -580,6 +581,7 @@ export default {
     if (this.randomQuestionId === 0) {
       questions = questions.sort(() => Math.random() - 0.5);
     }
+
     console.log("questions", questions);
     const _type = questions[this.randomQuestionId].questionType;
     const _QID = questions[this.randomQuestionId].qid;
@@ -596,17 +598,6 @@ export default {
     }
     else {
       this.randomQuestionId = 0;
-    }
-
-    if (this.answeredNum < this.totalQuestions) {
-      this.answeredNum += 1;
-    }
-    else {
-      if (this.apiManager.isLogined) {
-        console.log("finished question");
-        this.finishedGame();
-        return null;
-      }
     }
 
     //console.log("answered count", this.answeredNum);
@@ -1046,6 +1037,12 @@ export default {
       State.changeState('playing', 'ansWrong');
     }
 
+    this.updateAnsweredProgressBar(() => {
+      console.log("finished question");
+      this.finishedGame();
+      return null;
+    });
+
     this.uploadAnswerToAPI(answer, this.randomQuestion, eachQAScore); ////submit answer api//////
   },
   getScoreForQuestion() {
@@ -1101,6 +1098,54 @@ export default {
     return this.correctedAnswerNumber < this.totalQuestions
       ? this.answeredPercentage(this.totalQuestions)
       : 100;
+  },
+
+  updateAnsweredProgressBar(onCompleted = null) {
+    if (this.apiManager.isLogined) {
+      let progress = 0;
+      if (this.answeredNum < this.totalQuestions) {
+        this.answeredNum += 1;
+        progress = this.answeredNum / this.totalQuestions;
+      }
+      else {
+        progress = 1;
+      }
+
+      let progressColorBar = document.getElementById("progressColorBar");
+      let progressText = document.querySelector('.progressText');
+
+      if (progressColorBar) {
+        let rightPosition = (100 - (progress * 100)) + "%";
+        progressColorBar.style.setProperty('--progress-right', rightPosition);
+
+        const targetPercentage = Math.round(progress * 100);
+        this.countUp(progressText, Number(progressText.innerText.replace('%', '')) || 0, targetPercentage, 500, false, "%");
+
+        if (progress >= 1) {
+          setTimeout(() => {
+            if (onCompleted) onCompleted();
+          }, 500);
+        }
+      }
+    }
+  },
+  resetProgressBar() {
+    if (this.apiManager.isLogined) {
+      this.answeredNum = 0; // Reset answered questions
+      let progressColorBar = document.getElementById("progressColorBar");
+      let progressText = document.querySelector('.progressText');
+
+      if (progressColorBar) {
+        progressColorBar.style.setProperty('--progress-right', "100%"); // Reset position
+      }
+
+      if (progressText) {
+        progressText.textContent = "0%"; // Reset text
+      }
+    }
   }
+
 }
+
+
 
