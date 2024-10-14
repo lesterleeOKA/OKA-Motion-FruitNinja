@@ -102,7 +102,6 @@ export default {
       this.preloadedRightSubImages.push(img);
     });
 
-    //console.log("preloadUsedImages", this.preloadedFallingImages);
     Util.updateLoadingStatus("Loading Images");
   },
 
