@@ -610,7 +610,6 @@ export default {
       CorrectAnswer: _correctAnswer,
       Star: _star,
       Score: _score,
-      CorrectAnswer: _correctAnswer,
       CorrectAnswerId: _correctAnswerIndex,
       Media: _media,
     };
