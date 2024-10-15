@@ -276,6 +276,24 @@ function handleButtonClick(e) {
         State.changeState('leave');
       }, 500);
       break;
+    case View.motionBtn:
+      if (State.isSoundOn) {
+        Sound.play('btnClick');
+      }
+      State.gamePauseData.state = State.state;
+      State.gamePauseData.stateType = State.stateType;
+
+      if (View.motionBtn.classList.contains('on')) {
+        View.motionBtn.classList.add('off');
+        View.motionBtn.classList.remove('on');
+        View.renderer.showSkeleton = false;
+      }
+      else if (View.motionBtn.classList.contains('off')) {
+        View.motionBtn.classList.remove('off');
+        View.motionBtn.classList.add('on');
+        View.renderer.showSkeleton = true;
+      }
+      break;
     case View.musicBtn:
       if (State.state !== 'showMusicOnOff') {
         if (State.isSoundOn) {
@@ -378,6 +396,9 @@ function handleButtonTouch(e) {
     case View.exitBtn:
       View.exitBtn.classList.add('touched');
       break;
+    case View.motionBtn:
+      View.motionBtn.classList.add('touched');
+      break;
     case View.musicBtn:
       View.musicBtn.classList.add('touched');
       break;
@@ -407,6 +428,9 @@ function handleButtonTouchLeave(e) {
     case View.exitBtn:
       View.exitBtn.classList.remove('touched');
       break;
+    case View.motionBtn:
+      View.motionBtn.classList.remove('touched');
+      break;
     case View.musicBtn:
       View.musicBtn.classList.remove('touched');
       break;
@@ -432,6 +456,7 @@ function setupEventListeners() {
   const buttons = [
     View.startBtn,
     View.exitBtn,
+    View.motionBtn,
     View.musicBtn,
     View.backHomeBtnOfFinished,
     View.playAgainBtn,
