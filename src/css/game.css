@@ -544,6 +544,7 @@
   content: url(../images/musicBtnOff.png);
 }
 
+/*-----------------------------------------------------------------------------------------------*/
 .gameWrapper > .topRightControl > .motionBtn {
   width: calc(min(9vh, 9vw));
   margin-right: calc(min(3vh, 3vw));
