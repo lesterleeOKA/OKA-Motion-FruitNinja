@@ -192,8 +192,8 @@ async function init() {
       id,
       levelKey,
       () => {
-        const bgImageElement = document.getElementById('bgImage');
         if (removal === '1') {
+          const bgImageElement = document.getElementById('bgImage');
           let bgUrl = apiManager.settings.backgroundImageUrl && apiManager.settings.backgroundImageUrl !== '' ? apiManager.settings.backgroundImageUrl : bgImage;
           bgImageElement.style.backgroundImage = `url(${bgUrl})`;
         }
