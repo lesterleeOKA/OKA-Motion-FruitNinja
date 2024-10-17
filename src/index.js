@@ -192,6 +192,12 @@ async function init() {
       id,
       levelKey,
       () => {
+        const bgImageElement = document.getElementById('bgImage');
+        if (removal === '1') {
+          let bgUrl = apiManager.settings.backgroundImageUrl && apiManager.settings.backgroundImageUrl !== '' ? apiManager.settings.backgroundImageUrl : bgImage;
+          bgImageElement.style.backgroundImage = `url(${bgUrl})`;
+        }
+
         View.setPlayerIcon(apiManager.iconDataUrl);
         View.setPlayerName(apiManager.loginName);
         resolve();
@@ -485,10 +491,10 @@ async function app() {
     location.replace(`https:${location.href.substring(location.protocol.length)}`);
   }
 
-  if (removal === '1') {
+  /*if (removal === '1') {
     const bgImageElement = document.getElementById('bgImage');
     bgImageElement.style.backgroundImage = `url(${bgImage})`;
-  }
+  }*/
 
   if (fps === '1') {
     fpsDebug.style.opacity = 1;
