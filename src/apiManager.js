@@ -15,6 +15,7 @@ class Settings {
     this.gameTime = 0; // Default to 0
     this.removal = null;
     this.detectionModel = null;
+    this.fallSpeed = 0;
   }
 }
 
@@ -98,10 +99,10 @@ const apiManager = {
               logController.log(`Downloaded preview image: ${this.settings.previewGameImageUrl}`);
             }
 
-            if (this.gameSettingJson.game_time) this.settings.gameTime = this.gameSettingJson.game_time;
-            if (this.gameSettingJson.background_removal) this.settings.removal = this.gameSettingJson.background_removal;
-            if (this.gameSettingJson.detection_model) this.settings.detectionModel = this.gameSettingJson.detection_model;
-
+            this.settings.gameTime = this.gameSettingJson.game_time;
+            this.settings.fallSpeed = this.gameSettingJson.object_speed;
+            this.settings.removal = this.gameSettingJson.background_removal;
+            this.settings.detectionModel = this.gameSettingJson.detection_model;
           }
 
           if (photoJsonUrl) {
