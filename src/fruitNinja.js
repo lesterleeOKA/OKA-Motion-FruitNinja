@@ -30,6 +30,7 @@ export default {
   answerLength: 0,
   questionWrapper: null,
   answerWrapper: null,
+  answerTextField: null,
   fillwordTime: 0,
   redBoxX: 0,
   redBoxY: 0,
@@ -55,13 +56,14 @@ export default {
     this.startedGame = false;
     this.fallingId = 0;
     this.remainingTime = gameTime !== null ? gameTime : 300;
-    this.fallingSpeed = fallSpeed !== null ? fallSpeed : 8;
-    this.fallingDelay = this.fallingSpeed * 250;
+    this.fallingSpeed = fallSpeed !== null ? fallSpeed : 5;
+    this.itemDelay = 250;
+    this.fallingDelay = 800;
     this.updateTimerDisplay(this.remainingTime);
     this.questionType = QuestionManager.questionField;
     this.randomQuestion = null;
     this.question = '';
-    this.totalQuestions = 0;
+    this.totalQuestions = this.questionType.questions ? this.questionType.questions.length : 0;
     this.score = 0;
     this.time = 0;
     this.timerRunning = false;
@@ -76,6 +78,7 @@ export default {
     this.fillwordTime = 0;
     this.questionWrapper = null;
     this.answerWrapper = null;
+    this.answerTextField = null;
     View.scoreBoard.className = "scoreBoard";
     this.randomQuestionId = 0;
     this.answeredNum = 0;
@@ -272,7 +275,7 @@ export default {
     const falling = (timestamp) => {
       if (!this.lastFallingTime) this.lastFallingTime = timestamp;
       const elapsed = timestamp - this.lastFallingTime;
-      let currentDelay = firstFall ? 500 : this.fallingDelay;
+      let currentDelay = this.fallingDelay;
       //logController.log(this.finishedCreateOptions);
       if (elapsed >= currentDelay) {
         if (!this.finishedCreateOptions && this.randomPair.length > 0) {
@@ -442,7 +445,7 @@ export default {
     optionWrapper.style.width = `${this.optionSize + 20}px`;
     optionWrapper.style.height = `${this.optionSize + 20}px`;
     if (optionImage !== '' && optionImage !== 'undefined') {
-      optionWrapper.style.backgroundImage = `url(${optionImage.src})`;
+      optionWrapper.style.backgroundImage = `url(${optionImage})`;
       optionWrapper.style.backgroundSize = 'contain'; // Adjust size to maintain aspect ratio
       optionWrapper.style.backgroundRepeat = 'no-repeat'; // Prevent repeating
       optionWrapper.style.backgroundPosition = 'center'; // Center the image
@@ -466,15 +469,15 @@ export default {
     const rightSubImage = document.createElement('div');
     if (optionLeftImage === null || optionRightImage === null) {
       leftSubImage.classList.add('sub-image', 'left', 'cutLeft');
-      leftSubImage.style.backgroundImage = `url(${optionImage.src})`;
+      leftSubImage.style.backgroundImage = `url(${optionImage})`;
       rightSubImage.classList.add('sub-image', 'right', 'cutRight');
-      rightSubImage.style.backgroundImage = `url(${optionImage.src})`;
+      rightSubImage.style.backgroundImage = `url(${optionImage})`;
     }
     else {
       leftSubImage.classList.add('sub-image', 'left');
-      leftSubImage.style.backgroundImage = `url(${optionLeftImage.src})`;
+      leftSubImage.style.backgroundImage = `url(${optionLeftImage})`;
       rightSubImage.classList.add('sub-image', 'right');
-      rightSubImage.style.backgroundImage = `url(${optionRightImage.src})`;
+      rightSubImage.style.backgroundImage = `url(${optionRightImage})`;
     }
     leftSubImage.style.backgroundSize = 'contain'; // Adjust size to maintain aspect ratio
     leftSubImage.style.backgroundRepeat = 'no-repeat'; // Prevent repeating
@@ -485,7 +488,7 @@ export default {
     option.append(leftSubImage);
     option.append(rightSubImage);
     optionWrapper.appendChild(option);
-    optionWrapper.setAttribute('image', optionImage.src);
+    optionWrapper.setAttribute('image', optionImage);
     optionWrapper.setAttribute('fontSize', fontSize);
     optionWrapper.setAttribute('loop', 'true');
     return optionWrapper;
@@ -588,11 +591,15 @@ export default {
     const _QID = questions[this.randomQuestionId].qid;
     const _question = questions[this.randomQuestionId].question;
     const _answers = questions[this.randomQuestionId].answers;
-    const _correctAnswer = questions[this.randomQuestionId].correctAnswer;
-    const _star = questions[this.randomQuestionId].star;
-    const _score = questions[this.randomQuestionId].score;
-    const _correctAnswerIndex = questions[this.randomQuestionId].correctAnswerIndex;
-    const _media = questions[this.randomQuestionId].media;
+    let _correctAnswer = questions[this.randomQuestionId].correctAnswer;
+    const _star = this.apiManager.isLogined ? questions[this.randomQuestionId].star : null;
+    const _score = this.apiManager.isLogined ? questions[this.randomQuestionId].score.full : null;
+    const _correctAnswerIndex = this.apiManager.isLogined ? questions[this.randomQuestionId].correctAnswerIndex : null;
+    const _media = this.apiManager.isLogined ? questions[this.randomQuestionId].media : null;
+
+    if ((_correctAnswer === null || _correctAnswer === undefined) && _correctAnswerIndex !== null && _answers.length > 0) {
+      _correctAnswer = _answers[_correctAnswerIndex];
+    }
 
     if (this.randomQuestionId < this.totalQuestions - 1) {
       this.randomQuestionId += 1;
@@ -652,7 +659,7 @@ export default {
     this.selectedCount = Math.floor(Math.random() * this.numberOfColumns);
     this.questionWrapper = document.createElement('div');
     let questionBg = document.createElement('div');
-    this.answerWrapper = document.createElement('span');
+    this.answerTextField = document.createElement('span');
 
     switch (this.randomQuestion.QuestionType) {
       case 'spelling':
@@ -665,7 +672,7 @@ export default {
         this.questionWrapper.appendChild(questionText);
         var fontSize = `calc(min(max(3vh, 6vh - ${this.randomQuestion.Question.length} * 0.1vh), 6vh))`;
         this.questionWrapper.style.setProperty('--question-font-size', fontSize);
-        this.answerWrapper.classList.add('textType');
+        this.answerTextField.classList.add('textType');
         //View.stageImg.appendChild(questionText);
         break;
       case 'text':
@@ -678,7 +685,7 @@ export default {
         var fontSize = `calc(min(max(3vh, 6vh - ${this.randomQuestion.Question.length} * 0.1vh), 6vh))`;
         this.questionWrapper.style.setProperty('--question-font-size', fontSize);
         this.questionWrapper.style.top = "-15%";
-        this.answerWrapper.classList.add('audioType');
+        this.answerTextField.classList.add('audioType');
         break;
       case 'audio':
         this.questionWrapper.classList.add('questionAudioWrapper');
@@ -710,7 +717,7 @@ export default {
           this.buttonWrapper.classList.add('not-clicked');
         });
         this.questionWrapper.appendChild(this.buttonWrapper);
-        this.answerWrapper.classList.add('audioType');
+        this.answerTextField.classList.add('audioType');
         break;
       case 'fillInBlank':
       case 'reorder':
@@ -754,7 +761,7 @@ export default {
         });
         this.questionWrapper.appendChild(this.buttonWrapper);
 
-        this.answerWrapper.classList.add('pictureType');
+        this.answerTextField.classList.add('pictureType');
         break;
       case 'picture':
         this.questionWrapper.classList.add('questionImageWrapper');
@@ -781,7 +788,7 @@ export default {
             this.questionWrapper.appendChild(imageElement);
           }
         }
-        this.answerWrapper.classList.add('pictureType');
+        this.answerTextField.classList.add('pictureType');
         break;
     }
 
@@ -835,11 +842,35 @@ export default {
       logController.log('audio', this.randomQuestion.QID);
     }
 
-    this.answerWrapper.classList.add('answerWrapper');
+    this.answerTextField.classList.add('answerWrapper');
+    this.answerWrapper = document.createElement('span');
+    this.answerWrapper.classList.add('answerText');
+    this.answerTextField.appendChild(this.answerWrapper);
     View.stageImg.appendChild(this.questionWrapper);
-    View.stageImg.appendChild(this.answerWrapper);
+    View.stageImg.appendChild(this.answerTextField);
     View.stageImg.classList.add('fadeIn');
     View.stageImg.style.opacity = 1;
+  },
+
+  adjustAnswerTextFontSize(answer) {
+    if (this.answerWrapper) {
+      const textLength = answer.length;
+      let fontSize;
+      // Base font size
+      const baseFontSize = 26; // Adjust this value as needed
+
+      // Set font size based on text length
+      if (textLength <= 10) {
+        fontSize = baseFontSize; // Maximum size for short text
+      } else if (textLength <= 20) {
+        fontSize = baseFontSize * 0.8; // Scale down for medium-length text
+      } else if (textLength <= 30) {
+        fontSize = baseFontSize * 0.6; // Further scale down for longer text
+      } else {
+        fontSize = baseFontSize * 0.4; // Minimum size for very long text
+      } 3
+      this.answerWrapper.style.fontSize = `${fontSize}px`;
+    }
   },
 
   motionTriggerPlayAudio(_play) {
@@ -887,6 +918,7 @@ export default {
     if (this.answerWrapper) {
       if (this.fillwordTime < this.answerLength) {
         this.answerWrapper.textContent += option.getAttribute('word');
+        this.adjustAnswerTextFontSize(this.answerWrapper.textContent);
 
         if (this.questionType.QuestionType === "Text") {
           if (View.optionArea.contains(option)) {
@@ -999,8 +1031,8 @@ export default {
     this.fallingId = 0;
     this.leftCount = 0;
     this.rightCount = 0;
-    this.answerWrapper.classList.remove('correct');
-    this.answerWrapper.classList.remove('wrong');
+    this.answerTextField.classList.remove('correct');
+    this.answerTextField.classList.remove('wrong');
     this.answerWrapper.textContent = '';
     this.fillwordTime = 0;
     this.fallingItems.splice(0);
@@ -1022,18 +1054,18 @@ export default {
   },
   ////////////////////////////Added Submit Answer API/////////////////////////////////////////////////////
   checkAnswer(answer) {
-    const isCorrect = answer === this.randomQuestion.CorrectAnswer;
+    const isCorrect = answer.toLowerCase() === this.randomQuestion.CorrectAnswer.toLowerCase();
     const eachQAScore = this.getScoreForQuestion();
 
     if (isCorrect) {
       //答岩1分，答錯唔扣分
       this.addScore(eachQAScore);
-      this.answerWrapper.classList.add('correct');
+      this.answerTextField.classList.add('correct');
       State.changeState('playing', 'ansCorrect');
       View.showCorrectEffect(true);
     } else {
       //this.addScore(-1);
-      this.answerWrapper.classList.add('wrong');
+      this.answerTextField.classList.add('wrong');
       View.showWrongEffect(true);
       State.changeState('playing', 'ansWrong');
     }
@@ -1058,7 +1090,7 @@ export default {
     logController.log(`Game Time: ${this.remainingTime}, Remaining Time: ${this.time}`);
     const currentTime = this.calculateCurrentTime();
     const progress = this.calculateProgress();
-    const { correctId, score, currentQAPercent } = this.calculateAnswerMetrics(answer, currentQuestion, eachMark);
+    const { correctId, score, currentQAPercent } = this.calculateAnswerMetrics(answer, eachMark);
     const answeredPercentage = this.calculateAnsweredPercentage();
     this.apiManager.SubmitAnswer(
       currentTime,
@@ -1081,12 +1113,12 @@ export default {
   calculateProgress() {
     return Math.floor((this.answeredNum / this.totalQuestions) * 100);
   },
-  calculateAnswerMetrics(answer, currentQuestion, eachMark) {
+  calculateAnswerMetrics(answer, eachMark) {
     let correctId = 0;
     let score = 0;
     let currentQAPercent = 0;
 
-    if (answer === currentQuestion.CorrectAnswer) {
+    if (answer.toLowerCase() === this.randomQuestion.CorrectAnswer.toLowerCase()) {
       this.correctedAnswerNumber = Math.min(this.correctedAnswerNumber + 1, this.totalQuestions);
       correctId = 2;
       score = eachMark;
@@ -1101,7 +1133,7 @@ export default {
       : 100;
   },
 
-  updateAnsweredProgressBar(onCompleted = null) {
+  /*updateAnsweredProgressBar(onCompleted = null) {
     if (this.apiManager.isLogined) {
       let progress = 0;
       if (this.answeredNum < this.totalQuestions) {
@@ -1142,6 +1174,52 @@ export default {
 
       if (progressText) {
         progressText.textContent = "0%"; // Reset text
+      }
+    }
+  }*/
+
+  updateAnsweredProgressBar(onCompleted = null) {
+    if (this.apiManager.isLogined) {
+      let progress = 0;
+
+      // Increment answered questions and calculate progress
+      if (this.answeredNum < this.totalQuestions) {
+        this.answeredNum += 1;
+        progress = this.answeredNum / this.totalQuestions;
+      } else {
+        progress = 1;
+      }
+
+      let progressColorBar = document.getElementById("progressColorBar");
+      let progressText = document.querySelector('.progressText');
+
+      if (progressColorBar) {
+        let rightPosition = (100 - (progress * 100)) + "%";
+        progressColorBar.style.setProperty('--progress-right', rightPosition);
+        // Show the progress in the format "answered/total"
+        progressText.innerText = `${this.answeredNum}/${this.totalQuestions}`;
+
+        if (progress >= 1) {
+          setTimeout(() => {
+            if (onCompleted) onCompleted();
+          }, 500);
+        }
+      }
+    }
+  },
+
+  resetProgressBar() {
+    if (this.apiManager.isLogined) {
+      this.answeredNum = 0; // Reset answered questions
+      let progressColorBar = document.getElementById("progressColorBar");
+      let progressText = document.querySelector('.progressText');
+
+      if (progressColorBar) {
+        progressColorBar.style.setProperty('--progress-right', "100%"); // Reset position
+      }
+
+      if (progressText) {
+        progressText.textContent = "0/" + this.totalQuestions; // Reset text to show answered/total format
       }
     }
   }

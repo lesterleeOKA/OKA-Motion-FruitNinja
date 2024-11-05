@@ -1,6 +1,6 @@
 import Game from './fruitNinja';
 import State from './state';
-import Util from './util';
+import { logController } from './logController';
 
 export default {
   //-----------------------------------------------------------------------------------------------
@@ -60,6 +60,7 @@ export default {
   fpsModeBtn: document.getElementById('fpsButton'),
 
   progressBarWrapper: document.querySelector('.progressBarWrapper'),
+  instructionContent: document.querySelector('.instructionBoard > .instructionRule > .instructionContent'),
   //-----------------------------------------------------------------------------------------------
   preloadedFallingImages: [],
   optionImages: [
@@ -86,7 +87,32 @@ export default {
     require("./images/fruitNinja/fruits/watermelon-2.png"),
   ],
 
-  preloadUsedImages() {
+  toAPIImageUrl(url) {
+    if (url === null) return;
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.blob(); // Get the image as a Blob
+      })
+      .then(blob => {
+        let successUrl = URL.createObjectURL(blob);
+        logController.log("success blob", successUrl);
+        this.preloadedFallingImages.push(successUrl);
+      })
+      .catch(error => {
+        logController.error("Error loading image:", error);
+      });
+  },
+  preloadUsedImages(option_images = null) {
+    let logined = option_images !== null ? true : false;
+    let _optionImages = logined ? option_images : this.optionImages;
+    _optionImages.forEach((path) => {
+      this.toAPIImageUrl(path);
+    });
+  },
+  /*preloadUsedImages() {
     this.optionImages.forEach((path) => {
       const img = new Image();
       img.src = path;
@@ -106,7 +132,7 @@ export default {
     });
 
     Util.updateLoadingStatus("Loading Images");
-  },
+  },*/
 
   showInstruction() {
     this.instructionWrapper.style.top = 0;
@@ -316,5 +342,9 @@ export default {
 
   setProgressBar(status = null) {
     this.progressBarWrapper.style.display = status ? 'block' : 'none';
+  },
+
+  setInstructionContent(content = null) {
+    this.instructionContent.textContent = content;
   }
 };
