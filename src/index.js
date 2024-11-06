@@ -245,7 +245,8 @@ async function init() {
         gameSetup();
         resolve();
       },
-      () => {
+      (error) => {
+        logController.error("An error occurred while loading questions:", error);
         View.showLoginErrorPopup();
         reject();
       }
