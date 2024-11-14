@@ -271,7 +271,6 @@ export default {
   },
 
   startFalling() {
-    let firstFall = true;
     const falling = (timestamp) => {
       if (!this.lastFallingTime) this.lastFallingTime = timestamp;
       const elapsed = timestamp - this.lastFallingTime;
@@ -308,7 +307,6 @@ export default {
           }
         }
         this.lastFallingTime = timestamp;
-        firstFall = false;
       }
 
       if (this.timerRunning) {
@@ -372,7 +370,7 @@ export default {
   },
   createRandomItem(char, optionImage, optionLeftImage, optionRightImage) {
     if (char && char.length !== 0) {
-      const columnId = this.getBalancedColumn();
+      const columnId = this.getNextSordOrder();
       const word = char;
 
       const generatePosition = () => {
@@ -401,13 +399,8 @@ export default {
     else
       this.selectedCount = 0;
 
+    logController.log("new randomw id", this.selectedCount);
     return this.selectedCount;
-  },
-
-  getBalancedColumn() {
-    let newRandomId = this.getNextSordOrder();
-    logController.log("new randomw id", newRandomId);
-    return newRandomId;
   },
 
   generatePositionX(columnId) {
@@ -531,11 +524,11 @@ export default {
     else {
       currentColumnId = 0;
     }
-    optionWrapper.x = this.generatePositionX(currentColumnId);
-    optionWrapper.setAttribute('column', currentColumnId);
     //let delay = this.refallingDelay();
     //logController.log("delay", delay, itemLength);
     setTimeout(() => {
+      optionWrapper.x = this.generatePositionX(currentColumnId);
+      optionWrapper.setAttribute('column', currentColumnId);
       optionWrapper.style.left = optionWrapper.x + 'px';
       optionWrapper.style.setProperty('--bottom-height', `${View.canvas.height + this.optionSize + 100}px`);
       optionWrapper.style.setProperty('--fallingSpeed', `${this.fallingSpeed}s`);

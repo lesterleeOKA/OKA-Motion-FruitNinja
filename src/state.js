@@ -12,8 +12,8 @@ export default {
   stateLastFor: 0,
   stateType: '',
   isSoundOn: true,
-  gameTime: 0,
-  fallSpeed: 0,
+  gameTime: null,
+  fallSpeed: null,
   gamePauseData: {
     state: '',
     stateType: '',
