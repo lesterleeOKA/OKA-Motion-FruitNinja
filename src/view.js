@@ -64,27 +64,26 @@ export default {
   //-----------------------------------------------------------------------------------------------
   preloadedFallingImages: [],
   optionImages: [
-    require("./images/fruitNinja/fruits/apple.png"),
-    require("./images/fruitNinja/fruits/banana.png"),
-    require("./images/fruitNinja/fruits/peach.png"),
-    require("./images/fruitNinja/fruits/strawberry.png"),
-    require("./images/fruitNinja/fruits/watermelon.png"),
+    require("./images/fruitNinja/cakes/cake_1.png"),
+    require("./images/fruitNinja/cakes/cake_2.png"),
+    require("./images/fruitNinja/cakes/cake_3.png"),
+    require("./images/fruitNinja/cakes/cake_4.png"),
   ],
   preloadedLeftSubImages: [],
   leftSubImages: [
-    require("./images/fruitNinja/fruits/apple-1.png"),
+    /*require("./images/fruitNinja/fruits/apple-1.png"),
     require("./images/fruitNinja/fruits/banana-1.png"),
     require("./images/fruitNinja/fruits/peach-1.png"),
     require("./images/fruitNinja/fruits/strawberry-1.png"),
-    require("./images/fruitNinja/fruits/watermelon-1.png"),
+    require("./images/fruitNinja/fruits/watermelon-1.png"),*/
   ],
   preloadedRightSubImages: [],
   rightSubImages: [
-    require("./images/fruitNinja/fruits/apple-2.png"),
+    /*require("./images/fruitNinja/fruits/apple-2.png"),
     require("./images/fruitNinja/fruits/banana-2.png"),
     require("./images/fruitNinja/fruits/peach-2.png"),
     require("./images/fruitNinja/fruits/strawberry-2.png"),
-    require("./images/fruitNinja/fruits/watermelon-2.png"),
+    require("./images/fruitNinja/fruits/watermelon-2.png"),*/
   ],
 
   toAPIImageUrl(url) {

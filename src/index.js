@@ -20,7 +20,7 @@ let startInferenceTime, numInferences = 0;
 let inferenceTimeSum = 0, lastPanelUpdate = 0;
 let drawContour = false;
 let foregroundThresold = 0.65;
-const bgImage = require('./images/fruitNinja/bg.jpg');
+const bgImage = require('./images/fruitNinja/bg.png');
 const fpsDebug = document.getElementById('stats');
 let { jwt, id, levelKey, model, removal, fps, gameTime, fallSpeed } = parseUrlParams();
 let holdTimeout;

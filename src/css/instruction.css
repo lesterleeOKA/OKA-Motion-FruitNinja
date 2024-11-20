@@ -61,7 +61,7 @@
   flex-direction: column;
 }
 .instructionWrapper > .instructionBoard > .previewImage {
-  background-image: url(../images/fruit_ninja.png);
+  background-image: url(../images/fruitNinja_preview.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
