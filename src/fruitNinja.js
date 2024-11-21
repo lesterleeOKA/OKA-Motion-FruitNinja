@@ -280,10 +280,7 @@ export default {
         if (!this.finishedCreateOptions && this.randomPair.length > 0) {
           if (this.fallingItems.length < this.randomPair.length) {
             if (this.fallingId < this.fallingItems.length) {
-              if (this.fallingId === 0) {
-                View.preloadedFallingImages.sort();
-              }
-              logController.log("falling id:", this.fallingId);
+              //logController.log("falling id:", this.fallingId);
               this.fallingId += 1;
             } else {
               this.fallingId = 0;
@@ -1040,6 +1037,7 @@ export default {
     this.refallingId = 0;
   },
   moveToNextQuestion() {
+    View.preloadedFallingImages.sort(() => Math.random() - 0.5);
     this.randomQuestion = null;
     this.randomPair.splice(0);
     View.stageImg.innerHTML = '';
