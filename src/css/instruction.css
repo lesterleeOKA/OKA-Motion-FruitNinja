@@ -85,7 +85,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  width: calc(min(5vh, 5vw));
+  width: 7.5%;
   height: calc(min(5vh, 5vw));
   margin-right: 0.5rem;
 }
@@ -104,12 +104,13 @@
 }
 .instructionWrapper > .instructionBoard >.instructionRule > .instructionContent {
   /*font-family: "Arzachel", system-ui;*/
+  width: 92.5%;
   font-family: 'PoetsenOne', sans-serif;
   font-weight: 100;
   font-size: calc(min(2.5vh, 2.5vw));
   color: #7C5729;
   pointer-events: none;
-  text-align: center;
+  text-align: left;
   height: fit-content;
 }
 

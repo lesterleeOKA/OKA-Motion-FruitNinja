@@ -275,7 +275,7 @@ async function init() {
   };
 
   const defaultAudios = [
-    ['bgm', require('./audio/bgm_mspell.mp3'), false, 0.5],
+    ['bgm', require('./audio/bgm.mp3'), false, 0.5],
     ['btnClick', require('./audio/btnClick.wav')],
     ['countDown', require('./audio/countDown.mp3')],
     ['score', require('./audio/score.mp3')],
