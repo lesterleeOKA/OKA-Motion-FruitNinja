@@ -27,14 +27,14 @@
 .canvasWrapper > .optionArea > .optionWrapper {
   position: absolute;
   left: 0px;
-  border-radius: 50%;
+  /*border-radius: 50%;*/
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.8));
   transition: opacity 0.1s ease;
   opacity: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url(../images/fruitNinja/fruit1.png);
+  background: url(../images/fruitNinja/cakes/cake_1.png);
   background-position: center;
   background-size: cover;
 }
@@ -42,7 +42,7 @@
 .buttonWrapper {
   position: relative;
   justify-content: center;
-  background-image: url(../images/fruitNinja/btn_playaudio.png);
+  background-image: url(../images/normal/btn_playaudio.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -160,7 +160,7 @@
 .instructionBtn{
   width: calc(min(9vh, 9vw));
   margin-right: calc(min(3vh, 3vw));
-  content: url(../images/fruitNinja/instuctionBtn.png);
+  content: url(../images/normal/instuctionBtn.png);
   filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 1));
 }
 .instructionBtn:active {
@@ -169,7 +169,7 @@
   filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 1));
 }
 .resetBtn{
-  background: url(../images/fruitNinja/reset_btn.png);
+  background: url(../images/normal/reset_btn.png);
   background-position: center;
   background-size: cover;
   width: 25%;
@@ -238,12 +238,12 @@
 .correct {
   background-repeat: no-repeat;
   background-size: contain;
-  background-image: url(../images/ans_tick.png);
+  background-image: url(../images/normal/ans_tick.png);
 }
 .wrong {
   background-repeat: no-repeat;
   background-size: contain;
-  background-image: url(../images/ans_cross.png);
+  background-image: url(../images/normal/ans_cross.png);
 }
 
 .canvasWrapper > .optionArea > .optionWrapper.show {
@@ -427,7 +427,7 @@
   background-color: #84BD3B;
 }
 .canvasWrapper > .optionArea > .optionWrapper.correct.showColorBorder::after {
-  background-image: url(../images/ans_tick.png);
+  background-image: url(../images/normal/ans_tick.png);
 }
 .canvasWrapper > .optionArea > .optionWrapper.wrong.showColorBorder,
 .canvasWrapper > .optionArea > .optionWrapper.wrong.showColorBorder {
@@ -435,7 +435,7 @@
 }
 .canvasWrapper > .optionArea > .optionWrapper.wrong.showColorBorder::after,
 .canvasWrapper > .optionArea > .optionWrapper.wrong.showColorBorder::after {
-  background-image: url(../images/ans_cross.png);
+  background-image: url(../images/normal/ans_cross.png);
 }
 
 @keyframes optionBlinkInnerYellow {

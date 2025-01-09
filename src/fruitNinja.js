@@ -448,9 +448,10 @@ export default {
     optionWrapper.setAttribute('column', columnId);
     let option = document.createElement('span');
     option.classList.add('option');
-    option.textContent = text;
-    /*let fontSize = `calc(min(max(4vh, 20vh - ${text.length} * 5.2vh), 8vh))`;
-    option.style.setProperty('--font-size', fontSize);*/
+    const formattedText = text.split(' ').join('<br>'); // Replace spaces with <br>
+    option.innerHTML = formattedText; // Use innerHTML to include <br>
+    //option.textContent = text;
+
     let containerWidth = this.optionSize;
     let maxFontSize = 60; // Maximum font size in px
     let minFontSize = 10; // Minimum font size in px
