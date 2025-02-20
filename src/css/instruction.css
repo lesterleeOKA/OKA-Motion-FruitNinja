@@ -22,7 +22,7 @@
 
 .instructionWrapper > .instructionBoard> .gameTitle {
   position: relative;
-  background-image: url(../images/normal/title_fruitNinja.png);
+  background-image: url(../images/fruitNinja/title_fruitNinja.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -61,7 +61,7 @@
   flex-direction: column;
 }
 .instructionWrapper > .instructionBoard > .previewImage {
-  background-image: url(../images/fruitNinja_preview.png);
+  background-image: url(../images/fruitNinja/fruitNinja_preview.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
