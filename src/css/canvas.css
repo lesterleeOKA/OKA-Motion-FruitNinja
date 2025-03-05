@@ -306,18 +306,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 70%;
-  height: 70%;
+  width: 95%;
+  height: 95%;
   text-align: center;
   font-size: var(--font-size);
   /*font-family: "Arzachel", system-ui;*/
   font-family: 'PoetsenOne', sans-serif;
   font-weight: 100;
-  line-height: 3.6vh;
+  line-height: calc(min(3.2vh, 3.2vw));
   background: transparent;
   border: none;
   color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 1);
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 1));
 }
 

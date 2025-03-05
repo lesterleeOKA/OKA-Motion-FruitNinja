@@ -16,6 +16,7 @@ export default {
   remainingTime: 0,
   fallingSpeed: 0,
   optionSize: 0,
+  columnSize: 0,
   fallingOption: null,
   timer: null,
   timerRunning: false,
@@ -56,7 +57,7 @@ export default {
     this.startedGame = false;
     this.fallingId = 0;
     this.remainingTime = gameTime !== null ? gameTime : 300;
-    this.fallingSpeed = fallSpeed !== null ? fallSpeed : 5;
+    this.fallingSpeed = fallSpeed !== null ? fallSpeed : 8;
     this.itemDelay = 250;
     this.fallingDelay = 800;
     this.updateTimerDisplay(this.remainingTime);
@@ -84,7 +85,8 @@ export default {
     this.answeredNum = 0;
     this.correctedAnswerNumber = 0;
     this.answerLength = 0;
-    this.optionSize = View.canvas.width / 7.5;
+    this.optionSize = View.canvas.width / 12;
+    this.columnSize = View.canvas.width / 7.5;
     this.redBoxX = View.canvas.width / 3;
     this.redBoxY = (View.canvas.height / 5) * 3;
     this.redBoxWidth = View.canvas.width / 3;
@@ -144,93 +146,65 @@ export default {
   },
 
   addScore(mark) {
-    let currentScore = this.score;
+    const currentScore = this.score;
     let newScore = this.score + mark;
 
-    if (newScore < 0)
-      newScore = 0;
+    newScore = Math.max(newScore, 0);
 
     if (newScore >= 30 && newScore < 60) {
       this.starNum = 1;
       View.showSuccess();
-    }
-    else if (newScore >= 60 && newScore <= 90) {
+    } else if (newScore >= 60 && newScore <= 90) {
       this.starNum = 2;
-    }
-    else if (newScore > 90) {
+    } else if (newScore > 90) {
       this.starNum = 3;
-    }
-    else {
+    } else {
       View.showFailure();
     }
 
     this.score = newScore;
-    //View.scoreText.innerText = this.score;
     this.countUp(View.scoreText, currentScore, this.score, 1000);
   },
 
-  countUp(displayElement, start, end, duration, playEffect = true, unit = "", updateTextColor = true) {
+  countUp(displayElement, start, end, duration, playEffect = true, unit = "", updateTextColor = true, updateColor = 'yellow', originalColor = 'white') {
     let startTime = null;
     let lastSoundTime = 0;
     const soundInterval = 200;
 
-    function animate(timestamp) {
+    const animate = (timestamp) => {
       if (!startTime) {
         startTime = timestamp;
-        if (updateTextColor) displayElement.style.color = 'yellow';
+        if (updateTextColor) displayElement.style.color = updateColor;
       }
       const progress = timestamp - startTime;
-      // Calculate the current value based on the start value
       const current = Math.min(Math.floor((progress / duration) * (end - start) + start), end);
       displayElement.innerText = current + unit;
 
       if (current < end) {
         if (State.isSoundOn && (timestamp - lastSoundTime >= soundInterval) && playEffect) {
           Sound.play('score');
-          lastSoundTime = timestamp; // Update the last sound time
+          lastSoundTime = timestamp;
         }
         requestAnimationFrame(animate);
+      } else {
+        if (updateTextColor) displayElement.style.color = originalColor;
       }
-      else {
-        if (updateTextColor) displayElement.style.color = 'white';
-      }
-    }
+    };
     requestAnimationFrame(animate);
   },
 
   showFinalStars() {
     const delayPerStar = 200;
-    const star1 = document.getElementById("star1");
-    const star2 = document.getElementById("star2");
-    const star3 = document.getElementById("star3");
+    const stars = [document.getElementById("star1"), document.getElementById("star2"), document.getElementById("star3")];
 
-    if (this.starNum === 1) {
-      star1.classList.add('show');
-      this.scaleStarUp(star1, 500);
-    }
-    else if (this.starNum === 2) {
-      star1.classList.add('show');
-      this.scaleStarUp(star1, 500, () => {
+    stars.forEach((star, index) => {
+      if (this.starNum > index) {
         setTimeout(() => {
-          star2.classList.add('show');
-          this.scaleStarUp(star2, 500);
-        }, delayPerStar);
-      });
-    }
-    else if (this.starNum === 3) {
-      star1.classList.add('show');
-      this.scaleStarUp(star1, 500, () => {
-        setTimeout(() => {
-          star2.classList.add('show');
-          this.scaleStarUp(star2, 500, () => {
-            setTimeout(() => {
-              star3.classList.add('show');
-              this.scaleStarUp(star3, 500);
-            }, delayPerStar);
-          });
-        }, delayPerStar);
-      });
-    }
+          star.classList.add('show');
+          this.scaleStarUp(star, 1000);
+        }, delayPerStar * index);
+      }
+    });
   },
 
   scaleStarUp(starElement, duration, callback = null) {
@@ -238,7 +212,7 @@ export default {
     const initialScale = 0;
     const finalScale = 1;
 
-    function animate(timestamp) {
+    const animate = (timestamp) => {
       if (!start) start = timestamp;
       const progress = timestamp - start;
       const scale = Math.min(initialScale + (progress / duration), finalScale);
@@ -250,7 +224,7 @@ export default {
       } else if (callback) {
         callback();
       }
-    }
+    };
 
     requestAnimationFrame(animate);
   },
@@ -326,12 +300,7 @@ export default {
       this.updateTimerDisplay(this.time);
 
       if (this.time <= 10 && !this.isPlayLastTen) {
-        if (State.isSoundOn) {
-          Sound.play('lastTen', true);
-          logController.log('play last ten!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        }
-        View.timeText.classList.add('lastTen');
-        this.isPlayLastTen = true;
+        this.playLastTenSound();
       }
 
       if (this.time <= 0) {
@@ -340,6 +309,14 @@ export default {
         this.timer = setTimeout(this.countTime.bind(this), 1000);
       }
     }
+  },
+  playLastTenSound() {
+    if (State.isSoundOn) {
+      Sound.play('lastTen', true);
+      logController.log('play last ten!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    }
+    View.timeText.classList.add('lastTen');
+    this.isPlayLastTen = true;
   },
   stopCountTime() {
     if (this.timerRunning) {
@@ -415,17 +392,18 @@ export default {
       return positionX;
     }
     else {
-      const isLeft = columnId < Math.floor(this.redBoxX / this.optionSize);
-      let numColumns, columnWidth;
+      const isLeft = columnId < Math.floor(this.redBoxX / this.columnSize);
+      let numColumns = 2, columnWidth;
+      let leftMargin = this.columnSize / 2, rightMargin = this.columnSize / 2;
 
       if (isLeft) {
-        numColumns = Math.floor(this.redBoxX / this.optionSize);
-        columnWidth = this.redBoxX / numColumns;
-        return columnId * columnWidth + 15;
+        //numColumns = Math.floor(this.redBoxX / this.optionSize);
+        columnWidth = (this.redBoxX - leftMargin) / numColumns;
+        return columnId * columnWidth + leftMargin;
       } else {
-        numColumns = Math.floor((View.canvas.width - this.redBoxX - this.redBoxWidth - 10) / this.optionSize);
-        columnWidth = (View.canvas.width - this.redBoxX - this.redBoxWidth - 10) / numColumns;
-        return this.redBoxX + this.redBoxWidth + (columnId - Math.floor(this.redBoxX / this.optionSize)) * columnWidth + 30;
+        //numColumns = Math.floor((View.canvas.width - this.redBoxX - this.redBoxWidth - rightMargin) / this.optionSize);
+        columnWidth = (View.canvas.width - this.redBoxX - this.redBoxWidth - rightMargin) / numColumns;
+        return this.redBoxX + this.redBoxWidth + (rightMargin / 2) + (columnId - Math.floor(this.redBoxX / this.columnSize)) * columnWidth;
       }
     }
   },
@@ -454,7 +432,7 @@ export default {
 
     let containerWidth = this.optionSize;
     let maxFontSize = 60; // Maximum font size in px
-    let minFontSize = 10; // Minimum font size in px
+    let minFontSize = 25; // Minimum font size in px
     let fontSize = Math.max(minFontSize, Math.min(maxFontSize, containerWidth / (text.length * 0.65)));
 
     option.style.fontSize = `${fontSize}px`;
