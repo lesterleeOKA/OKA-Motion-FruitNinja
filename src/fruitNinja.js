@@ -51,13 +51,15 @@ export default {
   starNum: 0,
   touchBtn: false,
   apiManager: null,
+  engFontSize: null,
 
-  init(gameTime = null, fallSpeed = null) {
+  init(gameTime = null, fallSpeed = null, engFontSize=null) {
     //View.showTips('tipsReady');
     this.startedGame = false;
     this.fallingId = 0;
     this.remainingTime = gameTime !== null ? gameTime : 300;
     this.fallingSpeed = fallSpeed !== null ? fallSpeed : 8;
+    this.engFontSize = engFontSize !== null ? engFontSize : 30;
     this.itemDelay = 250;
     this.fallingDelay = 800;
     this.updateTimerDisplay(this.remainingTime);
@@ -430,12 +432,14 @@ export default {
     option.innerHTML = formattedText; // Use innerHTML to include <br>
     //option.textContent = text;
 
-    let containerWidth = this.optionSize;
-    let maxFontSize = 60; // Maximum font size in px
-    let minFontSize = 25; // Minimum font size in px
-    let fontSize = Math.max(minFontSize, Math.min(maxFontSize, containerWidth / (text.length * 0.65)));
-
+    //let containerWidth = this.optionSize;
+    //let maxFontSize = 60; // Maximum font size in px
+    //let minFontSize = 25; // Minimum font size in px
+    //let fontSize = Math.max(minFontSize, Math.min(maxFontSize, containerWidth / (text.length * 0.65)));
+    let fontSize = this.engFontSize;
     option.style.fontSize = `${fontSize}px`;
+    let lineHeightMultiplier = 1; // You can change this value
+    option.style.lineHeight = `${fontSize * lineHeightMultiplier}px`;
 
     const leftSubImage = document.createElement('div');
     const rightSubImage = document.createElement('div');

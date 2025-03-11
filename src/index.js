@@ -22,7 +22,7 @@ let drawContour = false;
 let foregroundThresold = 0.65;
 const bgImage = require('./images/fruitNinja/bg.png');
 const fpsDebug = document.getElementById('stats');
-let { jwt, id, levelKey, model, removal, fps, gameTime, fallSpeed } = parseUrlParams();
+let { jwt, id, levelKey, model, removal, fps, gameTime, fallSpeed, engFontSize} = parseUrlParams();
 let holdTimeout;
 //const ctx = canvas.getContext('2d');
 
@@ -223,6 +223,7 @@ function gameSetup() {
   }
   if (gameTime) State.gameTime = gameTime;
   if (fallSpeed) State.fallSpeed = fallSpeed;
+  if (engFontSize) State.engFontSize = engFontSize;
 }
 
 async function init() {

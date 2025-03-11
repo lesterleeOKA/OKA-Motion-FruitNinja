@@ -32,6 +32,9 @@ function parseUrlParams() {
     const fpsParam = params.find(param => param.startsWith('fps='));
     const fpsValue = fpsParam ? fpsParam.split('=')[1] : null;
     logController.log("fpsValue:", fpsValue);
+    const engFontSizeParam = params.find(param => param.startsWith('engfs='));
+    const engFontSizeValue = engFontSizeParam ? engFontSizeParam.split('=')[1] : null;
+    logController.log("engFontSizeValue:", engFontSizeValue);
 
     return {
       jwt: jwtValue,
@@ -42,6 +45,7 @@ function parseUrlParams() {
       removal: removalValue !== null ? removalValue : 0,
       fps: fpsValue !== null ? fpsValue : 0,
       model: modelValue,
+      engFontSize: engFontSizeValue
     };
   }
 
@@ -54,6 +58,7 @@ function parseUrlParams() {
     removal: 0,
     fps: 0,
     model: null,
+    engFontSize: null
   };
 }
 
